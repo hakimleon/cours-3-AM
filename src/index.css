@@ -1,0 +1,136 @@
+@import "tailwindcss";
+@import "katex/dist/katex.min.css";
+
+@theme {
+  --font-sans: 'Alexandria', 'Tajawal', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+:root {
+  --accent: #C94BA6;        /* magenta : titres, icônes, numéros, rail, puces, liens */
+  --text: #4A4A4A;          /* texte principal */
+  --bg-page: #F6F0EB;       /* fond crème */
+  --bg-card: #FFFFFF;       /* carte centrale */
+  --fig-shape: #5B7BC0;     /* figures : forme principale (bleu) */
+  --fig-mark: #F5A54A;      /* figures : éléments démontrés (orange) */
+  --radius: 16px;
+  --content-max: 640px;     /* colonne étroite */
+  --line-height: 1.9;       /* interligne très aéré */
+}
+
+@layer base {
+  html, body, button, input, select, textarea {
+    font-family: 'Alexandria', 'Tajawal', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background-color: var(--bg-page);
+    color: var(--text);
+    line-height: var(--line-height);
+  }
+}
+
+/* Ensure math formulas are always rendered LTR with proper math spacing */
+.katex, .katex-html {
+  direction: ltr !important;
+  text-align: left !important;
+  unicode-bidi: isolate !important;
+  white-space: nowrap !important;
+}
+
+.katex-display, .math-ltr {
+  direction: ltr !important;
+  text-align: center;
+  unicode-bidi: isolate !important;
+}
+
+.katex-display {
+  margin: 0.35em 0 !important;
+  max-width: 100%;
+  overflow-x: visible;
+  overflow-y: visible;
+  padding-bottom: 2px;
+}
+
+.math-formula-scroll {
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(148, 163, 184, 0.4) transparent;
+}
+
+/* Force LTR direction on all KaTeX internals and anchor square-root SVGs at left: 0 */
+.katex, .katex * {
+  direction: ltr !important;
+  box-sizing: content-box;
+}
+
+.katex .vlist > span,
+.katex .hide-tail {
+  text-align: left !important;
+}
+
+.katex svg {
+  left: 0 !important;
+  right: auto !important;
+}
+
+/* KaTeX rlap negation slash fix for RTL pages */
+.katex .rlap {
+  position: relative !important;
+  width: 0 !important;
+  display: inline-block !important;
+}
+
+.katex .rlap > .katex-inner {
+  position: absolute !important;
+  left: 0 !important;
+  right: auto !important;
+}
+
+.katex-inline {
+  direction: ltr !important;
+  text-align: left !important;
+  unicode-bidi: isolate;
+  display: inline-block;
+  vertical-align: middle;
+  white-space: nowrap !important;
+}
+
+/* Smooth scrolling for sidebar chapter links */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Explicit RTL and clean styling during PDF export capture */
+.pdf-export-mode,
+.pdf-export-block {
+  direction: rtl;
+  text-align: right;
+  font-family: 'Alexandria', 'Tajawal', system-ui, -apple-system, sans-serif;
+}
+
+.pdf-export-mode #sec-continuity,
+.pdf-export-mode #btn-toggle-all-solutions,
+.pdf-export-mode [id^="btn-toggle-solution-"],
+.pdf-export-mode .no-pdf {
+  display: none !important;
+}
+
+@media print {
+  #main-topbar,
+  #course-sidebar,
+  #sec-continuity,
+  .no-pdf {
+    display: none !important;
+  }
+  #course-main-content {
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+}
+
