@@ -396,7 +396,7 @@ export const Course01SchemaRenderer: React.FC<{ type: string }> = ({ type }) => 
                 {[
                   'الذرات (Atomes)',
                   'الجزيئات (Molécules)',
-                  'الأيونات / الشوارد (Ions)',
+                  'دقائق مجهرية (ذرات وجزيئات)',
                   'الأفراد الكيميائية (Entités)',
                 ].map((item, i) => (
                   <div key={i} className="p-2 rounded-[6px] bg-[#FAF7F4] border border-[#E2D9D0] font-medium text-[#4A4A4A]">
@@ -405,7 +405,7 @@ export const Course01SchemaRenderer: React.FC<{ type: string }> = ({ type }) => 
                 ))}
               </div>
               <div className="text-[11px] font-bold text-[#C94BA6]">
-                ← نصف المادة بـ : الفرد الكيميائي (Entité chimique : ذرة، جزيء، أيون)
+                ← نصف المادة بـ : الفرد الكيميائي (Entité chimique : ذرة، جزيء)
               </div>
             </div>
           </div>
@@ -456,7 +456,7 @@ export const Course01SchemaRenderer: React.FC<{ type: string }> = ({ type }) => 
               </text>
             </g>
 
-            {/* Box C: H₂O + O₂ + Na⁺/Cl⁻ */}
+            {/* Box C: H₂O + O₂ */}
             <g transform="translate(548, 20)">
               <text x="0" y="10" textAnchor="middle" fontSize="12.5" fontWeight="bold" fill="#0F766E">
                 العلبة C (ماء + غاز O₂ / ملح)
@@ -487,7 +487,7 @@ export const Course01SchemaRenderer: React.FC<{ type: string }> = ({ type }) => 
             {[
               {
                 text: '1. الفرد الكيميائي (Entité chimique)',
-                sub: 'وحدة مجهرية واحدة (ذرة Fe، جزيء H₂O، شاردة Na⁺)',
+                sub: 'دقيقة مجهرية واحدة (ذرة Fe، جزيء H₂O)',
                 accent: true,
               },
               {

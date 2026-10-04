@@ -41,7 +41,10 @@ import {
 } from './EnergySpecificComponents';
 import {
   BookOpen,
+  Sparkles,
   CheckCircle2,
+  ChevronDown,
+  ChevronUp,
   ChevronLeft,
   Star,
   LayoutGrid,
@@ -52,6 +55,7 @@ import {
   Loader2,
   Lock,
 } from 'lucide-react';
+import { Course01EssentialBlock } from './Course01EssentialBlock';
 
 const PC_DISCOVERY_UNLOCKED_STORAGE_KEY = 'pc_3am_discovery_unlocked_v1';
 
@@ -149,9 +153,17 @@ export const PhysicsCourseView: React.FC<PhysicsCourseViewProps> = ({
     }
   }, [unlockedDiscoveryIds]);
 
+  // Niveau « L'essentiel » vs bloc repliable « للتعمق » (Pour approfondir) pour le Cours 01
+  const [isDeepenExpanded, setIsDeepenExpanded] = useState<boolean>(course.id !== 'pc-course-01');
+
+  useEffect(() => {
+    setIsDeepenExpanded(course.id !== 'pc-course-01');
+  }, [course.id]);
+
   useEffect(() => {
     const handlePreparePdf = () => {
       setActiveTab('all');
+      setIsDeepenExpanded(true);
     };
     window.addEventListener('course-pdf-prepare', handlePreparePdf);
     return () => window.removeEventListener('course-pdf-prepare', handlePreparePdf);
@@ -221,6 +233,9 @@ export const PhysicsCourseView: React.FC<PhysicsCourseViewProps> = ({
 
   const handleJumpToSection = (secId: string) => {
     setActiveSectionId(secId);
+    if (course.id === 'pc-course-01' && secId !== 'sec-pc-essential' && secId !== 'sec-pc-exercises') {
+      setIsDeepenExpanded(true);
+    }
     if (activeTab !== 'all') {
       setActiveTab('all');
       setTimeout(() => {
@@ -228,8 +243,10 @@ export const PhysicsCourseView: React.FC<PhysicsCourseViewProps> = ({
         if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }, 60);
     } else {
-      const el = document.getElementById(secId);
-      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      setTimeout(() => {
+        const el = document.getElementById(secId);
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 40);
     }
   };
 
@@ -376,6 +393,66 @@ export const PhysicsCourseView: React.FC<PhysicsCourseViewProps> = ({
     }
   };
 
+  const renderExercisesBlock = () => {
+    if (!hasExercisesSection || (activeTab !== 'all' && activeTab !== 'activities')) {
+      return null;
+    }
+    return (
+      <section
+        id="sec-pc-exercises"
+        className="bg-[#FFFFFF] rounded-[18px] border border-[#EAE2DA] p-5 sm:p-6 space-y-4 scroll-mt-28"
+      >
+        <div className="section-lead-group space-y-3">
+          <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#EAE2DA] pb-2.5">
+            <div className="flex items-center gap-2.5">
+              <span
+                dir="ltr"
+                style={{ backgroundColor: theme.primaryHex }}
+                className="w-7 h-7 rounded-[8px] text-white font-mono font-bold text-xs flex items-center justify-center shrink-0"
+              >
+                {exercisesSecNum}
+              </span>
+              <h2 className="text-base sm:text-lg font-bold text-[#1A1A1A]">
+                تمارين تطبيقية ووضعيات سياقية مع التصحيح
+              </h2>
+            </div>
+            <span
+              dir="ltr"
+              style={{ color: theme.primaryHex }}
+              className="text-xs font-mono font-semibold"
+            >
+              Exercices contextualisés & Corrigés
+            </span>
+          </div>
+
+          {course.id !== 'pc-course-01' && (
+            discoveryActivity && course.id !== 'pc-course-09' ? (
+              <PhysicsDiscoveryCorrectionCard activity={discoveryActivity} />
+            ) : (
+              course.applications?.[0] && (
+                <PhysicsApplicationCard item={course.applications[0]} />
+              )
+            )
+          )}
+        </div>
+
+        {course.activites &&
+          course.activites.length > 0 &&
+          !course.sections.some((s) => s.blocks.some((b) => b.kind === 'activity')) &&
+          course.activites.map((act, i) => <PhysicsActivityBlock key={i} data={act} />)}
+
+        {course.applications &&
+          course.applications
+            .slice(
+              course.id === 'pc-course-01'
+                ? 0
+                : (discoveryActivity && course.id !== 'pc-course-09' ? 0 : 1)
+            )
+            .map((app) => <PhysicsApplicationCard key={app.id} item={app} />)}
+      </section>
+    );
+  };
+
   return (
     <PhysicsDomainThemeProvider domainId={course.domaine}>
       <div
@@ -509,6 +586,63 @@ export const PhysicsCourseView: React.FC<PhysicsCourseViewProps> = ({
               <nav className="relative border-r-2 border-[#E2D9D0] space-y-0.5 max-h-[42vh] overflow-y-auto pl-1">
                 {course.sections.length > 0 ? (
                   <>
+                    {/* Liens spécifiques en-tête pour Cours 01 : L'essentiel puis Exercices */}
+                    {course.id === 'pc-course-01' && (
+                      <>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            handleJumpToSection('sec-pc-essential');
+                            onCloseMobileSidebar();
+                          }}
+                          style={
+                            activeSectionId === 'sec-pc-essential'
+                              ? {
+                                  borderRightColor: '#0F766E',
+                                  color: '#0F766E',
+                                }
+                              : undefined
+                          }
+                          className={`relative w-full text-right pr-3.5 pl-2 py-1.5 text-xs transition-all flex items-baseline gap-2 cursor-pointer -mr-[2px] border-r-2 ${
+                            activeSectionId === 'sec-pc-essential'
+                              ? 'font-bold'
+                              : 'border-transparent text-[#4A4A4A]/80 hover:text-[#1A1A1A] font-medium'
+                          }`}
+                        >
+                          <Sparkles className="w-3.5 h-3.5 shrink-0 self-center text-[#0F766E]" />
+                          <span className="leading-snug truncate">أحتفظ بالأهم (L'essentiel)</span>
+                        </button>
+
+                        {course.id !== 'pc-course-01' && hasExercisesSection && (
+                          <button
+                            type="button"
+                            onClick={() => {
+                              handleJumpToSection('sec-pc-exercises');
+                              onCloseMobileSidebar();
+                            }}
+                            style={
+                              activeSectionId === 'sec-pc-exercises'
+                                ? {
+                                    borderRightColor: '#0F766E',
+                                    color: '#0F766E',
+                                  }
+                                : undefined
+                            }
+                            className={`relative w-full text-right pr-3.5 pl-2 py-1.5 text-xs transition-all flex items-baseline gap-2 cursor-pointer -mr-[2px] border-r-2 ${
+                              activeSectionId === 'sec-pc-exercises'
+                                ? 'font-bold'
+                                : 'border-transparent text-[#4A4A4A]/80 hover:text-[#1A1A1A] font-medium'
+                            }`}
+                          >
+                            <span className="font-bold shrink-0 font-mono text-[#0F766E]" dir="ltr">
+                              ★
+                            </span>
+                            <span className="leading-snug">تمارين تطبيقية ووضعيات مع الحل</span>
+                          </button>
+                        )}
+                      </>
+                    )}
+
                     {/* Toujours afficher la Section 1 (Activité de découverte) */}
                     {course.sections
                       .slice(0, isDiscoveryCompleted ? course.sections.length : 1)
@@ -907,7 +1041,12 @@ export const PhysicsCourseView: React.FC<PhysicsCourseViewProps> = ({
                       <button
                         key={id}
                         type="button"
-                        onClick={() => setActiveTab(id)}
+                        onClick={() => {
+                          setActiveTab(id);
+                          if (course.id === 'pc-course-01') {
+                            setIsDeepenExpanded(true);
+                          }
+                        }}
                         style={
                           isTabActive
                             ? { backgroundColor: theme.primaryHex, color: '#FFFFFF' }
@@ -929,8 +1068,66 @@ export const PhysicsCourseView: React.FC<PhysicsCourseViewProps> = ({
             </div>
           </section>
 
-          {/* Course Content or Ready Slot Architecture View */}
-          {!hasContent ? (
+          {/* B. BLOC L'ESSENTIEL (COURS 01 UNIQUEMENT) */}
+          {course.id === 'pc-course-01' && <Course01EssentialBlock />}
+
+          {/* C. EXERCICES CONTEXTUALISÉS & CORRIGÉS POUR COURS 01 (VISIBLE PAR DÉFAUT SOUS L'ESSENTIEL, AVANT « للتعمق ») */}
+          {course.id === 'pc-course-01' && renderExercisesBlock()}
+
+          {/* D. BOUTON ACCORDÉON « للتعمق » (COURS 01 UNIQUEMENT) */}
+          {course.id === 'pc-course-01' && (
+            <button
+              type="button"
+              onClick={() => setIsDeepenExpanded(!isDeepenExpanded)}
+              className="w-full flex items-center justify-between p-4 sm:p-5 rounded-[18px] bg-[#FFFFFF] border-2 border-[#E2D9D0] hover:border-[#0F766E] shadow-2xs transition-all text-right group cursor-pointer no-pdf"
+              dir="rtl"
+            >
+              <div className="flex items-center gap-3">
+                <div
+                  style={{ backgroundColor: isDeepenExpanded ? '#0F766E' : '#F0FDFA' }}
+                  className={`w-10 h-10 rounded-[12px] flex items-center justify-center transition-colors ${
+                    isDeepenExpanded ? 'text-white' : 'text-[#0F766E]'
+                  }`}
+                >
+                  <BookOpen className="w-5 h-5" />
+                </div>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <h3 className="text-base sm:text-lg font-bold text-[#1A1A1A] group-hover:text-[#0F766E] transition-colors">
+                      للتعمق
+                    </h3>
+                    <span className="text-[11px] font-mono text-[#6B6B6B]" dir="ltr">
+                      Pour approfondir
+                    </span>
+                  </div>
+                  <p className="text-xs text-[#6B6B6B]">
+                    {isDeepenExpanded
+                      ? 'انقر لطي المحتوى المفصل'
+                      : 'انقر لعرض الشرح المفصل، وضعية الانطلاق، التجارب، والمعجم الكامل'}
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2.5">
+                <span className="hidden sm:inline-block px-3 py-1 rounded-[8px] bg-[#FAF7F4] border border-[#E2D9D0] text-xs font-semibold text-[#4A4A4A]">
+                  {isDeepenExpanded ? 'معروض' : 'محتوى كامل'}
+                </span>
+                <div className="w-8 h-8 rounded-full bg-[#FAF7F4] flex items-center justify-center text-[#4A4A4A] group-hover:bg-[#0F766E] group-hover:text-white transition-colors">
+                  {isDeepenExpanded ? (
+                    <ChevronUp className="w-5 h-5" />
+                  ) : (
+                    <ChevronDown className="w-5 h-5" />
+                  )}
+                </div>
+              </div>
+            </button>
+          )}
+
+          {/* D. CONTENU DÉTAILLÉ DU COURS (REPLIÉ PAR DÉFAUT POUR COURS 01, DIRECT POUR LES AUTRES) */}
+          {(course.id !== 'pc-course-01' || isDeepenExpanded) && (
+            <div className="space-y-5">
+              {/* Course Content or Ready Slot Architecture View */}
+              {!hasContent ? (
             <section className="bg-[#FFFFFF] rounded-[18px] border border-[#EAE2DA] p-6 space-y-5">
               <div
                 style={{
@@ -1060,6 +1257,13 @@ export const PhysicsCourseView: React.FC<PhysicsCourseViewProps> = ({
                         />
                       )}
 
+                      {/* Pour Cours 01 : Corrigé de l'activité exploratoire directement dans la Section 1 de « للتعمق » */}
+                      {course.id === 'pc-course-01' && secIdx === 0 && discoveryActivity && (
+                        <div className="pt-2">
+                          <PhysicsDiscoveryCorrectionCard activity={discoveryActivity} />
+                        </div>
+                      )}
+
                       {/* Remaining blocks as direct children for granular PDF pagination */}
                       {sec.blocks.slice(1).map((b, bIdx) => renderBlock(b, bIdx + 1))}
 
@@ -1089,55 +1293,8 @@ export const PhysicsCourseView: React.FC<PhysicsCourseViewProps> = ({
                   );
                 })}
 
-              {/* EXERCISES, CONTEXTUALIZED SITUATIONS & DISCOVERY CORRECTION (Règle 1 & Règle 4) */}
-              {(activeTab === 'all' || activeTab === 'activities') && hasExercisesSection && (
-                <section
-                  id="sec-pc-exercises"
-                  className="bg-[#FFFFFF] rounded-[18px] border border-[#EAE2DA] p-5 sm:p-6 space-y-4 scroll-mt-28"
-                >
-                  <div className="section-lead-group space-y-3">
-                    <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#EAE2DA] pb-2.5">
-                      <div className="flex items-center gap-2.5">
-                        <span
-                          dir="ltr"
-                          style={{ backgroundColor: theme.primaryHex }}
-                          className="w-7 h-7 rounded-[8px] text-white font-mono font-bold text-xs flex items-center justify-center shrink-0"
-                        >
-                          {exercisesSecNum}
-                        </span>
-                        <h2 className="text-base sm:text-lg font-bold text-[#1A1A1A]">
-                          تمارين تطبيقية ووضعيات سياقية مع التصحيح
-                        </h2>
-                      </div>
-                      <span
-                        dir="ltr"
-                        style={{ color: theme.primaryHex }}
-                        className="text-xs font-mono font-semibold"
-                      >
-                        Exercices contextualisés & Corrigés
-                      </span>
-                    </div>
-
-                    {discoveryActivity && course.id !== 'pc-course-09' ? (
-                      <PhysicsDiscoveryCorrectionCard activity={discoveryActivity} />
-                    ) : (
-                      course.applications?.[0] && (
-                        <PhysicsApplicationCard item={course.applications[0]} />
-                      )
-                    )}
-                  </div>
-
-                  {course.activites &&
-                    course.activites.length > 0 &&
-                    !course.sections.some((s) => s.blocks.some((b) => b.kind === 'activity')) &&
-                    course.activites.map((act, i) => <PhysicsActivityBlock key={i} data={act} />)}
-
-                  {course.applications &&
-                    course.applications
-                      .slice(discoveryActivity && course.id !== 'pc-course-09' ? 0 : 1)
-                      .map((app) => <PhysicsApplicationCard key={app.id} item={app} />)}
-                </section>
-              )}
+              {/* EXERCISES POUR LES AUTRES COURS (Puisque Cours 01 les a déjà affichés en haut) */}
+              {course.id !== 'pc-course-01' && renderExercisesBlock()}
 
               {/* SUMMARY, SCHEMATIC DIAGRAM & BILINGUAL VOCABULARY */}
               {(activeTab === 'all' || activeTab === 'summary') && (
@@ -1154,6 +1311,8 @@ export const PhysicsCourseView: React.FC<PhysicsCourseViewProps> = ({
                 </div>
               )}
             </>
+          )}
+            </div>
           )}
 
           {/* 3. CONTINUITÉ PÉDAGOGIQUE (PRÉCÉDENT / SUIVANT AVEC REPÈRE DE DOMAINE) */}

@@ -251,11 +251,11 @@ export interface PhysicsDiscoveryActivity {
   observationTable?: PhysicsTableItem;
   schema?: PhysicsSchemaOrFigure;
   /** Temps 3 : Questions guidées AVANT de nommer formellement les concepts */
-  guidedQuestions: string[];
+  guidedQuestions?: string[];
   /** Indice discret (💡 مساعدة) sans donner la réponse */
   hint?: string;
   /** Corrigé affiché dans la section Exercices / Corrigés */
-  correction: {
+  correction?: {
     questionAnswers: string[];
     conclusion?: string;
   };
