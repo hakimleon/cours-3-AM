@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Sparkles,
   Atom,
@@ -19,6 +19,12 @@ import { ChemPhysText } from './ChemPhysText';
  */
 export const Course01EssentialBlock: React.FC = () => {
   const [showAnswers, setShowAnswers] = useState<boolean>(false);
+
+  useEffect(() => {
+    const handlePdfPrepare = () => setShowAnswers(true);
+    window.addEventListener('course-pdf-prepare', handlePdfPrepare);
+    return () => window.removeEventListener('course-pdf-prepare', handlePdfPrepare);
+  }, []);
 
   return (
     <section
@@ -193,7 +199,7 @@ export const Course01EssentialBlock: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setShowAnswers(!showAnswers)}
-                className="w-full inline-flex items-center justify-center gap-1.5 py-1.5 px-3 rounded-[8px] bg-white border border-[#93C5FD] text-xs font-bold text-[#1D4ED8] hover:bg-[#DBEAFE]/40 transition-colors shadow-2xs cursor-pointer"
+                className="no-pdf print:hidden w-full inline-flex items-center justify-center gap-1.5 py-1.5 px-3 rounded-[8px] bg-white border border-[#93C5FD] text-xs font-bold text-[#1D4ED8] hover:bg-[#DBEAFE]/40 transition-colors shadow-2xs cursor-pointer"
               >
                 {showAnswers ? (
                   <>

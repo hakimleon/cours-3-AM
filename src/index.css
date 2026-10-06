@@ -116,7 +116,11 @@ html {
 .pdf-export-mode #sec-continuity,
 .pdf-export-mode #btn-toggle-all-solutions,
 .pdf-export-mode [id^="btn-toggle-solution-"],
-.pdf-export-mode .no-pdf {
+.pdf-export-mode .no-pdf,
+.pdf-export-mode button,
+.pdf-export-block .no-pdf,
+.pdf-export-block button,
+.pdf-export-block [class*="no-pdf"] {
   display: none !important;
 }
 
@@ -124,13 +128,49 @@ html {
   #main-topbar,
   #course-sidebar,
   #sec-continuity,
-  .no-pdf {
+  .no-pdf,
+  button,
+  [class*="print:hidden"] {
     display: none !important;
   }
-  #course-main-content {
+
+  #course-main-content,
+  #physics-course-main-content {
     max-width: 100% !important;
     padding: 0 !important;
     margin: 0 !important;
+  }
+
+  /* Permettre aux conteneurs de sections de se répartir naturellement sur plusieurs pages */
+  main,
+  section,
+  #course-main-content > div,
+  #physics-course-main-content > div {
+    break-inside: auto !important;
+    page-break-inside: auto !important;
+  }
+
+  /* Empêcher chaque carte individuelle ou bloc de contenu d'être coupé en deux */
+  article,
+  figure,
+  table,
+  tr,
+  blockquote,
+  .card,
+  .section-lead-group,
+  div[class*="rounded-[12px]"],
+  div[class*="rounded-[10px]"],
+  div[class*="rounded-[8px]"] {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  /* Garder chaque titre et groupe d'en-tête lié à son contenu suivant */
+  h1, h2, h3, h4, h5, h6,
+  .section-lead-group,
+  [class*="section-lead-group"] {
+    break-after: avoid !important;
+    page-break-after: avoid !important;
   }
 }
 

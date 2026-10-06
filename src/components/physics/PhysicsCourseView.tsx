@@ -55,7 +55,7 @@ import {
   Loader2,
   Lock,
 } from 'lucide-react';
-import { Course01EssentialBlock } from './Course01EssentialBlock';
+import { CourseEssentialBlock } from './CourseEssentialBlock';
 
 const PC_DISCOVERY_UNLOCKED_STORAGE_KEY = 'pc_3am_discovery_unlocked_v1';
 
@@ -153,12 +153,12 @@ export const PhysicsCourseView: React.FC<PhysicsCourseViewProps> = ({
     }
   }, [unlockedDiscoveryIds]);
 
-  // Niveau « L'essentiel » vs bloc repliable « للتعمق » (Pour approfondir) pour le Cours 01
-  const [isDeepenExpanded, setIsDeepenExpanded] = useState<boolean>(course.id !== 'pc-course-01');
+  // Niveau « L'essentiel » vs bloc repliable « للتعمق » (Pour approfondir) — Gabarit générique
+  const [isDeepenExpanded, setIsDeepenExpanded] = useState<boolean>(!course.essential);
 
   useEffect(() => {
-    setIsDeepenExpanded(course.id !== 'pc-course-01');
-  }, [course.id]);
+    setIsDeepenExpanded(!course.essential);
+  }, [course.id, course.essential]);
 
   useEffect(() => {
     const handlePreparePdf = () => {
@@ -233,7 +233,7 @@ export const PhysicsCourseView: React.FC<PhysicsCourseViewProps> = ({
 
   const handleJumpToSection = (secId: string) => {
     setActiveSectionId(secId);
-    if (course.id === 'pc-course-01' && secId !== 'sec-pc-essential' && secId !== 'sec-pc-exercises') {
+    if (course.essential && secId !== 'sec-pc-essential' && secId !== 'sec-pc-exercises') {
       setIsDeepenExpanded(true);
     }
     if (activeTab !== 'all') {
@@ -408,9 +408,9 @@ export const PhysicsCourseView: React.FC<PhysicsCourseViewProps> = ({
               <span
                 dir="ltr"
                 style={{ backgroundColor: theme.primaryHex }}
-                className="w-7 h-7 rounded-[8px] text-white font-mono font-bold text-xs flex items-center justify-center shrink-0"
+                className="w-7 h-7 rounded-[8px] text-white font-mono font-bold text-xs flex items-center justify-center shrink-0 shadow-2xs"
               >
-                {exercisesSecNum}
+                {course.essential ? <ListChecks className="w-4 h-4" /> : exercisesSecNum}
               </span>
               <h2 className="text-base sm:text-lg font-bold text-[#1A1A1A]">
                 تمارين تطبيقية ووضعيات سياقية مع التصحيح
@@ -425,7 +425,7 @@ export const PhysicsCourseView: React.FC<PhysicsCourseViewProps> = ({
             </span>
           </div>
 
-          {course.id !== 'pc-course-01' && (
+          {!course.essential && (
             discoveryActivity && course.id !== 'pc-course-09' ? (
               <PhysicsDiscoveryCorrectionCard activity={discoveryActivity} />
             ) : (
@@ -444,7 +444,7 @@ export const PhysicsCourseView: React.FC<PhysicsCourseViewProps> = ({
         {course.applications &&
           course.applications
             .slice(
-              course.id === 'pc-course-01'
+              course.essential
                 ? 0
                 : (discoveryActivity && course.id !== 'pc-course-09' ? 0 : 1)
             )
@@ -1068,32 +1068,44 @@ export const PhysicsCourseView: React.FC<PhysicsCourseViewProps> = ({
             </div>
           </section>
 
-          {/* B. BLOC L'ESSENTIEL (COURS 01 UNIQUEMENT) */}
-          {course.id === 'pc-course-01' && <Course01EssentialBlock />}
+          {/* B. BLOC L'ESSENTIEL (GÉNÉRIQUE POUR TOUT COURS AVEC CHAMP ESSENTIAL) */}
+          {course.essential && (
+            <CourseEssentialBlock
+              essential={course.essential}
+              primaryColor={theme.primaryHex}
+            />
+          )}
 
-          {/* C. EXERCICES CONTEXTUALISÉS & CORRIGÉS POUR COURS 01 (VISIBLE PAR DÉFAUT SOUS L'ESSENTIEL, AVANT « للتعمق ») */}
-          {course.id === 'pc-course-01' && renderExercisesBlock()}
+          {/* C. EXERCICES CONTEXTUALISÉS & CORRIGÉS (VISIBLE PAR DÉFAUT SOUS L'ESSENTIEL, AVANT « للتعمق ») */}
+          {course.essential && renderExercisesBlock()}
 
-          {/* D. BOUTON ACCORDÉON « للتعمق » (COURS 01 UNIQUEMENT) */}
-          {course.id === 'pc-course-01' && (
+          {/* D. BOUTON ACCORDÉON « للتعمق » (REPLIÉ PAR DÉFAUT POUR TOUT COURS AVEC CHAMP ESSENTIAL) */}
+          {course.essential && (
             <button
               type="button"
               onClick={() => setIsDeepenExpanded(!isDeepenExpanded)}
-              className="w-full flex items-center justify-between p-4 sm:p-5 rounded-[18px] bg-[#FFFFFF] border-2 border-[#E2D9D0] hover:border-[#0F766E] shadow-2xs transition-all text-right group cursor-pointer no-pdf"
+              style={{
+                borderColor: isDeepenExpanded ? theme.primaryHex : '#E2D9D0',
+              }}
+              className="w-full flex items-center justify-between p-4 sm:p-5 rounded-[18px] bg-[#FFFFFF] border-2 shadow-2xs transition-all text-right group cursor-pointer no-pdf"
               dir="rtl"
             >
               <div className="flex items-center gap-3">
                 <div
-                  style={{ backgroundColor: isDeepenExpanded ? '#0F766E' : '#F0FDFA' }}
-                  className={`w-10 h-10 rounded-[12px] flex items-center justify-center transition-colors ${
-                    isDeepenExpanded ? 'text-white' : 'text-[#0F766E]'
-                  }`}
+                  style={{
+                    backgroundColor: isDeepenExpanded ? theme.primaryHex : theme.softBgHex,
+                    color: isDeepenExpanded ? '#FFFFFF' : theme.primaryHex,
+                  }}
+                  className="w-10 h-10 rounded-[12px] flex items-center justify-center transition-colors"
                 >
                   <BookOpen className="w-5 h-5" />
                 </div>
                 <div>
                   <div className="flex items-center gap-2">
-                    <h3 className="text-base sm:text-lg font-bold text-[#1A1A1A] group-hover:text-[#0F766E] transition-colors">
+                    <h3
+                      style={{ color: isDeepenExpanded ? theme.primaryHex : '#1A1A1A' }}
+                      className="text-base sm:text-lg font-bold transition-colors"
+                    >
                       للتعمق
                     </h3>
                     <span className="text-[11px] font-mono text-[#6B6B6B]" dir="ltr">
@@ -1112,7 +1124,13 @@ export const PhysicsCourseView: React.FC<PhysicsCourseViewProps> = ({
                 <span className="hidden sm:inline-block px-3 py-1 rounded-[8px] bg-[#FAF7F4] border border-[#E2D9D0] text-xs font-semibold text-[#4A4A4A]">
                   {isDeepenExpanded ? 'معروض' : 'محتوى كامل'}
                 </span>
-                <div className="w-8 h-8 rounded-full bg-[#FAF7F4] flex items-center justify-center text-[#4A4A4A] group-hover:bg-[#0F766E] group-hover:text-white transition-colors">
+                <div
+                  style={{
+                    backgroundColor: isDeepenExpanded ? theme.primaryHex : '#FAF7F4',
+                    color: isDeepenExpanded ? '#FFFFFF' : '#4A4A4A',
+                  }}
+                  className="w-8 h-8 rounded-full flex items-center justify-center transition-colors"
+                >
                   {isDeepenExpanded ? (
                     <ChevronUp className="w-5 h-5" />
                   ) : (
@@ -1123,8 +1141,8 @@ export const PhysicsCourseView: React.FC<PhysicsCourseViewProps> = ({
             </button>
           )}
 
-          {/* D. CONTENU DÉTAILLÉ DU COURS (REPLIÉ PAR DÉFAUT POUR COURS 01, DIRECT POUR LES AUTRES) */}
-          {(course.id !== 'pc-course-01' || isDeepenExpanded) && (
+          {/* E. CONTENU DÉTAILLÉ DU COURS (REPLIÉ PAR DÉFAUT POUR COURS AVEC ESSENTIAL, DIRECT POUR LES AUTRES) */}
+          {(!course.essential || isDeepenExpanded) && (
             <div className="space-y-5">
               {/* Course Content or Ready Slot Architecture View */}
               {!hasContent ? (
@@ -1257,8 +1275,8 @@ export const PhysicsCourseView: React.FC<PhysicsCourseViewProps> = ({
                         />
                       )}
 
-                      {/* Pour Cours 01 : Corrigé de l'activité exploratoire directement dans la Section 1 de « للتعمق » */}
-                      {course.id === 'pc-course-01' && secIdx === 0 && discoveryActivity && (
+                      {/* Pour cours avec essential : Corrigé de l'activité exploratoire directement dans la Section 1 de « للتعمق » */}
+                      {course.essential && secIdx === 0 && discoveryActivity && (
                         <div className="pt-2">
                           <PhysicsDiscoveryCorrectionCard activity={discoveryActivity} />
                         </div>
@@ -1293,8 +1311,8 @@ export const PhysicsCourseView: React.FC<PhysicsCourseViewProps> = ({
                   );
                 })}
 
-              {/* EXERCISES POUR LES AUTRES COURS (Puisque Cours 01 les a déjà affichés en haut) */}
-              {course.id !== 'pc-course-01' && renderExercisesBlock()}
+              {/* EXERCISES POUR LES COURS SANS CHAMP ESSENTIAL (Puisque les cours avec essential les affichent au-dessus de « للتعمق ») */}
+              {!course.essential && renderExercisesBlock()}
 
               {/* SUMMARY, SCHEMATIC DIAGRAM & BILINGUAL VOCABULARY */}
               {(activeTab === 'all' || activeTab === 'summary') && (

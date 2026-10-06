@@ -66,16 +66,63 @@ export const Course01SchemaRenderer: React.FC<{ type: string }> = ({ type }) => 
     case 'c01-everyday-materials':
       return (
         <div className="p-3.5 rounded-[12px] bg-[#FAF7F4] border border-[#E2D9D0] space-y-3">
-          {/* Illustration principale de la situation de départ (LightBox) */}
-          <ZoomableCourseImage
-            src="/src/assets/images/c01_situation_depart_1790801006930.jpg"
-            alt="مواد من الحياة اليومية: قطرة ماء وكأس ماء، مسمار حديد وقارورة غاز الأكسجين، وكأس ماء مع ملح وسكر"
-            captionArabic="صورة توضيحية للعينات الحقيقية الثلاث المستعملة في وضعية الانطلاق"
-            captionFrench="Eau (goutte vs verre) · Fer & Dioxygène · Eau salée et sucrée"
-            courseBadge="الدرس 01"
-          />
+          {/* Illustration panoramique vectorielle construite (remplace l'image IA) */}
+          <div className="bg-white rounded-[10px] border border-[#E5DDD5] p-3 space-y-2">
+            <svg viewBox="0 0 600 110" className="w-full h-auto bg-[#FBFBFA] rounded-[8px] border border-[#EAE2DA]">
+              {/* Situation A: Water drop & Beaker */}
+              <g transform="translate(100, 10)">
+                <rect x="-85" y="0" width="170" height="90" rx="8" fill="#F0F9FF" stroke="#BAE6FD" strokeWidth="1" />
+                {/* Droplet */}
+                <path d="M-45 22 C-45 22 -58 40 -58 50 C-58 58 -52 64 -45 64 C-38 64 -32 58 -32 50 C-32 40 -45 22 -45 22 Z" fill="#38BDF8" stroke="#0284C7" strokeWidth="1.5" />
+                {/* Glass */}
+                <path d="M22 24 L27 68 L63 68 L68 24 Z" fill="#E0F2FE" stroke="#0284C7" strokeWidth="1.5" />
+                <path d="M24 38 L27 67 L63 67 L66 38 Z" fill="#38BDF8" opacity="0.65" />
+              </g>
 
-          {/* 3 cartes illustrées avec schémas SVG des échantillons (أ)، (ب)، (ج) */}
+              {/* Situation B: Iron nail & Closed O2 Flask */}
+              <g transform="translate(300, 10)">
+                <rect x="-85" y="0" width="170" height="90" rx="8" fill="#FAF7F4" stroke="#E5DDD5" strokeWidth="1" />
+                {/* Iron nail */}
+                <rect x="-65" y="44" width="45" height="5" rx="1.5" fill="#64748B" stroke="#334155" strokeWidth="1.2" />
+                <rect x="-68" y="39" width="4.5" height="15" rx="1" fill="#475569" />
+                <polygon points="-20,44 -12,46.5 -20,49" fill="#64748B" />
+                {/* O2 Flask with 2 bonded atoms */}
+                <g transform="translate(42, 14)">
+                  <rect x="-5" y="0" width="10" height="3" rx="1" fill="#475569" />
+                  <rect x="-3" y="3" width="6" height="5" fill="#F8FAFC" stroke="#94A3B8" strokeWidth="1" />
+                  <path d="M-3 8 L-15 36 C-15 39 -12 41 -9 41 L9 41 C12 41 15 39 15 36 L3 8 Z" fill="#FEF2F2" stroke="#DC2626" strokeWidth="1.3" />
+                  {/* Diatomic O2 (2 atoms only) */}
+                  <g transform="translate(0, 26) scale(0.6)">
+                    <line x1="-5" y1="-2" x2="5" y2="-2" stroke="#991B1B" strokeWidth="1.5" />
+                    <line x1="-5" y1="2" x2="5" y2="2" stroke="#991B1B" strokeWidth="1.5" />
+                    <circle cx="-7.5" cy="0" r="7.5" fill="#DC2626" stroke="#991B1B" strokeWidth="1.2" />
+                    <circle cx="7.5" cy="0" r="7.5" fill="#DC2626" stroke="#991B1B" strokeWidth="1.2" />
+                    <text x="-7.5" y="2.5" textAnchor="middle" fill="#FFFFFF" fontSize="6.5" fontWeight="bold" fontFamily="monospace">O</text>
+                    <text x="7.5" y="2.5" textAnchor="middle" fill="#FFFFFF" fontSize="6.5" fontWeight="bold" fontFamily="monospace">O</text>
+                  </g>
+                </g>
+              </g>
+
+              {/* Situation C: Mixture Beaker */}
+              <g transform="translate(500, 10)">
+                <rect x="-85" y="0" width="170" height="90" rx="8" fill="#F0FDFA" stroke="#99F6E4" strokeWidth="1" />
+                <rect x="-26" y="20" width="52" height="48" rx="4" fill="#E0F2FE" stroke="#0F766E" strokeWidth="1.5" />
+                <circle cx="-12" cy="46" r="3" fill="#0F766E" />
+                <circle cx="5" cy="52" r="3" fill="#C94BA6" />
+                <circle cx="14" cy="38" r="3" fill="#DC2626" />
+                <rect x="-6" y="34" width="7" height="7" rx="1.5" fill="#FFFFFF" stroke="#64748B" />
+              </g>
+            </svg>
+
+            {/* Légendes en HTML hors du SVG */}
+            <div className="flex flex-wrap items-center justify-between text-xs text-[#4A4A4A] pt-1 border-t border-[#EAE2DA] px-1" dir="rtl">
+              <span className="font-bold text-[#0F766E]">العينة (أ) : قطرة ماء وكأس ماء</span>
+              <span className="font-bold text-[#0F766E]">العينة (ب) : مسمار حديد وقارورة غاز الأكسجين</span>
+              <span className="font-bold text-[#C94BA6]">العينة (ج) : كأس ماء مالح ومحلى</span>
+            </div>
+          </div>
+
+          {/* 3 cartes détaillées avec schémas SVG des échantillons (أ)، (ب)، (ج) */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5" dir="rtl">
             {/* العينة (أ) */}
             <div className="bg-white rounded-[10px] border border-[#E5DDD5] p-3 space-y-2">
@@ -83,27 +130,24 @@ export const Course01SchemaRenderer: React.FC<{ type: string }> = ({ type }) => 
                 <span className="text-xs font-bold text-[#0F766E]">العينة (أ) : قطرة ماء vs كأس ماء</span>
                 <ChemicalFormula formula="H₂O" size="sm" />
               </div>
-              <svg viewBox="0 0 180 64" className="w-full h-14 bg-[#F0F9FF]/60 rounded-[8px] border border-[#BAE6FD]/60">
+              <svg viewBox="0 0 180 60" className="w-full h-14 bg-[#F0F9FF]/60 rounded-[8px] border border-[#BAE6FD]/60">
                 {/* Water drop */}
                 <path
-                  d="M45 12 C45 12 31 29 31 39 C31 47 37 53 45 53 C53 53 59 47 59 39 C59 29 45 12 45 12 Z"
+                  d="M45 10 C45 10 31 27 31 37 C31 45 37 51 45 51 C53 51 59 45 59 37 C59 27 45 10 45 10 Z"
                   fill="#38BDF8"
                   stroke="#0284C7"
                   strokeWidth="1.5"
                 />
-                <text x="45" y="43" textAnchor="middle" fontSize="8.5" fontWeight="bold" fill="#FFFFFF">
-                  قطرة
-                </text>
-                <text x="85" y="36" textAnchor="middle" fontSize="11" fontWeight="bold" fill="#0284C7">
-                  vs
-                </text>
                 {/* Glass of water */}
-                <path d="M115 12 L120 52 L152 52 L157 12 Z" fill="#E0F2FE" stroke="#0284C7" strokeWidth="1.5" />
-                <path d="M117 24 L120 51 L152 51 L155 24 Z" fill="#38BDF8" opacity="0.65" />
-                <text x="136" y="41" textAnchor="middle" fontSize="8.5" fontWeight="bold" fill="#0369A1">
-                  كأس ماء
-                </text>
+                <path d="M115 10 L120 48 L152 48 L157 10 Z" fill="#E0F2FE" stroke="#0284C7" strokeWidth="1.5" />
+                <path d="M117 22 L120 47 L152 47 L155 22 Z" fill="#38BDF8" opacity="0.65" />
               </svg>
+              {/* Légende en HTML */}
+              <div className="flex justify-around text-[10.5px] font-bold text-[#0284C7]">
+                <span>قطرة ماء</span>
+                <span className="text-[#94A3B8]">vs</span>
+                <span>كأس ماء</span>
+              </div>
               <p className="text-[11px] text-[#4A4A4A] leading-relaxed">
                 القطرة والكأس يحتويان على نفس السائل، لكن الكأس يضم عددًا أكبر بكثير من الوحدات المجهرية غير المرئية.
               </p>
@@ -118,21 +162,42 @@ export const Course01SchemaRenderer: React.FC<{ type: string }> = ({ type }) => 
                   <ChemicalFormula formula="O₂" size="sm" />
                 </span>
               </div>
-              <svg viewBox="0 0 180 64" className="w-full h-14 bg-[#FAF7F4] rounded-[8px] border border-[#E5DDD5]">
+              <svg viewBox="0 0 180 60" className="w-full h-14 bg-[#FAF7F4] rounded-[8px] border border-[#E5DDD5]">
                 {/* Iron nail */}
-                <rect x="22" y="28" width="48" height="6" rx="2" fill="#64748B" stroke="#334155" strokeWidth="1.2" />
-                <rect x="18" y="23" width="6" height="16" rx="1.5" fill="#475569" />
-                <polygon points="70,28 80,31 70,34" fill="#64748B" />
-                <text x="48" y="49" textAnchor="middle" fontSize="8.5" fontWeight="bold" fill="#334155">
-                  مسمار حديد (Fe)
-                </text>
-                {/* O2 Flask */}
-                <circle cx="135" cy="34" r="17" fill="#FEF2F2" stroke="#DC2626" strokeWidth="1.5" />
-                <O2MiniSvg x={135} y={34} scale={0.65} />
-                <text x="135" y="13" textAnchor="middle" fontSize="8.5" fontWeight="bold" fill="#DC2626">
-                  قارورة O₂
-                </text>
+                <rect x="22" y="26" width="48" height="6" rx="2" fill="#64748B" stroke="#334155" strokeWidth="1.2" />
+                <rect x="18" y="21" width="6" height="16" rx="1.5" fill="#475569" />
+                <polygon points="70,26 80,29 70,32" fill="#64748B" />
+
+                {/* O2 Laboratory Flask / Bottle */}
+                <g transform="translate(135, 10)">
+                  <rect x="-6" y="0" width="12" height="3" rx="1" fill="#475569" stroke="#334155" strokeWidth="1" />
+                  <rect x="-4" y="3" width="8" height="5" fill="#F8FAFC" stroke="#94A3B8" strokeWidth="1.2" />
+                  <path
+                    d="M-4 8 L-18 34 C-18 37 -15 39 -12 39 L12 39 C15 39 18 37 18 34 L4 8 Z"
+                    fill="#FEF2F2"
+                    stroke="#DC2626"
+                    strokeWidth="1.5"
+                  />
+                  {/* Inside flask: exactly ONE diatomic O₂ molecule (2 atoms O-O) */}
+                  <g transform="translate(0, 24) scale(0.65)">
+                    <line x1="-5" y1="-2" x2="5" y2="-2" stroke="#991B1B" strokeWidth="1.5" />
+                    <line x1="-5" y1="2" x2="5" y2="2" stroke="#991B1B" strokeWidth="1.5" />
+                    <circle cx="-8" cy="0" r="8.5" fill="#DC2626" stroke="#991B1B" strokeWidth="1.5" />
+                    <circle cx="8" cy="0" r="8.5" fill="#DC2626" stroke="#991B1B" strokeWidth="1.5" />
+                    <text x="-8" y="3" textAnchor="middle" fill="#FFFFFF" fontSize="7.5" fontWeight="bold" fontFamily="monospace">
+                      O
+                    </text>
+                    <text x="8" y="3" textAnchor="middle" fill="#FFFFFF" fontSize="7.5" fontWeight="bold" fontFamily="monospace">
+                      O
+                    </text>
+                  </g>
+                </g>
               </svg>
+              {/* Légende en HTML */}
+              <div className="flex justify-around text-[10.5px] font-bold text-[#334155]">
+                <span>مسمار حديد (Fe)</span>
+                <span className="text-[#DC2626]">قارورة O₂ (ذرتان)</span>
+              </div>
               <p className="text-[11px] text-[#4A4A4A] leading-relaxed">
                 مسمار الحديد يتكون من ذرات متماثلة (Fe)، بينما غاز الأكسجين في الهواء يتكون من جزيئات ثنائية الذرة (O₂).
               </p>
@@ -147,20 +212,19 @@ export const Course01SchemaRenderer: React.FC<{ type: string }> = ({ type }) => 
                   <ChemicalFormula formula="CO₂" size="sm" />
                 </span>
               </div>
-              <svg viewBox="0 0 180 64" className="w-full h-14 bg-[#F0FDFA]/60 rounded-[8px] border border-[#99F6E4]">
+              <svg viewBox="0 0 180 60" className="w-full h-14 bg-[#F0FDFA]/60 rounded-[8px] border border-[#99F6E4]">
                 {/* Beaker with water + salt + sugar */}
-                <rect x="64" y="12" width="52" height="42" rx="4" fill="#E0F2FE" stroke="#0F766E" strokeWidth="1.5" />
-                <circle cx="78" cy="34" r="3" fill="#0F766E" />
-                <circle cx="94" cy="42" r="3" fill="#C94BA6" />
-                <circle cx="104" cy="28" r="3" fill="#DC2626" />
-                <rect x="82" y="25" width="8" height="8" rx="1.5" fill="#FFFFFF" stroke="#64748B" />
-                <text x="32" y="28" textAnchor="middle" fontSize="8.5" fontWeight="bold" fill="#0F766E">
-                  ماء + ملح
-                </text>
-                <text x="148" y="28" textAnchor="middle" fontSize="8.5" fontWeight="bold" fill="#C94BA6">
-                  + سكر وهواء
-                </text>
+                <rect x="64" y="10" width="52" height="40" rx="4" fill="#E0F2FE" stroke="#0F766E" strokeWidth="1.5" />
+                <circle cx="78" cy="30" r="3" fill="#0F766E" />
+                <circle cx="94" cy="38" r="3" fill="#C94BA6" />
+                <circle cx="104" cy="24" r="3" fill="#DC2626" />
+                <rect x="82" y="22" width="7" height="7" rx="1.5" fill="#FFFFFF" stroke="#64748B" />
               </svg>
+              {/* Légende en HTML */}
+              <div className="flex justify-around text-[10.5px] font-bold text-[#0F766E]">
+                <span>ماء + ملح مذاب</span>
+                <span className="text-[#C94BA6]">+ سكر وهواء</span>
+              </div>
               <p className="text-[11px] text-[#4A4A4A] leading-relaxed">
                 عند إذابة الملح والسكر في الماء بوجود الهواء، تجتمع داخل نفس الكأس عدة مواد كيميائية مختلفة معًا.
               </p>
@@ -231,23 +295,29 @@ export const Course01SchemaRenderer: React.FC<{ type: string }> = ({ type }) => 
               <text x="0" y="-62" textAnchor="middle" fontSize="11.5" fontWeight="bold" fill="#0F766E">
                 بنية جزيء الماء H₂O
               </text>
-              <line x1="-30" y1="-26" x2="-10" y2="-6" stroke="#334155" strokeWidth="2.5" />
-              <line x1="-30" y1="26" x2="-10" y2="6" stroke="#334155" strokeWidth="2.5" />
-              <circle cx="-38" cy="-34" r="13" fill="#F8FAFC" stroke="#475569" strokeWidth="1.8" />
-              <text x="-38" y="-29" textAnchor="middle" fontSize="12" fontWeight="bold" fill="#1E293B" fontFamily="monospace">
-                H
-              </text>
-              <circle cx="0" cy="0" r="17" fill="#FEF2F2" stroke="#DC2626" strokeWidth="2" />
-              <text x="0" y="5" textAnchor="middle" fontSize="14" fontWeight="bold" fill="#DC2626" fontFamily="monospace">
+              {/* Chemical bonds to central O */}
+              <line x1="0" y1="-8" x2="-26" y2="18" stroke="#334155" strokeWidth="2.5" />
+              <line x1="0" y1="-8" x2="26" y2="18" stroke="#334155" strokeWidth="2.5" />
+              {/* Central Oxygen atom (O) */}
+              <circle cx="0" cy="-8" r="17" fill="#DC2626" stroke="#991B1B" strokeWidth="2" />
+              <text x="0" y="-3" textAnchor="middle" fontSize="14" fontWeight="bold" fill="#FFFFFF" fontFamily="monospace">
                 O
               </text>
-              <circle cx="-38" cy="34" r="13" fill="#F8FAFC" stroke="#475569" strokeWidth="1.8" />
-              <text x="-38" y="39" textAnchor="middle" fontSize="12" fontWeight="bold" fill="#1E293B" fontFamily="monospace">
+              {/* Left Hydrogen atom (H) */}
+              <circle cx="-28" cy="20" r="12.5" fill="#FFFFFF" stroke="#475569" strokeWidth="1.8" />
+              <text x="-28" y="24.5" textAnchor="middle" fontSize="11" fontWeight="bold" fill="#1E293B" fontFamily="monospace">
                 H
               </text>
-              <H2OMiniSvg x={45} y={-4} scale={1.25} />
-              <text x="5" y="64" textAnchor="middle" fontSize="11" fontWeight="bold" fill="#4A4A4A">
-                ذرة أكسجين O + ذرتا هيدروجين 2H
+              {/* Right Hydrogen atom (H) */}
+              <circle cx="28" cy="20" r="12.5" fill="#FFFFFF" stroke="#475569" strokeWidth="1.8" />
+              <text x="28" y="24.5" textAnchor="middle" fontSize="11" fontWeight="bold" fill="#1E293B" fontFamily="monospace">
+                H
+              </text>
+              <text x="0" y="52" textAnchor="middle" fontSize="10.5" fontWeight="bold" fill="#0F766E">
+                جزيء ماء واحد (فرد كيميائي)
+              </text>
+              <text x="0" y="66" textAnchor="middle" fontSize="9.5" fill="#4A4A4A">
+                ذرة أكسجين مركزية (O) + ذرتا هيدروجين (2H)
               </text>
             </g>
 
@@ -491,7 +561,7 @@ export const Course01SchemaRenderer: React.FC<{ type: string }> = ({ type }) => 
                 accent: true,
               },
               {
-                text: 'تجمع عدد هائل من الأفراد الكيميائية المتماثلة',
+                text: 'مجموعة من الأفراد الكيميائية المتماثلة',
                 accent: false,
               },
               {
@@ -500,12 +570,13 @@ export const Course01SchemaRenderer: React.FC<{ type: string }> = ({ type }) => 
                 accent: true,
               },
               {
-                text: 'تواجد عدة أنواع كيميائية معًا في حيز محدد وحالة معينة',
+                text: 'مكونة من نوع كيميائي أو أكثر',
+                sub: 'وصف عياني: طبيعة وكتلة الأنواع، حالتها الفيزيائية (s, l, g, aq)، درجة الحرارة T والضغط P',
                 accent: false,
               },
               {
                 text: '3. الجملة الكيميائية (Système chimique)',
-                sub: 'مجموع الأنواع الكيميائية المدروسة (مثل: ماء + ملح + غاز O₂)',
+                sub: 'مكونة من نوع كيميائي أو أكثر (طبيعة وكتلة الأنواع، حالتها الفيزيائية، T و P)',
                 accent: true,
               },
             ].map((node, i, arr) => (
