@@ -62,98 +62,42 @@ function collectPrintableBlocks(mainEl: HTMLElement): HTMLElement[] {
  */
 function collectPhysicsPrintableBlocks(mainEl: HTMLElement): HTMLElement[] {
   const blocks: HTMLElement[] = [];
-  const MAX_BLOCK_HEIGHT_PX = 650;
 
-  const pushCardOrChildren = (el: HTMLElement) => {
-    if (!el || el.id === 'sec-continuity' || el.classList.contains('no-pdf')) return;
+  const isValidBlock = (el: HTMLElement | null): el is HTMLElement => {
+    if (!el || el.id === 'sec-continuity' || el.classList.contains('no-pdf')) return false;
     const style = window.getComputedStyle(el);
-    if (style.display === 'none' || el.offsetHeight === 0) return;
-
-    // 1. If this element fits comfortably on an A4 page, keep it as an atomic card
-    if (el.offsetHeight <= MAX_BLOCK_HEIGHT_PX) {
-      blocks.push(el);
-      return;
-    }
-
-    // 2. If it's taller than MAX_BLOCK_HEIGHT_PX, unwrap single wrapper or break down children cleanly
-    // so individual cards (e.g. sample cards, observation tables, exercise cards) are never sliced
-    const children = Array.from(el.children) as HTMLElement[];
-    const validChildren = children.filter(
-      (c) =>
-        c &&
-        c.offsetHeight > 0 &&
-        !c.classList.contains('no-pdf') &&
-        window.getComputedStyle(c).display !== 'none'
-    );
-
-    // If single wrapper child, penetrate deeper to find individual atomic cards
-    if (validChildren.length === 1) {
-      pushCardOrChildren(validChildren[0]);
-      return;
-    }
-
-    if (validChildren.length > 1) {
-      for (const child of validChildren) {
-        pushCardOrChildren(child);
-      }
-      return;
-    }
-
-    blocks.push(el);
+    if (style.display === 'none' || el.offsetHeight === 0) return false;
+    return true;
   };
 
-  // 1. Separate top-level elements by logical course order
-  const topChildren = Array.from(mainEl.children) as HTMLElement[];
-  const headerOrHero: HTMLElement[] = [];
-  const essential: HTMLElement[] = [];
-  const detailedSections: HTMLElement[] = [];
-  const exercisesSection: HTMLElement[] = [];
-  const summarySection: HTMLElement[] = [];
-  const otherElements: HTMLElement[] = [];
+  // 1. En-tête du cours
+  const header = mainEl.querySelector('#physics-course-header') as HTMLElement | null;
+  if (isValidBlock(header)) blocks.push(header);
 
-  for (const child of topChildren) {
-    if (!child || child.id === 'sec-continuity' || child.classList.contains('no-pdf')) continue;
-    if (child.id === 'sec-pc-essential') {
-      essential.push(child);
-    } else if (child.id === 'sec-pc-exercises') {
-      exercisesSection.push(child);
-    } else if (child.id === 'sec-pc-summary') {
-      summarySection.push(child);
-    } else if (child.id && child.id.startsWith('sec-pc-')) {
-      detailedSections.push(child);
-    } else if (child.querySelector?.('#sec-pc-exercises')) {
-      exercisesSection.push(child);
-    } else if (child.querySelector?.('[id^="sec-pc-"]')) {
-      detailedSections.push(child);
-    } else if (child.tagName.toLowerCase() === 'section' || child.tagName.toLowerCase() === 'header') {
-      headerOrHero.push(child);
-    } else {
-      otherElements.push(child);
+  // 2. L'essentiel (« أحتفظ بالأهم »)
+  const essential = mainEl.querySelector('#sec-pc-essential') as HTMLElement | null;
+  if (isValidBlock(essential)) blocks.push(essential);
+
+  // 3. Exercices contextualisés avec solutions
+  const exercises = mainEl.querySelector('#sec-pc-exercises') as HTMLElement | null;
+  if (isValidBlock(exercises)) blocks.push(exercises);
+
+  // 4. Sections détaillées (« للتعمق »)
+  // Chaque section du cours (ex: sec-pc-01-01, sec-pc-01-02...) constitue une unité pédagogique sécable proprement
+  const sections = Array.from(
+    mainEl.querySelectorAll('section[id^="sec-pc-"]')
+  ) as HTMLElement[];
+
+  for (const sec of sections) {
+    if (sec.id === 'sec-pc-exercises' || sec.id === 'sec-pc-essential') continue;
+    if (isValidBlock(sec)) {
+      blocks.push(sec);
     }
   }
 
-  // 2. Strict sequential order matching the general course template:
-  //    En-tête -> L'essentiel -> Exercices avec corrigés -> Sections détaillées (« للتعمق ») -> Synthèse et vocabulaire
-  const orderedElements = essential.length > 0
-    ? [
-        ...headerOrHero,
-        ...essential,
-        ...exercisesSection,
-        ...detailedSections,
-        ...summarySection,
-        ...otherElements,
-      ]
-    : [
-        ...headerOrHero,
-        ...detailedSections,
-        ...exercisesSection,
-        ...summarySection,
-        ...otherElements,
-      ];
-
-  for (const el of orderedElements) {
-    pushCardOrChildren(el);
-  }
+  // 5. Synthèse & Vocabulaire bilingue
+  const summary = mainEl.querySelector('#sec-pc-summary') as HTMLElement | null;
+  if (isValidBlock(summary)) blocks.push(summary);
 
   return blocks.length > 0 ? blocks : [mainEl];
 }
@@ -233,24 +177,22 @@ async function renderBlocksToPdf(
 
     // Empêcher les titres de section d'être séparés de leur contenu (Sections 3, 4, 5, 7, etc.)
     const isSectionHeader =
-      block.classList.contains('section-lead-group') ||
-      block.querySelector('.section-lead-group') !== null ||
-      (block.querySelector('h1, h2') !== null && block.offsetHeight < 300);
-
+      block.classList.contains("section-lead-group") ||
+      block.querySelector(".section-lead-group") !== null ||
+      (block.querySelector("h1, h2, h3") !== null && block.offsetHeight < 220);
     if (isSectionHeader && currentY > marginTop + 5) {
       const nextBlock = blocks[i + 1];
       const nextHeightMm = nextBlock && nextBlock.offsetWidth > 0
         ? (nextBlock.offsetHeight / nextBlock.offsetWidth) * contentWidthMm
-        : 70;
-      // Garantit que le titre et au moins 75mm (ou l'intégralité) du contenu suivant tiennent ensemble
-      const requiredMm = blockHeightMm + Math.min(nextHeightMm, 95);
+        : 35;
+      // Empêche le titre d'être orphelin en bas de page tout en évitant les grands blancs inutiles
+      const requiredMm = blockHeightMm + Math.min(nextHeightMm, 45);
       if (currentY + requiredMm > marginTop + maxContentHeightMm) {
         pdf.addPage();
         fillPageBackground();
         currentY = marginTop;
       }
     }
-
     // Case 1: Block fits within a single A4 page
     if (blockHeightMm <= maxContentHeightMm) {
       if (currentY + blockHeightMm > marginTop + maxContentHeightMm && currentY > marginTop + 5) {

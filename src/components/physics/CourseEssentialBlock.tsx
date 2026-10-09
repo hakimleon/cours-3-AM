@@ -63,11 +63,17 @@ export const CourseEssentialBlock: React.FC<CourseEssentialBlockProps> = ({
   useEffect(() => {
     const handlePdfPrepare = () => setShowAnswers(true);
     const handlePdfDone = () => setShowAnswers(false);
+    const handleBeforePrint = () => setShowAnswers(true);
+    const handleAfterPrint = () => setShowAnswers(false);
     window.addEventListener('course-pdf-prepare', handlePdfPrepare);
     window.addEventListener('course-pdf-done', handlePdfDone);
+    window.addEventListener('beforeprint', handleBeforePrint);
+    window.addEventListener('afterprint', handleAfterPrint);
     return () => {
       window.removeEventListener('course-pdf-prepare', handlePdfPrepare);
       window.removeEventListener('course-pdf-done', handlePdfDone);
+      window.removeEventListener('beforeprint', handleBeforePrint);
+      window.removeEventListener('afterprint', handleAfterPrint);
     };
   }, []);
 

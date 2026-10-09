@@ -113,120 +113,45 @@ export const Course01SchemaRenderer: React.FC<{ type: string }> = ({ type }) => 
                 <rect x="-6" y="34" width="7" height="7" rx="1.5" fill="#FFFFFF" stroke="#64748B" />
               </g>
             </svg>
-
-            {/* Légendes en HTML hors du SVG */}
-            <div className="flex flex-wrap items-center justify-between text-xs text-[#4A4A4A] pt-1 border-t border-[#EAE2DA] px-1" dir="rtl">
-              <span className="font-bold text-[#0F766E]">العينة (أ) : قطرة ماء وكأس ماء</span>
-              <span className="font-bold text-[#0F766E]">العينة (ب) : مسمار حديد وقارورة غاز الأكسجين</span>
-              <span className="font-bold text-[#C94BA6]">العينة (ج) : كأس ماء مالح ومحلى</span>
-            </div>
           </div>
 
-          {/* 3 cartes détaillées avec schémas SVG des échantillons (أ)، (ب)، (ج) */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5" dir="rtl">
-            {/* العينة (أ) */}
-            <div className="bg-white rounded-[10px] border border-[#E5DDD5] p-3 space-y-2">
+          {/* Légendes détaillées pour chaque échantillon en HTML bien espacées */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 pt-1" dir="rtl">
+            <div className="p-3 bg-white rounded-[10px] border border-[#E5DDD5] space-y-1.5">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-bold text-[#0F766E]">العينة (أ) : قطرة ماء vs كأس ماء</span>
                 <ChemicalFormula formula="H₂O" size="sm" />
               </div>
-              <svg viewBox="0 0 180 60" className="w-full h-14 bg-[#F0F9FF]/60 rounded-[8px] border border-[#BAE6FD]/60">
-                {/* Water drop */}
-                <path
-                  d="M45 10 C45 10 31 27 31 37 C31 45 37 51 45 51 C53 51 59 45 59 37 C59 27 45 10 45 10 Z"
-                  fill="#38BDF8"
-                  stroke="#0284C7"
-                  strokeWidth="1.5"
-                />
-                {/* Glass of water */}
-                <path d="M115 10 L120 48 L152 48 L157 10 Z" fill="#E0F2FE" stroke="#0284C7" strokeWidth="1.5" />
-                <path d="M117 22 L120 47 L152 47 L155 22 Z" fill="#38BDF8" opacity="0.65" />
-              </svg>
-              {/* Légende en HTML */}
-              <div className="flex justify-around text-[10.5px] font-bold text-[#0284C7]">
-                <span>قطرة ماء</span>
-                <span className="text-[#94A3B8]">vs</span>
-                <span>كأس ماء</span>
-              </div>
               <p className="text-[11px] text-[#4A4A4A] leading-relaxed">
-                القطرة والكأس يحتويان على نفس السائل، لكن الكأس يضم عددًا أكبر بكثير من الوحدات المجهرية غير المرئية.
+                القطرة والكأس يحتويان على نفس السائل، لكن الكأس يضم عددًا أكبر بكثير من الوحدات المجهرية غير المرئية بالعين المجردة.
               </p>
             </div>
 
-            {/* العينة (ب) */}
-            <div className="bg-white rounded-[10px] border border-[#E5DDD5] p-3 space-y-2">
+            <div className="p-3 bg-white rounded-[10px] border border-[#E5DDD5] space-y-1.5">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold text-[#0F766E]">العينة (ب) : الحديد وغاز الأكسجين</span>
-                <span className="flex items-center gap-1">
+                <span className="text-xs font-bold text-[#0F766E]">العينة (ب) : مسمار حديد وقارورة غاز الأكسجين</span>
+                <span className="flex items-center gap-1.5">
                   <ChemicalFormula formula="Fe" size="sm" />
+                  <span className="text-[#CBD5E1]">·</span>
                   <ChemicalFormula formula="O₂" size="sm" />
                 </span>
-              </div>
-              <svg viewBox="0 0 180 60" className="w-full h-14 bg-[#FAF7F4] rounded-[8px] border border-[#E5DDD5]">
-                {/* Iron nail */}
-                <rect x="22" y="26" width="48" height="6" rx="2" fill="#64748B" stroke="#334155" strokeWidth="1.2" />
-                <rect x="18" y="21" width="6" height="16" rx="1.5" fill="#475569" />
-                <polygon points="70,26 80,29 70,32" fill="#64748B" />
-
-                {/* O2 Laboratory Flask / Bottle */}
-                <g transform="translate(135, 10)">
-                  <rect x="-6" y="0" width="12" height="3" rx="1" fill="#475569" stroke="#334155" strokeWidth="1" />
-                  <rect x="-4" y="3" width="8" height="5" fill="#F8FAFC" stroke="#94A3B8" strokeWidth="1.2" />
-                  <path
-                    d="M-4 8 L-18 34 C-18 37 -15 39 -12 39 L12 39 C15 39 18 37 18 34 L4 8 Z"
-                    fill="#FEF2F2"
-                    stroke="#DC2626"
-                    strokeWidth="1.5"
-                  />
-                  {/* Inside flask: exactly ONE diatomic O₂ molecule (2 atoms O-O) */}
-                  <g transform="translate(0, 24) scale(0.65)">
-                    <line x1="-5" y1="-2" x2="5" y2="-2" stroke="#991B1B" strokeWidth="1.5" />
-                    <line x1="-5" y1="2" x2="5" y2="2" stroke="#991B1B" strokeWidth="1.5" />
-                    <circle cx="-8" cy="0" r="8.5" fill="#DC2626" stroke="#991B1B" strokeWidth="1.5" />
-                    <circle cx="8" cy="0" r="8.5" fill="#DC2626" stroke="#991B1B" strokeWidth="1.5" />
-                    <text x="-8" y="3" textAnchor="middle" fill="#FFFFFF" fontSize="7.5" fontWeight="bold" fontFamily="monospace">
-                      O
-                    </text>
-                    <text x="8" y="3" textAnchor="middle" fill="#FFFFFF" fontSize="7.5" fontWeight="bold" fontFamily="monospace">
-                      O
-                    </text>
-                  </g>
-                </g>
-              </svg>
-              {/* Légende en HTML */}
-              <div className="flex justify-around text-[10.5px] font-bold text-[#334155]">
-                <span>مسمار حديد (Fe)</span>
-                <span className="text-[#DC2626]">قارورة O₂ (ذرتان)</span>
               </div>
               <p className="text-[11px] text-[#4A4A4A] leading-relaxed">
                 مسمار الحديد يتكون من ذرات متماثلة (Fe)، بينما غاز الأكسجين في الهواء يتكون من جزيئات ثنائية الذرة (O₂).
               </p>
             </div>
 
-            {/* العينة (ج) */}
-            <div className="bg-white rounded-[10px] border border-[#E5DDD5] p-3 space-y-2">
+            <div className="p-3 bg-white rounded-[10px] border border-[#E5DDD5] space-y-1.5">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-bold text-[#C94BA6]">العينة (ج) : كأس ماء مالح ومحلى</span>
-                <span className="flex items-center gap-1">
+                <span className="flex items-center gap-1.5">
+                  <ChemicalFormula formula="H₂O" size="sm" />
+                  <span className="text-[#CBD5E1]">·</span>
                   <ChemicalFormula formula="NaCl" size="sm" />
-                  <ChemicalFormula formula="CO₂" size="sm" />
                 </span>
               </div>
-              <svg viewBox="0 0 180 60" className="w-full h-14 bg-[#F0FDFA]/60 rounded-[8px] border border-[#99F6E4]">
-                {/* Beaker with water + salt + sugar */}
-                <rect x="64" y="10" width="52" height="40" rx="4" fill="#E0F2FE" stroke="#0F766E" strokeWidth="1.5" />
-                <circle cx="78" cy="30" r="3" fill="#0F766E" />
-                <circle cx="94" cy="38" r="3" fill="#C94BA6" />
-                <circle cx="104" cy="24" r="3" fill="#DC2626" />
-                <rect x="82" y="22" width="7" height="7" rx="1.5" fill="#FFFFFF" stroke="#64748B" />
-              </svg>
-              {/* Légende en HTML */}
-              <div className="flex justify-around text-[10.5px] font-bold text-[#0F766E]">
-                <span>ماء + ملح مذاب</span>
-                <span className="text-[#C94BA6]">+ سكر وهواء</span>
-              </div>
               <p className="text-[11px] text-[#4A4A4A] leading-relaxed">
-                عند إذابة الملح والسكر في الماء بوجود الهواء، تجتمع داخل نفس الكأس عدة مواد كيميائية مختلفة معًا.
+                عند إذابة الملح والسكر في الماء بوجود الهواء الملامس، تجتمع داخل نفس الكأس عدة مواد كيميائية مختلفة معًا.
               </p>
             </div>
           </div>
@@ -584,13 +509,21 @@ export const Course01SchemaRenderer: React.FC<{ type: string }> = ({ type }) => 
                 <div
                   className={`w-full py-2 px-3.5 rounded-[10px] text-center border text-xs sm:text-sm ${
                     node.accent
-                      ? 'bg-[#0F766E] text-white border-[#0F766E] font-bold'
-                      : 'bg-white text-[#4A4A4A] border-[#E2D9D0] font-medium'
+                      ? 'bg-[#0F766E] text-white border-[#0F766E] font-bold shadow-2xs'
+                      : 'bg-white text-[#1A1A1A] border-[#CBD5E1] font-semibold'
                   }`}
                 >
-                  <div>{node.text}</div>
+                  <div className={node.accent ? 'text-white' : 'text-[#0F766E] font-bold'}>{node.text}</div>
                   {node.sub && (
-                    <div className="text-[11px] font-normal text-[#CCFBF1] mt-0.5">{node.sub}</div>
+                    <div
+                      className={`text-[11px] mt-1 leading-relaxed ${
+                        node.accent
+                          ? 'text-[#CCFBF1] font-medium'
+                          : 'text-[#334155] font-normal bg-[#F8FAFC] p-1.5 rounded-[6px] border border-[#E2E8F0]'
+                      }`}
+                    >
+                      {node.sub}
+                    </div>
                   )}
                 </div>
                 {i < arr.length - 1 && (

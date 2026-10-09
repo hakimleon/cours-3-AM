@@ -165,8 +165,16 @@ export const PhysicsCourseView: React.FC<PhysicsCourseViewProps> = ({
       setActiveTab('all');
       setIsDeepenExpanded(true);
     };
+    const handleBeforePrint = () => {
+      setActiveTab('all');
+      setIsDeepenExpanded(true);
+    };
     window.addEventListener('course-pdf-prepare', handlePreparePdf);
-    return () => window.removeEventListener('course-pdf-prepare', handlePreparePdf);
+    window.addEventListener('beforeprint', handleBeforePrint);
+    return () => {
+      window.removeEventListener('course-pdf-prepare', handlePreparePdf);
+      window.removeEventListener('beforeprint', handleBeforePrint);
+    };
   }, []);
 
   // Strict validation on populated courses (BUG 1)
@@ -469,6 +477,7 @@ export const PhysicsCourseView: React.FC<PhysicsCourseViewProps> = ({
 
         {/* 1. STICKY SIDEBAR (À DROITE EN RTL) AUX COULEURS DU DOMAINE */}
         <aside
+          id="physics-course-sidebar"
           className={`fixed lg:sticky top-[118px] right-0 z-30 w-64 sm:w-68 h-[calc(100vh-128px)] bg-[#F6F0EB] lg:bg-transparent p-5 lg:py-2 lg:px-0 flex flex-col justify-between overflow-y-auto transition-transform duration-300 ease-in-out lg:translate-x-0 shrink-0 ${
             isSidebarOpenMobile
               ? 'translate-x-0 shadow-2xl border-l border-[#E5DDD5]'
@@ -1142,8 +1151,54 @@ export const PhysicsCourseView: React.FC<PhysicsCourseViewProps> = ({
           )}
 
           {/* E. CONTENU DÉTAILLÉ DU COURS (REPLIÉ PAR DÉFAUT POUR COURS AVEC ESSENTIAL, DIRECT POUR LES AUTRES) */}
-          {(!course.essential || isDeepenExpanded) && (
-            <div className="space-y-5">
+          <div className={`space-y-5 depth-accordion-content ${!course.essential || isDeepenExpanded ? "" : "hidden print:block pdf-export-mode:block"}`}>
+            {/* Titre visible « للتعمق » avant la situation de départ (ouvert dans le PDF et lors de l'impression) */}
+            {course.essential && (
+              <div
+                id="sec-pc-deepen-header"
+                style={{ borderColor: theme.primaryHex }}
+                className="rounded-[16px] p-4 sm:p-5 bg-[#FFFFFF] border-2 shadow-2xs flex items-center justify-between gap-3 text-right"
+                dir="rtl"
+              >
+                <div className="flex items-center gap-3">
+                  <div
+                    style={{
+                      backgroundColor: theme.primaryHex,
+                      color: '#FFFFFF',
+                    }}
+                    className="w-10 h-10 rounded-[12px] flex items-center justify-center shrink-0 shadow-xs"
+                  >
+                    <BookOpen className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <h2
+                        style={{ color: theme.primaryHex }}
+                        className="text-base sm:text-lg font-bold"
+                      >
+                        للتعمق
+                      </h2>
+                      <span className="text-xs font-mono text-[#6B6B6B]" dir="ltr">
+                        Pour approfondir · الشرح المفصل، التجارب والأنشطة
+                      </span>
+                    </div>
+                    <p className="text-xs text-[#6B6B6B]">
+                      الأنشطة الاستكشافية، الشرح المعمق، دراسة النماذج المجهرية، والخلاصة الشاملة
+                    </p>
+                  </div>
+                </div>
+                <span
+                  style={{
+                    backgroundColor: theme.softBgHex,
+                    color: theme.primaryHex,
+                    borderColor: theme.softBorderHex,
+                  }}
+                  className="hidden sm:inline-block px-3 py-1 rounded-[8px] border text-xs font-bold"
+                >
+                  المستوى المتقدم والمفصل
+                </span>
+              </div>
+            )}
               {/* Course Content or Ready Slot Architecture View */}
               {!hasContent ? (
             <section className="bg-[#FFFFFF] rounded-[18px] border border-[#EAE2DA] p-6 space-y-5">
@@ -1331,7 +1386,6 @@ export const PhysicsCourseView: React.FC<PhysicsCourseViewProps> = ({
             </>
           )}
             </div>
-          )}
 
           {/* 3. CONTINUITÉ PÉDAGOGIQUE (PRÉCÉDENT / SUIVANT AVEC REPÈRE DE DOMAINE) */}
           <section

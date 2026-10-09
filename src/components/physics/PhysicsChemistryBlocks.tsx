@@ -798,9 +798,13 @@ export const PhysicsActivityBlock: React.FC<{ data: PhysicsActivityItem }> = ({ 
     const handleDonePdf = () => setShowCorrection(false);
     window.addEventListener('course-pdf-prepare', handlePreparePdf);
     window.addEventListener('course-pdf-done', handleDonePdf);
+    window.addEventListener('beforeprint', handlePreparePdf);
+    window.addEventListener('afterprint', handleDonePdf);
     return () => {
       window.removeEventListener('course-pdf-prepare', handlePreparePdf);
       window.removeEventListener('course-pdf-done', handleDonePdf);
+      window.removeEventListener('beforeprint', handlePreparePdf);
+      window.removeEventListener('afterprint', handleDonePdf);
     };
   }, []);
 
@@ -863,7 +867,7 @@ export const PhysicsActivityBlock: React.FC<{ data: PhysicsActivityItem }> = ({ 
             )}
           </button>
 
-          {showCorrection && (
+          <div className={showCorrection ? "" : "hidden print:block pdf-export-mode:block"}>
             <div className="mt-3 p-4 rounded-[12px] bg-[#F6F0EB]/70 border border-[#0F766E]/30 space-y-2">
               <div className="text-xs font-bold text-[#0F766E]">التصحيح النموذجي للنشاط :</div>
               <ol className="space-y-2 pr-5 list-decimal text-xs sm:text-sm text-[#4A4A4A]">
@@ -879,7 +883,7 @@ export const PhysicsActivityBlock: React.FC<{ data: PhysicsActivityItem }> = ({ 
                 </div>
               )}
             </div>
-          )}
+          </div>
         </div>
       )}
     </div>
@@ -894,9 +898,13 @@ export const PhysicsApplicationCard: React.FC<{ item: PhysicsApplicationQuestion
     const handleDonePdf = () => setIsOpen(false);
     window.addEventListener('course-pdf-prepare', handlePreparePdf);
     window.addEventListener('course-pdf-done', handleDonePdf);
+    window.addEventListener('beforeprint', handlePreparePdf);
+    window.addEventListener('afterprint', handleDonePdf);
     return () => {
       window.removeEventListener('course-pdf-prepare', handlePreparePdf);
       window.removeEventListener('course-pdf-done', handleDonePdf);
+      window.removeEventListener('beforeprint', handlePreparePdf);
+      window.removeEventListener('afterprint', handleDonePdf);
     };
   }, []);
 
@@ -946,7 +954,7 @@ export const PhysicsApplicationCard: React.FC<{ item: PhysicsApplicationQuestion
           <span>{isOpen ? 'إخفاء التصحيح' : 'عرض الحل والتصحيح النموذجي'}</span>
         </button>
 
-        {isOpen && (
+        <div className={isOpen ? "" : "hidden print:block pdf-export-mode:block"}>
           <div className="mt-3 p-4 rounded-[12px] bg-[#FAF7F4] border border-[#E2D9D0] space-y-3">
             {item.correctionSteps.map((st, idx) => (
               <div key={idx} className="space-y-1">
@@ -985,7 +993,7 @@ export const PhysicsApplicationCard: React.FC<{ item: PhysicsApplicationQuestion
               </div>
             </div>
           </div>
-        )}
+        </div>
       </div>
     </div>
   );
@@ -1133,9 +1141,13 @@ export const PhysicsDiscoveryCorrectionCard: React.FC<{
     const handleDonePdf = () => setIsOpen(false);
     window.addEventListener('course-pdf-prepare', handlePreparePdf);
     window.addEventListener('course-pdf-done', handleDonePdf);
+    window.addEventListener('beforeprint', handlePreparePdf);
+    window.addEventListener('afterprint', handleDonePdf);
     return () => {
       window.removeEventListener('course-pdf-prepare', handlePreparePdf);
       window.removeEventListener('course-pdf-done', handleDonePdf);
+      window.removeEventListener('beforeprint', handlePreparePdf);
+      window.removeEventListener('afterprint', handleDonePdf);
     };
   }, []);
 
@@ -1166,7 +1178,7 @@ export const PhysicsDiscoveryCorrectionCard: React.FC<{
         </button>
       </div>
 
-      {isOpen && (
+      <div className={isOpen ? "" : "hidden print:block pdf-export-mode:block"}>
         <div className="p-4 space-y-2 text-xs sm:text-sm text-[#4A4A4A] leading-[1.85] border-t border-[#E5DDD5]">
           <ol className="space-y-1.5 pr-5 list-decimal">
             {activity.correction.questionAnswers?.map((ans, idx) => (
@@ -1181,7 +1193,7 @@ export const PhysicsDiscoveryCorrectionCard: React.FC<{
             </div>
           )}
         </div>
-      )}
+      </div>
     </div>
   );
 };

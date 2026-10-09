@@ -124,9 +124,15 @@ html {
   display: none !important;
 }
 
+@page {
+  size: A4 portrait;
+  margin: 10mm 10mm 12mm 10mm;
+}
+
 @media print {
   #main-topbar,
   #course-sidebar,
+  #physics-course-sidebar,
   #sec-continuity,
   .no-pdf,
   button,
@@ -134,14 +140,30 @@ html {
     display: none !important;
   }
 
+  /* Rendre le conteneur principal fluide et sans scroll / overflow / hauteur fixe */
+  html, body, #root, #course-app-container {
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow: visible !important;
+    background-color: #FFFFFF !important;
+  }
+
   #course-main-content,
   #physics-course-main-content {
     max-width: 100% !important;
+    width: 100% !important;
     padding: 0 !important;
     margin: 0 !important;
+    overflow: visible !important;
   }
 
-  /* Permettre aux conteneurs de sections de se répartir naturellement sur plusieurs pages */
+  /* Déplier le bloc للتعمق et forcer les réponses et corrigés à être visibles */
+  .depth-accordion-content {
+    display: block !important;
+  }
+
+  /* Permettre aux conteneurs de sections et de blocs de se répartir naturellement */
   main,
   section,
   #course-main-content > div,
@@ -165,7 +187,7 @@ html {
     page-break-inside: avoid !important;
   }
 
-  /* Garder chaque titre et groupe d'en-tête lié à son contenu suivant */
+  /* Garder chaque titre et groupe d'en-tête lié à son contenu suivant (aucun titre orphelin) */
   h1, h2, h3, h4, h5, h6,
   .section-lead-group,
   [class*="section-lead-group"] {
@@ -173,4 +195,3 @@ html {
     page-break-after: avoid !important;
   }
 }
-
