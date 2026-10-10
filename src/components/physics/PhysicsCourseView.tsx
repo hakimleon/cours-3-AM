@@ -41,7 +41,9 @@ import {
 } from './EnergySpecificComponents';
 import {
   BookOpen,
+  Sparkles,
   CheckCircle2,
+  ChevronDown,
   ChevronLeft,
   Star,
   LayoutGrid,
@@ -52,6 +54,7 @@ import {
   Loader2,
   Lock,
 } from 'lucide-react';
+import { CourseEssentialBlock } from './CourseEssentialBlock';
 
 const PC_DISCOVERY_UNLOCKED_STORAGE_KEY = 'pc_3am_discovery_unlocked_v1';
 
@@ -149,12 +152,27 @@ export const PhysicsCourseView: React.FC<PhysicsCourseViewProps> = ({
     }
   }, [unlockedDiscoveryIds]);
 
+  // Accordéon « للتعمق » : replié sur le web, forcé ouvert pendant l'export PDF
+  const [tataamakAccordionOpen, setTataamakAccordionOpen] = useState<boolean>(false);
+
   useEffect(() => {
     const handlePreparePdf = () => {
       setActiveTab('all');
+      setTataamakAccordionOpen(true);
+    };
+    const handleDonePdf = () => setTataamakAccordionOpen(false);
+    const handleBeforePrint = () => {
+      setActiveTab('all');
+      setTataamakAccordionOpen(true);
     };
     window.addEventListener('course-pdf-prepare', handlePreparePdf);
-    return () => window.removeEventListener('course-pdf-prepare', handlePreparePdf);
+    window.addEventListener('course-pdf-done', handleDonePdf);
+    window.addEventListener('beforeprint', handleBeforePrint);
+    return () => {
+      window.removeEventListener('course-pdf-prepare', handlePreparePdf);
+      window.removeEventListener('course-pdf-done', handleDonePdf);
+      window.removeEventListener('beforeprint', handleBeforePrint);
+    };
   }, []);
 
   // Strict validation on populated courses (BUG 1)
@@ -186,6 +204,8 @@ export const PhysicsCourseView: React.FC<PhysicsCourseViewProps> = ({
     if (!unlockedDiscoveryIds.includes(course.id)) {
       setUnlockedDiscoveryIds((prev) => [...prev, course.id]);
     }
+    // Ouvre l'accordéon « للتعمق » pour révéler la suite du cours (section 2…)
+    setTataamakAccordionOpen(true);
     const secondSec = course.sections[1];
     if (secondSec) {
       setActiveSectionId(secondSec.id);
@@ -220,6 +240,8 @@ export const PhysicsCourseView: React.FC<PhysicsCourseViewProps> = ({
   const summarySecNum = course.sections.length + (hasExercisesSection ? 2 : 1);
 
   const handleJumpToSection = (secId: string) => {
+    // Toute navigation vers une section révèle l'accordéon « للتعمق »
+    setTataamakAccordionOpen(true);
     setActiveSectionId(secId);
     if (activeTab !== 'all') {
       setActiveTab('all');
@@ -228,8 +250,10 @@ export const PhysicsCourseView: React.FC<PhysicsCourseViewProps> = ({
         if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }, 60);
     } else {
-      const el = document.getElementById(secId);
-      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      setTimeout(() => {
+        const el = document.getElementById(secId);
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 40);
     }
   };
 
@@ -376,6 +400,66 @@ export const PhysicsCourseView: React.FC<PhysicsCourseViewProps> = ({
     }
   };
 
+  const renderExercisesBlock = () => {
+    if (!hasExercisesSection || (activeTab !== 'all' && activeTab !== 'activities')) {
+      return null;
+    }
+    return (
+      <section
+        id="sec-pc-exercises"
+        className="bg-[#FFFFFF] rounded-[18px] border border-[#EAE2DA] p-5 sm:p-6 space-y-4 scroll-mt-28"
+      >
+        <div className="section-lead-group space-y-3">
+          <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#EAE2DA] pb-2.5">
+            <div className="flex items-center gap-2.5">
+              <span
+                dir="ltr"
+                style={{ backgroundColor: theme.primaryHex }}
+                className="w-7 h-7 rounded-[8px] text-white font-mono font-bold text-xs flex items-center justify-center shrink-0 shadow-2xs"
+              >
+                {course.essential ? <ListChecks className="w-4 h-4" /> : exercisesSecNum}
+              </span>
+              <h2 className="text-base sm:text-lg font-bold text-[#1A1A1A]">
+                تمارين تطبيقية ووضعيات سياقية مع التصحيح
+              </h2>
+            </div>
+            <span
+              dir="ltr"
+              style={{ color: theme.primaryHex }}
+              className="text-xs font-mono font-semibold"
+            >
+              Exercices contextualisés & Corrigés
+            </span>
+          </div>
+
+          {!course.essential && (
+            discoveryActivity && course.id !== 'pc-course-09' ? (
+              <PhysicsDiscoveryCorrectionCard activity={discoveryActivity} />
+            ) : (
+              course.applications?.[0] && (
+                <PhysicsApplicationCard item={course.applications[0]} />
+              )
+            )
+          )}
+        </div>
+
+        {course.activites &&
+          course.activites.length > 0 &&
+          !course.sections.some((s) => s.blocks.some((b) => b.kind === 'activity')) &&
+          course.activites.map((act, i) => <PhysicsActivityBlock key={i} data={act} />)}
+
+        {course.applications &&
+          course.applications
+            .slice(
+              course.essential
+                ? 0
+                : (discoveryActivity && course.id !== 'pc-course-09' ? 0 : 1)
+            )
+            .map((app) => <PhysicsApplicationCard key={app.id} item={app} />)}
+      </section>
+    );
+  };
+
   return (
     <PhysicsDomainThemeProvider domainId={course.domaine}>
       <div
@@ -392,6 +476,7 @@ export const PhysicsCourseView: React.FC<PhysicsCourseViewProps> = ({
 
         {/* 1. STICKY SIDEBAR (À DROITE EN RTL) AUX COULEURS DU DOMAINE */}
         <aside
+          id="physics-course-sidebar"
           className={`fixed lg:sticky top-[118px] right-0 z-30 w-64 sm:w-68 h-[calc(100vh-128px)] bg-[#F6F0EB] lg:bg-transparent p-5 lg:py-2 lg:px-0 flex flex-col justify-between overflow-y-auto transition-transform duration-300 ease-in-out lg:translate-x-0 shrink-0 ${
             isSidebarOpenMobile
               ? 'translate-x-0 shadow-2xl border-l border-[#E5DDD5]'
@@ -509,6 +594,63 @@ export const PhysicsCourseView: React.FC<PhysicsCourseViewProps> = ({
               <nav className="relative border-r-2 border-[#E2D9D0] space-y-0.5 max-h-[42vh] overflow-y-auto pl-1">
                 {course.sections.length > 0 ? (
                   <>
+                    {/* Liens spécifiques en-tête pour Cours 01 : L'essentiel puis Exercices */}
+                    {course.id === 'pc-course-01' && (
+                      <>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            handleJumpToSection('sec-pc-essential');
+                            onCloseMobileSidebar();
+                          }}
+                          style={
+                            activeSectionId === 'sec-pc-essential'
+                              ? {
+                                  borderRightColor: '#0F766E',
+                                  color: '#0F766E',
+                                }
+                              : undefined
+                          }
+                          className={`relative w-full text-right pr-3.5 pl-2 py-1.5 text-xs transition-all flex items-baseline gap-2 cursor-pointer -mr-[2px] border-r-2 ${
+                            activeSectionId === 'sec-pc-essential'
+                              ? 'font-bold'
+                              : 'border-transparent text-[#4A4A4A]/80 hover:text-[#1A1A1A] font-medium'
+                          }`}
+                        >
+                          <Sparkles className="w-3.5 h-3.5 shrink-0 self-center text-[#0F766E]" />
+                          <span className="leading-snug truncate">أحتفظ بالأهم (L'essentiel)</span>
+                        </button>
+
+                        {course.id !== 'pc-course-01' && hasExercisesSection && (
+                          <button
+                            type="button"
+                            onClick={() => {
+                              handleJumpToSection('sec-pc-exercises');
+                              onCloseMobileSidebar();
+                            }}
+                            style={
+                              activeSectionId === 'sec-pc-exercises'
+                                ? {
+                                    borderRightColor: '#0F766E',
+                                    color: '#0F766E',
+                                  }
+                                : undefined
+                            }
+                            className={`relative w-full text-right pr-3.5 pl-2 py-1.5 text-xs transition-all flex items-baseline gap-2 cursor-pointer -mr-[2px] border-r-2 ${
+                              activeSectionId === 'sec-pc-exercises'
+                                ? 'font-bold'
+                                : 'border-transparent text-[#4A4A4A]/80 hover:text-[#1A1A1A] font-medium'
+                            }`}
+                          >
+                            <span className="font-bold shrink-0 font-mono text-[#0F766E]" dir="ltr">
+                              ★
+                            </span>
+                            <span className="leading-snug">تمارين تطبيقية ووضعيات مع الحل</span>
+                          </button>
+                        )}
+                      </>
+                    )}
+
                     {/* Toujours afficher la Section 1 (Activité de découverte) */}
                     {course.sections
                       .slice(0, isDiscoveryCompleted ? course.sections.length : 1)
@@ -929,8 +1071,51 @@ export const PhysicsCourseView: React.FC<PhysicsCourseViewProps> = ({
             </div>
           </section>
 
-          {/* Course Content or Ready Slot Architecture View */}
-          {!hasContent ? (
+          {/* B. BLOC L'ESSENTIEL (GÉNÉRIQUE POUR TOUT COURS AVEC CHAMP ESSENTIAL) */}
+          {course.essential && (
+            <CourseEssentialBlock
+              essential={course.essential}
+              primaryColor={theme.primaryHex}
+            />
+          )}
+
+          {/* C. EXERCICES CONTEXTUALISÉS & CORRIGÉS (VISIBLE PAR DÉFAUT SOUS L'ESSENTIEL, AVANT « للتعمق ») */}
+          {course.essential && renderExercisesBlock()}
+
+          {/* ACCORDÉON « للتعمق » : replié sur le web, forcé ouvert pendant l'export PDF */}
+          <div id="tataamak-accordion" className="space-y-5">
+            <button
+              type="button"
+              onClick={() => setTataamakAccordionOpen(!tataamakAccordionOpen)}
+              aria-expanded={tataamakAccordionOpen}
+              className="w-full flex items-center justify-between gap-3 px-5 py-3.5 rounded-[16px] border-2 border-[#EAE2DA] bg-[#FAF7F4] hover:bg-[#F3ECE5] transition-colors cursor-pointer"
+            >
+              <div className="flex items-center gap-3">
+                <span
+                  style={{ backgroundColor: theme.primaryHex }}
+                  className="w-8 h-8 rounded-[10px] text-white flex items-center justify-center shrink-0"
+                >
+                  <BookOpen className="w-4.5 h-4.5" />
+                </span>
+                <div className="text-right">
+                  <div className="text-sm sm:text-base font-bold text-[#1A1A1A]">
+                    للتعمق — الدرس كاملاً من وضعية الانطلاق إلى الخلاصة
+                  </div>
+                  <div className="text-[11px] font-mono text-[#8C8C8C]" dir="ltr">
+                    Pour approfondir : situation de départ, sections, synthèse et vocabulaire
+                  </div>
+                </div>
+              </div>
+              <ChevronDown
+                style={{ color: theme.primaryHex }}
+                className={`w-5 h-5 transition-transform duration-200 ${tataamakAccordionOpen ? 'rotate-180' : ''}`}
+              />
+            </button>
+
+            {tataamakAccordionOpen && (
+              <>
+              {/* Course Content or Ready Slot Architecture View */}
+              {!hasContent ? (
             <section className="bg-[#FFFFFF] rounded-[18px] border border-[#EAE2DA] p-6 space-y-5">
               <div
                 style={{
@@ -1060,6 +1245,13 @@ export const PhysicsCourseView: React.FC<PhysicsCourseViewProps> = ({
                         />
                       )}
 
+                      {/* Pour cours avec essential : Corrigé de l'activité exploratoire directement dans la Section 1 de « للتعمق » */}
+                      {course.essential && secIdx === 0 && discoveryActivity && (
+                        <div className="pt-2">
+                          <PhysicsDiscoveryCorrectionCard activity={discoveryActivity} />
+                        </div>
+                      )}
+
                       {/* Remaining blocks as direct children for granular PDF pagination */}
                       {sec.blocks.slice(1).map((b, bIdx) => renderBlock(b, bIdx + 1))}
 
@@ -1089,55 +1281,8 @@ export const PhysicsCourseView: React.FC<PhysicsCourseViewProps> = ({
                   );
                 })}
 
-              {/* EXERCISES, CONTEXTUALIZED SITUATIONS & DISCOVERY CORRECTION (Règle 1 & Règle 4) */}
-              {(activeTab === 'all' || activeTab === 'activities') && hasExercisesSection && (
-                <section
-                  id="sec-pc-exercises"
-                  className="bg-[#FFFFFF] rounded-[18px] border border-[#EAE2DA] p-5 sm:p-6 space-y-4 scroll-mt-28"
-                >
-                  <div className="section-lead-group space-y-3">
-                    <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#EAE2DA] pb-2.5">
-                      <div className="flex items-center gap-2.5">
-                        <span
-                          dir="ltr"
-                          style={{ backgroundColor: theme.primaryHex }}
-                          className="w-7 h-7 rounded-[8px] text-white font-mono font-bold text-xs flex items-center justify-center shrink-0"
-                        >
-                          {exercisesSecNum}
-                        </span>
-                        <h2 className="text-base sm:text-lg font-bold text-[#1A1A1A]">
-                          تمارين تطبيقية ووضعيات سياقية مع التصحيح
-                        </h2>
-                      </div>
-                      <span
-                        dir="ltr"
-                        style={{ color: theme.primaryHex }}
-                        className="text-xs font-mono font-semibold"
-                      >
-                        Exercices contextualisés & Corrigés
-                      </span>
-                    </div>
-
-                    {discoveryActivity && course.id !== 'pc-course-09' ? (
-                      <PhysicsDiscoveryCorrectionCard activity={discoveryActivity} />
-                    ) : (
-                      course.applications?.[0] && (
-                        <PhysicsApplicationCard item={course.applications[0]} />
-                      )
-                    )}
-                  </div>
-
-                  {course.activites &&
-                    course.activites.length > 0 &&
-                    !course.sections.some((s) => s.blocks.some((b) => b.kind === 'activity')) &&
-                    course.activites.map((act, i) => <PhysicsActivityBlock key={i} data={act} />)}
-
-                  {course.applications &&
-                    course.applications
-                      .slice(discoveryActivity && course.id !== 'pc-course-09' ? 0 : 1)
-                      .map((app) => <PhysicsApplicationCard key={app.id} item={app} />)}
-                </section>
-              )}
+              {/* EXERCISES POUR LES COURS SANS CHAMP ESSENTIAL (Puisque les cours avec essential les affichent au-dessus de « للتعمق ») */}
+              {!course.essential && renderExercisesBlock()}
 
               {/* SUMMARY, SCHEMATIC DIAGRAM & BILINGUAL VOCABULARY */}
               {(activeTab === 'all' || activeTab === 'summary') && (
@@ -1155,6 +1300,9 @@ export const PhysicsCourseView: React.FC<PhysicsCourseViewProps> = ({
               )}
             </>
           )}
+              </>
+            )}
+          </div>
 
           {/* 3. CONTINUITÉ PÉDAGOGIQUE (PRÉCÉDENT / SUIVANT AVEC REPÈRE DE DOMAINE) */}
           <section

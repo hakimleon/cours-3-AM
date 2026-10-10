@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   PhysicsSimulationBlockData,
   SimulationFallbackData,
@@ -181,6 +181,19 @@ const SimulationInteractiveCore: React.FC<{
       return next;
     });
   };
+
+  // Impression / Export PDF : le tiroir fermé par défaut est ouvert pour que le contenu
+  // de la simulation apparaisse dans le document imprimé (aucun autre changement).
+  useEffect(() => {
+    const handlePreparePdf = () => setIsDrawerOpen(true);
+    const handleDonePdf = () => setIsDrawerOpen(false);
+    window.addEventListener('course-pdf-prepare', handlePreparePdf);
+    window.addEventListener('course-pdf-done', handleDonePdf);
+    return () => {
+      window.removeEventListener('course-pdf-prepare', handlePreparePdf);
+      window.removeEventListener('course-pdf-done', handleDonePdf);
+    };
+  }, []);
 
   // Suivi des réponses révélées dans le mode « Observation guidée »
   const [revealedGuidedIds, setRevealedGuidedIds] = useState<string[]>([]);

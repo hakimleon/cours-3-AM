@@ -251,14 +251,43 @@ export interface PhysicsDiscoveryActivity {
   observationTable?: PhysicsTableItem;
   schema?: PhysicsSchemaOrFigure;
   /** Temps 3 : Questions guidées AVANT de nommer formellement les concepts */
-  guidedQuestions: string[];
+  guidedQuestions?: string[];
   /** Indice discret (💡 مساعدة) sans donner la réponse */
   hint?: string;
   /** Corrigé affiché dans la section Exercices / Corrigés */
-  correction: {
+  correction?: {
     questionAnswers: string[];
     conclusion?: string;
   };
+}
+
+export interface PhysicsCourseEssentialItem {
+  id?: string;
+  titleArabic: string;
+  titleFrench?: string;
+  icon?: 'atom' | 'boxes' | 'sparkles' | 'flask' | 'zap' | 'flame' | 'scale' | 'alert' | 'info';
+  definition: string;
+  example?: string;
+}
+
+export interface PhysicsCourseEssential {
+  titleArabic?: string; // Défaut: 'أحتفظ بالأهم'
+  titleFrench?: string; // Défaut: "L'essentiel"
+  badgeArabic?: string; // Défaut: 'المستوى الأساسي المباشر'
+  subtitleArabic?: string; // Défaut: 'المفاهيم الأساسية المستخلصة من المنهاج والأنشطة'
+  items: PhysicsCourseEssentialItem[];
+  keyInsight?: string; // Ex: 'الفرد الكيميائي يستعمل في المستوى المجهري بينما النوع الكيميائي يستعمل في المستوى العياني.'
+  systemDescription?: {
+    titleArabic: string;
+    titleFrench?: string;
+    description: string;
+    points?: string[];
+  };
+  commonMistakes?: string[];
+  flashQuestions?: Array<{
+    question: string;
+    answer: string;
+  }>;
 }
 
 export interface PhysicsCommonMistakeItem {
@@ -333,6 +362,7 @@ export interface PhysicsChemistryCourse {
   objectifs: string[];
   prerequis?: string[];
   introduction?: string;
+  essential?: PhysicsCourseEssential;
   discoveryActivity?: PhysicsDiscoveryActivity;
   sections: PhysicsCourseSection[];
   commonMistakes?: PhysicsCommonMistakeItem[];

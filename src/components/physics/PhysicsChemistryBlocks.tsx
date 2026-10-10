@@ -798,9 +798,13 @@ export const PhysicsActivityBlock: React.FC<{ data: PhysicsActivityItem }> = ({ 
     const handleDonePdf = () => setShowCorrection(false);
     window.addEventListener('course-pdf-prepare', handlePreparePdf);
     window.addEventListener('course-pdf-done', handleDonePdf);
+    window.addEventListener('beforeprint', handlePreparePdf);
+    window.addEventListener('afterprint', handleDonePdf);
     return () => {
       window.removeEventListener('course-pdf-prepare', handlePreparePdf);
       window.removeEventListener('course-pdf-done', handleDonePdf);
+      window.removeEventListener('beforeprint', handlePreparePdf);
+      window.removeEventListener('afterprint', handleDonePdf);
     };
   }, []);
 
@@ -863,7 +867,7 @@ export const PhysicsActivityBlock: React.FC<{ data: PhysicsActivityItem }> = ({ 
             )}
           </button>
 
-          {showCorrection && (
+          <div className={showCorrection ? "" : "hidden print:block pdf-export-mode:block"}>
             <div className="mt-3 p-4 rounded-[12px] bg-[#F6F0EB]/70 border border-[#0F766E]/30 space-y-2">
               <div className="text-xs font-bold text-[#0F766E]">التصحيح النموذجي للنشاط :</div>
               <ol className="space-y-2 pr-5 list-decimal text-xs sm:text-sm text-[#4A4A4A]">
@@ -879,7 +883,7 @@ export const PhysicsActivityBlock: React.FC<{ data: PhysicsActivityItem }> = ({ 
                 </div>
               )}
             </div>
-          )}
+          </div>
         </div>
       )}
     </div>
@@ -894,9 +898,13 @@ export const PhysicsApplicationCard: React.FC<{ item: PhysicsApplicationQuestion
     const handleDonePdf = () => setIsOpen(false);
     window.addEventListener('course-pdf-prepare', handlePreparePdf);
     window.addEventListener('course-pdf-done', handleDonePdf);
+    window.addEventListener('beforeprint', handlePreparePdf);
+    window.addEventListener('afterprint', handleDonePdf);
     return () => {
       window.removeEventListener('course-pdf-prepare', handlePreparePdf);
       window.removeEventListener('course-pdf-done', handleDonePdf);
+      window.removeEventListener('beforeprint', handlePreparePdf);
+      window.removeEventListener('afterprint', handleDonePdf);
     };
   }, []);
 
@@ -946,7 +954,7 @@ export const PhysicsApplicationCard: React.FC<{ item: PhysicsApplicationQuestion
           <span>{isOpen ? 'إخفاء التصحيح' : 'عرض الحل والتصحيح النموذجي'}</span>
         </button>
 
-        {isOpen && (
+        <div className={isOpen ? "" : "hidden print:block pdf-export-mode:block"}>
           <div className="mt-3 p-4 rounded-[12px] bg-[#FAF7F4] border border-[#E2D9D0] space-y-3">
             {item.correctionSteps.map((st, idx) => (
               <div key={idx} className="space-y-1">
@@ -954,7 +962,7 @@ export const PhysicsApplicationCard: React.FC<{ item: PhysicsApplicationQuestion
                   {idx + 1}. <ChemPhysText text={st.title} />
                 </div>
                 {st.explanation && (
-                  <p className="text-xs sm:text-sm text-[#4A4A4A] leading-relaxed">
+                  <p className="text-xs sm:text-sm text-[#4A4A4A] leading-relaxed whitespace-pre-line">
                     <ChemPhysText text={st.explanation} />
                   </p>
                 )}
@@ -977,13 +985,15 @@ export const PhysicsApplicationCard: React.FC<{ item: PhysicsApplicationQuestion
               </div>
             ))}
 
-            <div className="p-3 rounded-[10px] bg-[#0F766E]/10 border border-[#0F766E]/25 flex items-center gap-2 text-xs sm:text-sm font-bold text-[#0F766E]">
-              <CheckCircle2 className="w-4 h-4 shrink-0" />
-              <span>النتيجة النهائية : </span>
-              <ChemPhysText text={item.finalAnswer} />
+            <div className="p-3 rounded-[10px] bg-[#0F766E]/10 border border-[#0F766E]/25 flex items-start gap-2 text-xs sm:text-sm font-bold text-[#0F766E]">
+              <CheckCircle2 className="w-4 h-4 shrink-0 mt-0.5" />
+              <div className="whitespace-pre-line leading-relaxed">
+                <span className="font-bold">النتيجة النهائية : </span>
+                <ChemPhysText text={item.finalAnswer} />
+              </div>
             </div>
           </div>
-        )}
+        </div>
       </div>
     </div>
   );
@@ -1073,7 +1083,7 @@ export const PhysicsDiscoveryBlock: React.FC<{
               <span>3. أسئلة استكشافية موجهة (فكّر ولاحظ قبل تسمية المفاهيم) :</span>
             </div>
             <ol className="space-y-2 pr-5 list-decimal text-xs sm:text-sm text-[#4A4A4A] font-medium">
-              {data.guidedQuestions.map((q, idx) => (
+              {data.guidedQuestions?.map((q, idx) => (
                 <li key={idx} className="leading-relaxed">
                   <ChemPhysText text={q} />
                 </li>
@@ -1131,11 +1141,17 @@ export const PhysicsDiscoveryCorrectionCard: React.FC<{
     const handleDonePdf = () => setIsOpen(false);
     window.addEventListener('course-pdf-prepare', handlePreparePdf);
     window.addEventListener('course-pdf-done', handleDonePdf);
+    window.addEventListener('beforeprint', handlePreparePdf);
+    window.addEventListener('afterprint', handleDonePdf);
     return () => {
       window.removeEventListener('course-pdf-prepare', handlePreparePdf);
       window.removeEventListener('course-pdf-done', handleDonePdf);
+      window.removeEventListener('beforeprint', handlePreparePdf);
+      window.removeEventListener('afterprint', handleDonePdf);
     };
   }, []);
+
+  if (!activity.correction) return null;
 
   return (
     <div className="rounded-[14px] border border-[#0F766E]/35 bg-[#FFFFFF] overflow-hidden">
@@ -1162,22 +1178,22 @@ export const PhysicsDiscoveryCorrectionCard: React.FC<{
         </button>
       </div>
 
-      {isOpen && (
+      <div className={isOpen ? "" : "hidden print:block pdf-export-mode:block"}>
         <div className="p-4 space-y-2 text-xs sm:text-sm text-[#4A4A4A] leading-[1.85] border-t border-[#E5DDD5]">
           <ol className="space-y-1.5 pr-5 list-decimal">
-            {activity.correction.questionAnswers.map((ans, idx) => (
+            {activity.correction.questionAnswers?.map((ans, idx) => (
               <li key={idx}>
                 <ChemPhysText text={ans} />
               </li>
             ))}
           </ol>
           {activity.correction.conclusion && (
-            <div className="p-3 mt-2 rounded-[10px] bg-[#FAF7F4] border border-[#0F766E]/25 text-xs font-bold text-[#0F766E]">
+            <div className="p-3 mt-2 rounded-[10px] bg-[#FAF7F4] border border-[#0F766E]/25 text-xs sm:text-sm font-semibold text-[#0F766E] whitespace-pre-line leading-relaxed">
               <ChemPhysText text={activity.correction.conclusion} />
             </div>
           )}
         </div>
-      )}
+      </div>
     </div>
   );
 };

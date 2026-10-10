@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useCallback,
+} from "react";
 import {
   X,
   ZoomIn,
@@ -8,7 +14,7 @@ import {
   ChevronLeft,
   Maximize2,
   Images,
-} from 'lucide-react';
+} from "lucide-react";
 
 export interface LightboxImageItem {
   id: string;
@@ -24,7 +30,9 @@ interface ImageLightboxContextValue {
   closeLightbox: () => void;
 }
 
-const ImageLightboxContext = createContext<ImageLightboxContextValue | null>(null);
+const ImageLightboxContext = createContext<ImageLightboxContextValue | null>(
+  null,
+);
 
 /**
  * Catalogue par défaut des illustrations pédagogiques des cours pour permettre
@@ -32,76 +40,84 @@ const ImageLightboxContext = createContext<ImageLightboxContextValue | null>(nul
  */
 export const DEFAULT_COURSE_GALLERY_IMAGES: LightboxImageItem[] = [
   {
-    id: 'img-c01-depart',
-    src: '/src/assets/images/c01_situation_depart_1790801006930.jpg',
-    alt: 'مواد من الحياة اليومية: قطرة ماء وكأس ماء، مسمار حديد وقارورة غاز الأكسجين، وكأس ماء مع ملح وسكر',
-    captionArabic: 'الدرس 01 — وضعية الانطلاق : العينات الحقيقية الثلاث (ماء، حديد وثنائي الأكسجين، ماء مالح وحلو)',
-    captionFrench: 'Cours 01 · Eau (goutte vs verre), Fer & Dioxygène, Eau salée et sucrée',
-    courseBadge: 'الدرس 01',
+    id: "img-c02-main",
+    src: "/src/assets/images/c02_electrolyse_eau_1790802935276.jpg",
+    alt: "وضعية الانطلاق للدرس 02 : مقارنة تبخر الماء مع تجربة تمرير تيار كهربائي في الماء",
+    captionArabic:
+      "الدرس 02 — وضعية الانطلاق : مقارنة بين تبخر الماء (تغير فيزيائي) والتحليل الكهربائي للماء (2 : 1)",
+    captionFrench:
+      "Cours 02 · Électrolyse de l’eau (rapport 2 : 1) vs Ébullition de l’eau",
+    courseBadge: "الدرس 02",
   },
   {
-    id: 'img-c02-main',
-    src: '/src/assets/images/c02_electrolyse_eau_1790802935276.jpg',
-    alt: 'وضعية الانطلاق للدرس 02 : مقارنة تبخر الماء مع تجربة تمرير تيار كهربائي في الماء',
-    captionArabic: 'الدرس 02 — وضعية الانطلاق : مقارنة بين تبخر الماء (تغير فيزيائي) والتحليل الكهربائي للماء (2 : 1)',
-    captionFrench: 'Cours 02 · Électrolyse de l’eau (rapport 2 : 1) vs Ébullition de l’eau',
-    courseBadge: 'الدرس 02',
+    id: "img-c02-complet",
+    src: "/src/assets/images/c02_electrolyse_eau_complet_1790804818474.jpg",
+    alt: "مخطط تفصيلي لتجربة التحليل الكهربائي للماء مع البيانات الكاملة",
+    captionArabic:
+      "الدرس 02 — المخطط التفصيلي الكامل لتجربة التحليل الكهربائي للماء",
+    captionFrench:
+      "Cours 02 · Schéma détaillé complet de l’électrolyse de l’eau",
+    courseBadge: "الدرس 02 (تفصيلي)",
   },
   {
-    id: 'img-c02-complet',
-    src: '/src/assets/images/c02_electrolyse_eau_complet_1790804818474.jpg',
-    alt: 'مخطط تفصيلي لتجربة التحليل الكهربائي للماء مع البيانات الكاملة',
-    captionArabic: 'الدرس 02 — المخطط التفصيلي الكامل لتجربة التحليل الكهربائي للماء',
-    captionFrench: 'Cours 02 · Schéma détaillé complet de l’électrolyse de l’eau',
-    courseBadge: 'الدرس 02 (تفصيلي)',
+    id: "img-c02-observation",
+    src: "/src/assets/images/c02_electrolyse_observation_1790804557254.jpg",
+    alt: "منظر مخبري شامل لتجربة التحليل الكهربائي للماء ومقارنتها بغليان الماء",
+    captionArabic:
+      "الدرس 02 — مشهد مخبري : التركيب التجريبي للتحليل الكهربائي للماء",
+    captionFrench:
+      "Cours 02 · Vue d’ensemble du montage expérimental au laboratoire",
+    courseBadge: "الدرس 02 (مشهد مخبري)",
   },
   {
-    id: 'img-c02-observation',
-    src: '/src/assets/images/c02_electrolyse_observation_1790804557254.jpg',
-    alt: 'منظر مخبري شامل لتجربة التحليل الكهربائي للماء ومقارنتها بغليان الماء',
-    captionArabic: 'الدرس 02 — مشهد مخبري : التركيب التجريبي للتحليل الكهربائي للماء',
-    captionFrench: 'Cours 02 · Vue d’ensemble du montage expérimental au laboratoire',
-    courseBadge: 'الدرس 02 (مشهد مخبري)',
+    id: "img-c03-main",
+    src: "/src/assets/images/c03_combustion_carbone_1790805665478.jpg",
+    alt: "وضعية الانطلاق للدرس 03 : تسخين قطعة كربون وإدخالها في وعاء الهواء ثم الكشف بماء الجير",
+    captionArabic:
+      "الدرس 03 — وضعية الانطلاق : احتراق الكربون في الهواء والكشف عن الغاز الناتج بماء الجير",
+    captionFrench:
+      "Cours 03 · Combustion du carbone dans l’air et test à l’eau de chaux (CO₂)",
+    courseBadge: "الدرس 03",
   },
   {
-    id: 'img-c03-main',
-    src: '/src/assets/images/c03_combustion_carbone_1790805665478.jpg',
-    alt: 'وضعية الانطلاق للدرس 03 : تسخين قطعة كربون وإدخالها في وعاء الهواء ثم الكشف بماء الجير',
-    captionArabic: 'الدرس 03 — وضعية الانطلاق : احتراق الكربون في الهواء والكشف عن الغاز الناتج بماء الجير',
-    captionFrench: 'Cours 03 · Combustion du carbone dans l’air et test à l’eau de chaux (CO₂)',
-    courseBadge: 'الدرس 03',
+    id: "img-c04-main",
+    src: "/src/assets/images/c04_combustion_hydrocarbure_1790806910224.jpg",
+    alt: "وضعية الانطلاق للدرس 04 : مقارنة الاحتراق التام والاحتراق غير التام لغاز البوتان",
+    captionArabic:
+      "الدرس 04 — وضعية الانطلاق : مقارنة الاحتراق التام (لهب أزرق، وفرة O₂) والاحتراق غير التام (لهب أصفر وسخام، قلة O₂)",
+    captionFrench:
+      "Cours 04 · Combustion complète vs Combustion incomplète d’un hydrocarbure (C₄H₁₀)",
+    courseBadge: "الدرس 04",
   },
   {
-    id: 'img-c04-main',
-    src: '/src/assets/images/c04_combustion_hydrocarbure_1790806910224.jpg',
-    alt: 'وضعية الانطلاق للدرس 04 : مقارنة الاحتراق التام والاحتراق غير التام لغاز البوتان',
-    captionArabic: 'الدرس 04 — وضعية الانطلاق : مقارنة الاحتراق التام (لهب أزرق، وفرة O₂) والاحتراق غير التام (لهب أصفر وسخام، قلة O₂)',
-    captionFrench: 'Cours 04 · Combustion complète vs Combustion incomplète d’un hydrocarbure (C₄H₁₀)',
-    courseBadge: 'الدرس 04',
+    id: "img-c05-main",
+    src: "/src/assets/images/c05_equilibrage_equation_1790807535324.jpg",
+    alt: "وضعية الانطلاق للدرس 05 : مقارنة معادلة غير موزونة ومعادلة موزونة في كفتي ميزان الذرات",
+    captionArabic:
+      "الدرس 05 — وضعية الانطلاق : موازنة معادلة التفاعل الكيميائي لتحقيق انحفاظ الذرات في طرفي المعادلة",
+    captionFrench:
+      "Cours 05 · Équilibrer une équation de réaction chimique (2 H₂ + O₂ ⟶ 2 H₂O)",
+    courseBadge: "الدرس 05",
   },
   {
-    id: 'img-c05-main',
-    src: '/src/assets/images/c05_equilibrage_equation_1790807535324.jpg',
-    alt: 'وضعية الانطلاق للدرس 05 : مقارنة معادلة غير موزونة ومعادلة موزونة في كفتي ميزان الذرات',
-    captionArabic: 'الدرس 05 — وضعية الانطلاق : موازنة معادلة التفاعل الكيميائي لتحقيق انحفاظ الذرات في طرفي المعادلة',
-    captionFrench: 'Cours 05 · Équilibrer une équation de réaction chimique (2 H₂ + O₂ ⟶ 2 H₂O)',
-    courseBadge: 'الدرس 05',
+    id: "img-c06-main",
+    src: "/src/assets/images/c06_facteurs_reaction_1790808515013.jpg",
+    alt: "وضعية الانطلاق للدرس 06 : تأثير درجة الحرارة (ماء بارد مقابل ماء دافئ) وسطح التلامس (قرص كامل مقابل مسحوق) على سرعة التفاعل الكيميائي",
+    captionArabic:
+      "الدرس 06 — وضعية الانطلاق : مقارنة تأثير درجة الحرارة وسطح التلامس على سرعة التفاعل الكيميائي",
+    captionFrench:
+      "Cours 06 · Les facteurs influençant une réaction chimique (Température et Surface de contact)",
+    courseBadge: "الدرس 06",
   },
   {
-    id: 'img-c06-main',
-    src: '/src/assets/images/c06_facteurs_reaction_1790808515013.jpg',
-    alt: 'وضعية الانطلاق للدرس 06 : تأثير درجة الحرارة (ماء بارد مقابل ماء دافئ) وسطح التلامس (قرص كامل مقابل مسحوق) على سرعة التفاعل الكيميائي',
-    captionArabic: 'الدرس 06 — وضعية الانطلاق : مقارنة تأثير درجة الحرارة وسطح التلامس على سرعة التفاعل الكيميائي',
-    captionFrench: 'Cours 06 · Les facteurs influençant une réaction chimique (Température et Surface de contact)',
-    courseBadge: 'الدرس 06',
-  },
-  {
-    id: 'img-c07-main',
-    src: '/src/assets/images/c07_chaine_fonctionnelle_1790809652050.jpg',
-    alt: 'وضعية الانطلاق للدرس 07 : السلسلة الوظيفية لدارة المصباح الكهربائي والمروحة الكهربائية',
-    captionArabic: 'الدرس 07 — وضعية الانطلاق : السلسلة الوظيفية لدارة المصباح الكهربائي (البطارية ← المفتاح ← الأسلاك ← المصباح) والمروحة الكهربائية',
-    captionFrench: 'Cours 07 · La chaîne fonctionnelle : circuit d’éclairage et ventilateur électrique',
-    courseBadge: 'الدرس 07',
+    id: "img-c07-main",
+    src: "/src/assets/images/c07_chaine_fonctionnelle_1790809652050.jpg",
+    alt: "وضعية الانطلاق للدرس 07 : السلسلة الوظيفية لدارة المصباح الكهربائي والمروحة الكهربائية",
+    captionArabic:
+      "الدرس 07 — وضعية الانطلاق : السلسلة الوظيفية لدارة المصباح الكهربائي (البطارية ← المفتاح ← الأسلاك ← المصباح) والمروحة الكهربائية",
+    captionFrench:
+      "Cours 07 · La chaîne fonctionnelle : circuit d’éclairage et ventilateur électrique",
+    courseBadge: "الدرس 07",
   },
 ];
 
@@ -116,30 +132,39 @@ export const useImageLightbox = (): ImageLightboxContextValue => {
   return ctx;
 };
 
-export const ImageLightboxProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const ImageLightboxProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [items, setItems] = useState<LightboxImageItem[]>(DEFAULT_COURSE_GALLERY_IMAGES);
+  const [items, setItems] = useState<LightboxImageItem[]>(
+    DEFAULT_COURSE_GALLERY_IMAGES,
+  );
   const [currentIndex, setCurrentIndex] = useState(0);
   const [zoomLevel, setZoomLevel] = useState(1);
 
   const collectDomImages = useCallback((): LightboxImageItem[] => {
     const domImgs = Array.from(
-      document.querySelectorAll<HTMLImageElement>('img[data-lightbox-item="true"]')
+      document.querySelectorAll<HTMLImageElement>(
+        'img[data-lightbox-item="true"]',
+      ),
     );
     const collected: LightboxImageItem[] = [];
     const seenSrc = new Set<string>();
 
     domImgs.forEach((img, idx) => {
-      const src = img.getAttribute('src') || img.src;
+      const src = img.getAttribute("src") || img.src;
       if (!src || seenSrc.has(src)) return;
       seenSrc.add(src);
       collected.push({
         id: `dom-img-${idx}`,
         src,
-        alt: img.alt || 'صورة توضيحية من الدرس',
-        captionArabic: img.getAttribute('data-caption-ar') || img.alt || 'صورة توضيحية من الدرس',
-        captionFrench: img.getAttribute('data-caption-fr') || undefined,
-        courseBadge: img.getAttribute('data-course-badge') || undefined,
+        alt: img.alt || "صورة توضيحية من الدرس",
+        captionArabic:
+          img.getAttribute("data-caption-ar") ||
+          img.alt ||
+          "صورة توضيحية من الدرس",
+        captionFrench: img.getAttribute("data-caption-fr") || undefined,
+        courseBadge: img.getAttribute("data-course-badge") || undefined,
       });
     });
 
@@ -156,16 +181,19 @@ export const ImageLightboxProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const openLightbox = useCallback(
     (initialSrc: string, customItems?: LightboxImageItem[]) => {
-      const gallery = customItems && customItems.length > 0 ? customItems : collectDomImages();
+      const gallery =
+        customItems && customItems.length > 0
+          ? customItems
+          : collectDomImages();
       const foundIndex = gallery.findIndex(
-        (it) => it.src === initialSrc || initialSrc.endsWith(it.src)
+        (it) => it.src === initialSrc || initialSrc.endsWith(it.src),
       );
       setItems(gallery);
       setCurrentIndex(foundIndex >= 0 ? foundIndex : 0);
       setZoomLevel(1);
       setIsOpen(true);
     },
-    [collectDomImages]
+    [collectDomImages],
   );
 
   const closeLightbox = useCallback(() => {
@@ -198,23 +226,31 @@ export const ImageLightboxProvider: React.FC<{ children: React.ReactNode }> = ({
   useEffect(() => {
     if (!isOpen) return;
     const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
+      if (e.key === "Escape") {
         closeLightbox();
-      } else if (e.key === 'ArrowLeft') {
+      } else if (e.key === "ArrowLeft") {
         handleNext();
-      } else if (e.key === 'ArrowRight') {
+      } else if (e.key === "ArrowRight") {
         handlePrev();
-      } else if (e.key === '+' || e.key === '=') {
+      } else if (e.key === "+" || e.key === "=") {
         handleZoomIn();
-      } else if (e.key === '-') {
+      } else if (e.key === "-") {
         handleZoomOut();
-      } else if (e.key === '0') {
+      } else if (e.key === "0") {
         handleResetZoom();
       }
     };
-    window.addEventListener('keydown', onKeyDown);
-    return () => window.removeEventListener('keydown', onKeyDown);
-  }, [isOpen, closeLightbox, handleNext, handlePrev, handleZoomIn, handleZoomOut, handleResetZoom]);
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [
+    isOpen,
+    closeLightbox,
+    handleNext,
+    handlePrev,
+    handleZoomIn,
+    handleZoomOut,
+    handleResetZoom,
+  ]);
 
   const currentItem = items[currentIndex] || items[0];
 
@@ -334,7 +370,7 @@ export const ImageLightboxProvider: React.FC<{ children: React.ReactNode }> = ({
               className="relative flex items-center justify-center max-w-full max-h-full transition-transform duration-200 ease-out"
               style={{
                 transform: `scale(${zoomLevel})`,
-                transformOrigin: 'center center',
+                transformOrigin: "center center",
               }}
               onClick={(e) => e.stopPropagation()}
               onDoubleClick={() => {
@@ -394,8 +430,8 @@ export const ImageLightboxProvider: React.FC<{ children: React.ReactNode }> = ({
                       }}
                       className={`group relative rounded-[10px] overflow-hidden border-2 transition-all shrink-0 cursor-pointer ${
                         isActive
-                          ? 'border-[#14B8A6] ring-2 ring-[#14B8A6]/40 scale-105'
-                          : 'border-white/20 opacity-65 hover:opacity-100'
+                          ? "border-[#14B8A6] ring-2 ring-[#14B8A6]/40 scale-105"
+                          : "border-white/20 opacity-65 hover:opacity-100"
                       }`}
                       title={item.captionArabic || item.alt}
                     >
@@ -441,7 +477,7 @@ export const ZoomableCourseImage: React.FC<{
         tabIndex={0}
         onClick={() => openLightbox(src)}
         onKeyDown={(e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
+          if (e.key === "Enter" || e.key === " ") {
             e.preventDefault();
             openLightbox(src);
           }
@@ -455,8 +491,8 @@ export const ZoomableCourseImage: React.FC<{
           referrerPolicy="no-referrer"
           data-lightbox-item="true"
           data-caption-ar={captionArabic}
-          data-caption-fr={captionFrench || ''}
-          data-course-badge={courseBadge || ''}
+          data-caption-fr={captionFrench || ""}
+          data-course-badge={courseBadge || ""}
           className="w-full h-auto max-h-[420px] object-contain mx-auto block bg-[#FAF7F4] transition-transform duration-300 group-hover:scale-[1.015]"
         />
 
