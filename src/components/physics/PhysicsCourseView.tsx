@@ -887,6 +887,7 @@ export const PhysicsCourseView: React.FC<PhysicsCourseViewProps> = ({
 
         {/* 2. MAIN COURSE CONTENT */}
         <main id="physics-course-main-content" className="flex-1 min-w-0 space-y-5">
+
           {/* A. BANDEAU DE REPÈRE VISUEL DU DOMAINE + EN-TÊTE DU COURS */}
           <section
             id="physics-course-header"
@@ -1052,7 +1053,7 @@ export const PhysicsCourseView: React.FC<PhysicsCourseViewProps> = ({
                         type="button"
                         onClick={() => {
                           setActiveTab(id);
-                          if (course.id === 'pc-course-01') {
+                          if (id !== 'all') {
                             setIsDeepenExpanded(true);
                           }
                         }}
@@ -1154,10 +1155,10 @@ export const PhysicsCourseView: React.FC<PhysicsCourseViewProps> = ({
           <div className={`space-y-5 depth-accordion-content ${!course.essential || isDeepenExpanded ? "" : "hidden print:block pdf-export-mode:block"}`}>
             {/* Titre visible « للتعمق » avant la situation de départ (ouvert dans le PDF et lors de l'impression) */}
             {course.essential && (
-              <div
+              <section
                 id="sec-pc-deepen-header"
                 style={{ borderColor: theme.primaryHex }}
-                className="rounded-[16px] p-4 sm:p-5 bg-[#FFFFFF] border-2 shadow-2xs flex items-center justify-between gap-3 text-right"
+                className="section-lead-group rounded-[16px] p-4 sm:p-5 bg-[#FFFFFF] border-2 shadow-2xs flex items-center justify-between gap-3 text-right"
                 dir="rtl"
               >
                 <div className="flex items-center gap-3">
@@ -1168,7 +1169,7 @@ export const PhysicsCourseView: React.FC<PhysicsCourseViewProps> = ({
                     }}
                     className="w-10 h-10 rounded-[12px] flex items-center justify-center shrink-0 shadow-xs"
                   >
-                    <BookOpen className="w-5 h-5" />
+                    <BookOpen className="w-5 h-5 text-white" strokeWidth={2.2} style={{ width: 20, height: 20 }} />
                   </div>
                   <div>
                     <div className="flex items-center gap-2">
@@ -1197,7 +1198,7 @@ export const PhysicsCourseView: React.FC<PhysicsCourseViewProps> = ({
                 >
                   المستوى المتقدم والمفصل
                 </span>
-              </div>
+              </section>
             )}
               {/* Course Content or Ready Slot Architecture View */}
               {!hasContent ? (

@@ -16,7 +16,7 @@ import {
   CheckCircle2,
   Info,
 } from 'lucide-react';
-import { ChemPhysText } from './ChemPhysText';
+import { ChemPhysText, ChemicalFormula } from './ChemPhysText';
 import { PhysicsCourseEssential, PhysicsCourseEssentialItem } from '../../typesPhysicsChemistry';
 
 interface CourseEssentialBlockProps {
@@ -156,17 +156,78 @@ export const CourseEssentialBlock: React.FC<CourseEssentialBlockProps> = ({
                   )}
                 </div>
 
-                <p className="text-xs sm:text-[13px] text-[#4A4A4A] leading-relaxed whitespace-pre-line">
+                <p
+                  style={{ height: 'auto', overflow: 'visible' }}
+                  className="text-xs sm:text-[13px] text-[#4A4A4A] leading-[1.85] whitespace-pre-line overflow-visible"
+                >
                   <ChemPhysText text={item.definition} />
                 </p>
               </div>
 
               {item.example && (
-                <div className="p-2 rounded-[8px] bg-white border border-[#E2D9D0] text-xs text-[#1A1A1A]">
-                  <span style={{ color: primaryColor }} className="font-bold">
-                    مثال:{' '}
-                  </span>
-                  <ChemPhysText text={item.example} />
+                <div
+                  style={{ height: 'auto', overflow: 'visible' }}
+                  className="p-2 sm:p-2.5 rounded-[10px] bg-white border border-[#E2D9D0] text-xs text-[#1A1A1A] space-y-1.5 max-w-full"
+                >
+                  <div className="flex items-center justify-between text-[11px] font-bold text-[#6B6B6B]">
+                    <span style={{ color: primaryColor }}>
+                      {item.example.includes('⟶') || item.example.includes('→')
+                        ? 'معادلة التفاعل الموزونة :'
+                        : item.example.includes('↓')
+                        ? 'السلسلة السببية المجهرية :'
+                        : 'مثال توضيحي :'}
+                    </span>
+                  </div>
+                  {item.example.includes('⟶') || item.example.includes('→') ? (() => {
+                    const arrowChar = item.example.includes('⟶') ? '⟶' : '→';
+                    const parts = item.example.split(arrowChar);
+                    const lhs = parts[0]?.trim();
+                    const rhs = parts[1]?.trim();
+                    return (
+                      <div
+                        dir="ltr"
+                        style={{ height: 'auto', overflow: 'visible', unicodeBidi: 'isolate' }}
+                        className="p-2 rounded-[8px] bg-[#FAF7F4] border border-[#0F766E]/20 text-center font-sans font-bold text-xs sm:text-[13px] text-[#1E293B]"
+                      >
+                        {/* Single line on sm+ screens, stacked 3-line on narrow mobile if long */}
+                        <div className="hidden sm:inline-flex items-center justify-center gap-2 whitespace-nowrap">
+                          <ChemicalFormula formula={lhs} size="sm" />
+                          <span className="text-[#0F766E] font-bold px-0.5 select-none">⟶</span>
+                          <ChemicalFormula formula={rhs} size="sm" />
+                        </div>
+                        <div className="flex sm:hidden flex-col items-center justify-center gap-0.5">
+                          <div className="text-[#0F766E]"><ChemicalFormula formula={lhs} size="sm" /></div>
+                          <div className="text-[#0F766E] font-bold text-sm leading-none my-0.5">⟶</div>
+                          <div className="text-[#0284C7]"><ChemicalFormula formula={rhs} size="sm" /></div>
+                        </div>
+                      </div>
+                    );
+                  })() : item.example.includes('↓') ? (
+                    <div className="flex flex-col items-center justify-center gap-1 py-1 text-center font-sans">
+                      {item.example.split('\n').map((line, lIdx) => {
+                        const trimmed = line.trim();
+                        if (trimmed === '↓') {
+                          return (
+                            <span key={lIdx} className="text-[#0F766E] font-bold text-sm leading-none select-none">
+                              ↓
+                            </span>
+                          );
+                        }
+                        return (
+                          <span
+                            key={lIdx}
+                            className="px-2.5 py-1 rounded-[6px] bg-[#FAF7F4] border border-[#E2D9D0] text-[11.5px] font-semibold text-[#1A1A1A] inline-block shadow-2xs"
+                          >
+                            <ChemPhysText text={trimmed} />
+                          </span>
+                        );
+                      })}
+                    </div>
+                  ) : (
+                    <div className="text-xs text-[#1A1A1A] leading-relaxed font-sans whitespace-pre-line">
+                      <ChemPhysText text={item.example} />
+                    </div>
+                  )}
                 </div>
               )}
             </div>
@@ -197,7 +258,7 @@ export const CourseEssentialBlock: React.FC<CourseEssentialBlockProps> = ({
         essential.commonMistakes ||
         essential.flashQuestions) && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
-          {/* الجملة الكيميائية أو الشروط المعيارية */}
+          {/* Colonne 1 : systemDescription OU أخطاء شائعة si pas de systemDescription */}
           {essential.systemDescription ? (
             <div className="p-3.5 rounded-[12px] bg-[#FAF7F4] border border-[#E2D9D0] space-y-2.5 flex flex-col justify-between">
               <div className="space-y-2">
@@ -229,13 +290,32 @@ export const CourseEssentialBlock: React.FC<CourseEssentialBlockProps> = ({
               </div>
             </div>
           ) : (
-            <div />
+            essential.commonMistakes && essential.commonMistakes.length > 0 && (
+              <div className="p-3.5 rounded-[12px] bg-[#FEF2F2] border border-[#FCA5A5] space-y-2">
+                <div className="flex items-center justify-between border-b border-[#FECACA] pb-1">
+                  <div className="flex items-center gap-1.5 text-xs font-bold text-[#991B1B]">
+                    <AlertTriangle className="w-4 h-4 text-[#DC2626]" />
+                    <span>أخطاء شائعة</span>
+                  </div>
+                  <span className="text-[10.5px] font-mono text-[#991B1B]" dir="ltr">
+                    Erreurs fréquentes
+                  </span>
+                </div>
+
+                <ul className="pr-4 list-disc space-y-1.5 text-xs text-[#7F1D1D] leading-relaxed">
+                  {essential.commonMistakes.map((cm, cIdx) => (
+                    <li key={cIdx}>
+                      <ChemPhysText text={cm} />
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )
           )}
 
-          {/* أخطاء شائعة + أسئلة سريعة */}
+          {/* Colonne 2 : أخطاء شائعة (si systemDescription présent) + أسئلة سريعة */}
           <div className="space-y-3.5">
-            {/* أخطاء شائعة · Erreurs fréquentes */}
-            {essential.commonMistakes && essential.commonMistakes.length > 0 && (
+            {essential.systemDescription && essential.commonMistakes && essential.commonMistakes.length > 0 && (
               <div className="p-3.5 rounded-[12px] bg-[#FEF2F2] border border-[#FCA5A5] space-y-2">
                 <div className="flex items-center justify-between border-b border-[#FECACA] pb-1">
                   <div className="flex items-center gap-1.5 text-xs font-bold text-[#991B1B]">

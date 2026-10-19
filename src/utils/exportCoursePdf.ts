@@ -2,6 +2,7 @@ import { jsPDF } from 'jspdf';
 import { domToCanvas } from 'modern-screenshot';
 import { Course } from '../types';
 import { PhysicsChemistryCourse } from '../typesPhysicsChemistry';
+import { SvtCourse } from '../typesSvt';
 
 /**
  * Collects logical DOM blocks inside #course-main-content so that
@@ -59,9 +60,11 @@ function collectPrintableBlocks(mainEl: HTMLElement): HTMLElement[] {
 
 /**
  * Collects logical DOM blocks inside #physics-course-main-content for Physique-Chimie 3AM courses.
+ * Decomposes oversized cards and sections to avoid canvas memory exhaustion and prevent browser freezes.
  */
 function collectPhysicsPrintableBlocks(mainEl: HTMLElement): HTMLElement[] {
   const blocks: HTMLElement[] = [];
+  const MAX_SINGLE_BLOCK_PX = 560; // Granularité calibrée pour éviter les grands blancs et cibler 14 à 15 pages
 
   const isValidBlock = (el: HTMLElement | null): el is HTMLElement => {
     if (!el || el.id === 'sec-continuity' || el.classList.contains('no-pdf')) return false;
@@ -70,34 +73,80 @@ function collectPhysicsPrintableBlocks(mainEl: HTMLElement): HTMLElement[] {
     return true;
   };
 
+  const addBlockOrSubBlocks = (el: HTMLElement | null) => {
+    if (!isValidBlock(el)) return;
+
+    // Bloc atomique insécable : énoncé complet d'exercice, carte numérotée, tableau ou bloc sous la limite
+    if (
+      el.classList.contains('application-enonce-group') ||
+      el.hasAttribute('data-card-number') ||
+      el.querySelector('table') !== null ||
+      el.offsetHeight <= MAX_SINGLE_BLOCK_PX
+    ) {
+      blocks.push(el);
+      return;
+    }
+
+    // Si le conteneur dépasse MAX_SINGLE_BLOCK_PX, découper en sous-blocs logiques
+    const children = Array.from(el.children) as HTMLElement[];
+    let addedChild = false;
+
+    for (const child of children) {
+      if (!isValidBlock(child)) continue;
+      addedChild = true;
+      if (
+        child.offsetHeight <= MAX_SINGLE_BLOCK_PX ||
+        child.children.length <= 1 ||
+        child.classList.contains('application-enonce-group') ||
+        child.querySelector('table') !== null
+      ) {
+        blocks.push(child);
+      } else {
+        // Découpe profonde pour les grandes cartes, en préservant les groupes d'énoncé
+        for (const subChild of Array.from(child.children) as HTMLElement[]) {
+          if (isValidBlock(subChild)) {
+            blocks.push(subChild);
+          }
+        }
+      }
+    }
+
+    if (!addedChild) {
+      blocks.push(el);
+    }
+  };
+
   // 1. En-tête du cours
   const header = mainEl.querySelector('#physics-course-header') as HTMLElement | null;
   if (isValidBlock(header)) blocks.push(header);
 
   // 2. L'essentiel (« أحتفظ بالأهم »)
   const essential = mainEl.querySelector('#sec-pc-essential') as HTMLElement | null;
-  if (isValidBlock(essential)) blocks.push(essential);
+  addBlockOrSubBlocks(essential);
 
   // 3. Exercices contextualisés avec solutions
   const exercises = mainEl.querySelector('#sec-pc-exercises') as HTMLElement | null;
-  if (isValidBlock(exercises)) blocks.push(exercises);
+  addBlockOrSubBlocks(exercises);
+
+  // 3.5 Barre « للتعمق » (Pour approfondir)
+  const deepenHeader = mainEl.querySelector('#sec-pc-deepen-header') as HTMLElement | null;
+  if (isValidBlock(deepenHeader)) {
+    blocks.push(deepenHeader);
+  }
 
   // 4. Sections détaillées (« للتعمق »)
-  // Chaque section du cours (ex: sec-pc-01-01, sec-pc-01-02...) constitue une unité pédagogique sécable proprement
   const sections = Array.from(
     mainEl.querySelectorAll('section[id^="sec-pc-"]')
   ) as HTMLElement[];
 
   for (const sec of sections) {
-    if (sec.id === 'sec-pc-exercises' || sec.id === 'sec-pc-essential') continue;
-    if (isValidBlock(sec)) {
-      blocks.push(sec);
-    }
+    if (sec.id === 'sec-pc-exercises' || sec.id === 'sec-pc-essential' || sec.id === 'sec-pc-deepen-header') continue;
+    addBlockOrSubBlocks(sec);
   }
 
   // 5. Synthèse & Vocabulaire bilingue
   const summary = mainEl.querySelector('#sec-pc-summary') as HTMLElement | null;
-  if (isValidBlock(summary)) blocks.push(summary);
+  addBlockOrSubBlocks(summary);
 
   return blocks.length > 0 ? blocks : [mainEl];
 }
@@ -153,12 +202,23 @@ async function renderBlocksToPdf(
       b.style.setProperty('display', 'none', 'important');
     });
 
-    let canvas: HTMLCanvasElement;
+    let canvas: HTMLCanvasElement | null = null;
     try {
+      // Font: false is essential to prevent modern-screenshot from attempting to fetch
+      // remote Google Fonts via network over each individual block, which caused freezes.
       canvas = await domToCanvas(block, {
-        scale: 2,
+        scale: 1.75,
         backgroundColor: '#FBFBFA',
+        font: false,
+        timeout: 6000,
+        features: {
+          removeAbnormalAttributes: true,
+          removeControlCharacter: true,
+        },
       });
+    } catch (captureErr) {
+      console.warn(`[PDF Export] Skipped block ${i + 1} due to capture timeout/error:`, captureErr);
+      continue;
     } finally {
       originalDisplays.forEach(({ el, display }) => {
         el.style.display = display;
@@ -175,24 +235,29 @@ async function renderBlocksToPdf(
 
     const blockHeightMm = (canvas.height / canvas.width) * contentWidthMm;
 
-    // Empêcher les titres de section d'être séparés de leur contenu (Sections 3, 4, 5, 7, etc.)
+    // Empêcher rigoureusement les titres de section d'être orphelins en bas de page
     const isSectionHeader =
-      block.classList.contains("section-lead-group") ||
-      block.querySelector(".section-lead-group") !== null ||
-      (block.querySelector("h1, h2, h3") !== null && block.offsetHeight < 220);
+      block.classList.contains('section-lead-group') ||
+      block.querySelector('.section-lead-group') !== null ||
+      block.id === 'sec-pc-deepen-header' ||
+      block.id?.startsWith('sec-pc-') ||
+      (block.querySelector('h1, h2, h3') !== null && block.offsetHeight < 280);
+
     if (isSectionHeader && currentY > marginTop + 5) {
       const nextBlock = blocks[i + 1];
-      const nextHeightMm = nextBlock && nextBlock.offsetWidth > 0
-        ? (nextBlock.offsetHeight / nextBlock.offsetWidth) * contentWidthMm
-        : 35;
-      // Empêche le titre d'être orphelin en bas de page tout en évitant les grands blancs inutiles
-      const requiredMm = blockHeightMm + Math.min(nextHeightMm, 45);
+      const nextHeightMm =
+        nextBlock && nextBlock.offsetWidth > 0
+          ? (nextBlock.offsetHeight / nextBlock.offsetWidth) * contentWidthMm
+          : 50;
+      // Exiger la place pour le titre ET au moins 70 mm de contenu suivant
+      const requiredMm = blockHeightMm + Math.min(nextHeightMm, 70);
       if (currentY + requiredMm > marginTop + maxContentHeightMm) {
         pdf.addPage();
         fillPageBackground();
         currentY = marginTop;
       }
     }
+
     // Case 1: Block fits within a single A4 page
     if (blockHeightMm <= maxContentHeightMm) {
       if (currentY + blockHeightMm > marginTop + maxContentHeightMm && currentY > marginTop + 5) {
@@ -205,8 +270,8 @@ async function renderBlocksToPdf(
       pdf.addImage(imgData, 'JPEG', marginX, currentY, contentWidthMm, blockHeightMm, undefined, 'FAST');
       currentY += blockHeightMm + blockGapMm;
     } else {
-      // Case 2: Single block is taller than an entire A4 page — slice it cleanly across pages
-      if (currentY > marginTop + 30) {
+      // Case 2: Single block is taller than an entire A4 page — slice cleanly with infinite loop protection
+      if (currentY > marginTop + 25) {
         pdf.addPage();
         fillPageBackground();
         currentY = marginTop;
@@ -215,16 +280,19 @@ async function renderBlocksToPdf(
       const pxPerMm = canvas.width / contentWidthMm;
       let remainingPx = canvas.height;
       let sourceY = 0;
+      let loopCounter = 0;
 
-      while (remainingPx > 0) {
+      while (remainingPx > 0 && loopCounter++ < 50) {
         const availHeightMm = marginTop + maxContentHeightMm - currentY;
-        const sliceHeightPx = Math.min(remainingPx, Math.floor(availHeightMm * pxPerMm));
+        let sliceHeightPx = Math.min(remainingPx, Math.floor(availHeightMm * pxPerMm));
 
         if (sliceHeightPx <= 10) {
           pdf.addPage();
           fillPageBackground();
           currentY = marginTop;
-          continue;
+          const freshAvailHeightMm = maxContentHeightMm;
+          sliceHeightPx = Math.min(remainingPx, Math.floor(freshAvailHeightMm * pxPerMm));
+          if (sliceHeightPx <= 0) break;
         }
 
         const sliceCanvas = document.createElement('canvas');
@@ -337,14 +405,26 @@ export async function exportPhysicsCourseToPdf(
   mainEl.classList.add('pdf-export-mode');
   mainEl.setAttribute('dir', 'rtl');
 
+  // Explicitly ensure depth accordion content is rendered during PDF capture
+  const deepenContent = mainEl.querySelector('.depth-accordion-content') as HTMLElement | null;
+  let hadHiddenClass = false;
+  if (deepenContent) {
+    if (deepenContent.classList.contains('hidden')) {
+      hadHiddenClass = true;
+      deepenContent.classList.remove('hidden');
+    }
+    deepenContent.style.setProperty('display', 'block', 'important');
+  }
+
   try {
     if (document.fonts && document.fonts.ready) {
       await document.fonts.ready;
     }
-    await new Promise((resolve) => setTimeout(resolve, 400));
+    // Allow React states and images to complete rendering
+    await new Promise((resolve) => setTimeout(resolve, 450));
 
     const blocks = collectPhysicsPrintableBlocks(mainEl);
-    const safeTitle = course.titreArabe
+    const cleanTitre = (course.titreFrancais || course.titreArabe)
       .replace(/[\\/:*?"<>|،]/g, '')
       .trim()
       .replace(/\s+/g, '-');
@@ -352,7 +432,52 @@ export async function exportPhysicsCourseToPdf(
     await renderBlocksToPdf(
       blocks,
       `Physique-Chimie 3AM  |  Cours ${course.numero}`,
-      `Physique-Chimie-3AM-Cours-${course.numero}-${safeTitle}.pdf`,
+      `Physique-Chimie-3AM-Cours-${course.numero}-${cleanTitre}.pdf`,
+      onProgress
+    );
+  } finally {
+    if (deepenContent) {
+      if (hadHiddenClass) {
+        deepenContent.classList.add('hidden');
+      }
+      deepenContent.style.removeProperty('display');
+    }
+    mainEl.classList.remove('pdf-export-mode');
+    window.dispatchEvent(new CustomEvent('course-pdf-done'));
+  }
+}
+
+export async function exportSvtCourseToPdf(
+  course: SvtCourse,
+  onProgress?: (progressText: string) => void
+): Promise<void> {
+  const mainEl = document.getElementById('svt-course-main-content');
+  if (!mainEl) {
+    throw new Error('SVT course content element not found');
+  }
+
+  onProgress?.('جاري فتح الأنشطة والتصحيحات وتحضير صفحات درس علوم الطبيعة والحياة...');
+
+  window.dispatchEvent(new CustomEvent('course-pdf-prepare'));
+  mainEl.classList.add('pdf-export-mode');
+  mainEl.setAttribute('dir', 'rtl');
+
+  try {
+    if (document.fonts && document.fonts.ready) {
+      await document.fonts.ready;
+    }
+    await new Promise((resolve) => setTimeout(resolve, 450));
+
+    const blocks = collectPhysicsPrintableBlocks(mainEl);
+    const cleanTitre = (course.titreFrancais || course.titreArabe)
+      .replace(/[\\/:*?"<>|،]/g, '')
+      .trim()
+      .replace(/\s+/g, '-');
+
+    await renderBlocksToPdf(
+      blocks,
+      `SVT 3AM  |  Cours ${course.numero}`,
+      `SVT-3AM-Cours-${course.numero}-${cleanTitre}.pdf`,
       onProgress
     );
   } finally {
@@ -360,4 +485,6 @@ export async function exportPhysicsCourseToPdf(
     window.dispatchEvent(new CustomEvent('course-pdf-done'));
   }
 }
+
+
 

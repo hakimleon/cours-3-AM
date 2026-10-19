@@ -47,6 +47,7 @@ export interface PhysicsExperienceItem {
   interpretation: string[];
   conclusion?: string;
   chemicalEquation?: string;
+  safetyWarning?: string;
   schemaType?:
     | 'water-electrolysis'
     | 'carbon-combustion'
@@ -109,6 +110,7 @@ export interface PhysicsSchemaOrFigure {
     | 'c04-incomplete-combustion-danger'
     | 'c04-microscopic-atom-conservation'
     | 'c04-microscopic-butane-atoms'
+    | 'c04-species-entities-cards'
     | 'c04-master-summary-diagram'
     | 'c05-discovery-setup'
     | 'c05-coefficient-vs-subscript'

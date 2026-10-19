@@ -4,8 +4,8 @@ import { ChemicalFormula } from './ChemPhysText';
 
 interface FireElementState {
   combustible: boolean; // المادة القابلة للاحتراق (الكربون C)
-  oxidizer: boolean;    // المؤكسد (ثنائي الأكسجين O₂)
-  energy: boolean;      // طاقة التنشيط (الحرارة / اللهب)
+  oxidizer: boolean;    // ثنائي الأكسجين (O₂)
+  energy: boolean;      // حرارة (تسخين أولي)
 }
 
 export const FireTriangleSimulator: React.FC = () => {
@@ -49,12 +49,12 @@ export const FireTriangleSimulator: React.FC = () => {
   const getDiagnostic = () => {
     if (isBurning) {
       return {
-        badge: 'الاحتراق مشتعل ومستمر (3 / 3 عناصر متوفرة)',
-        title: '🔥 اكتمل مثلث الاحتراق : تفاعل الكربون مع ثنائي الأكسجين!',
+        badge: 'الاحتراق مشتعل ومستمر (3 / 3 أضلاع متوفرة)',
+        title: '🔥 اكتمل مثلث الحريق : تفاعل الكربون مع ثنائي الأكسجين!',
         description:
-          'اجتمعت العناصر الثلاثة معًا: قطعة الكربون (مادة قابلة للاحتراق) + غاز ثنائي الأكسجين O₂ (المؤكسد) + التسخين (طاقة التنشيط). تتوهج قطعة الفحم بشدة وتنبعث حرارة وضوء ويتشكل غاز ثنائي أكسيد الكربون (CO₂).',
+          'اجتمعت الأضلاع الثلاثة معًا: قطعة الكربون (مادة قابلة للاحتراق) + غاز ثنائي الأكسجين O₂ + الحرارة (تسخين أولي). تتوهج قطعة الفحم وينبعث حرارة وضوء ويتشكل غاز ثنائي أكسيد الكربون (CO₂).',
         realLifeApplication:
-          'في المخبر : يستمر توهج قطعة الكربون داخل القارورة ويتعكر ماء الجير بوجود CO₂.',
+          'في المخبر : يستمر توهج قطعة الكربون داخل القارورة ويتعكر رائق الكلس بوجود CO₂.',
         tone: 'burning' as const,
       };
     }
@@ -62,51 +62,51 @@ export const FireTriangleSimulator: React.FC = () => {
     const missing: string[] = [];
     if (!elements.combustible) missing.push('المادة القابلة للاحتراق (الكربون C)');
     if (!elements.oxidizer) missing.push('ثنائي الأكسجين (O₂)');
-    if (!elements.energy) missing.push('طاقة التنشيط (التسخين)');
+    if (!elements.energy) missing.push('حرارة (تسخين أولي)');
 
     if (missing.length === 1) {
       if (!elements.combustible) {
         return {
-          badge: 'توقف الاحتراق — تمت إزالة المادة القابلة للاحتراق (C)',
+          badge: 'توقف الاحتراق — غياب المادة القابلة للاحتراق (C)',
           title: '⚪ ماذا يحدث عند غياب المادة القابلة للاحتراق (الكربون)؟',
           description:
-            'رغم وجود غاز ثنائي الأكسجين (O₂) في الهواء ووجود مصدر حراري (طاقة تنشيط)، لا يحدث أي احتراق لعدم وجود المادة القابلة للاحتراق (الكربون C). وعندما تُستهلك قطعة الفحم بالكامل يتوقف الاحتراق تلقائيًا.',
+            'رغم وجود غاز ثنائي الأكسجين (O₂) في الهواء ووجود مصدر حراري (تسخين أولي)، لا يحدث أي احتراق لعدم وجود المادة القابلة للاحتراق (الكربون C). وعندما تُستهلك قطعة الفحم يتوقف الاحتراق تلقائيًا.',
           realLifeApplication:
-            'تطبيق في الأمن والسلامة : إبعاد المواد القابلة للاشتعال (الخشب، الورق، الغاز) يكسر مثلث النار ويمنع امتداد الحريق.',
+            'تطبيق في الأمن والسلامة : إبعاد المواد القابلة للاحتراق يكسر مثلث الحريق ويمنع امتداد النار.',
           tone: 'extinguished' as const,
         };
       }
       if (!elements.oxidizer) {
         return {
-          badge: 'انطفاء اللهب — تمت إزالة ثنائي الأكسجين (O₂)',
+          badge: 'انطفاء التوهج — غياب ثنائي الأكسجين (O₂)',
           title: '💨 ماذا يحدث عند غياب أو نفاد ثنائي الأكسجين (O₂)؟',
           description:
-            'حتى لو كانت قطعة الكربون (C) موجودة وساخنة، فإن غياب غاز ثنائي الأكسجين (O₂) يؤدي إلى انطفاء التوهج وتوقف الاحتراق فورًا! فثنائي الأكسجين هو المؤكسد الضروري لحدوث الاحتراق.',
+            'حتى لو كانت قطعة الكربون (C) ساخنة، فإن غياب غاز ثنائي الأكسجين (O₂) يؤدي إلى انطفاء التوهج وتوقف الاحتراق فورًا! فثنائي الأكسجين ضروري لحدوث الاحتراق.',
           realLifeApplication:
-            'تطبيق في المخبر والحياة اليومية : في قارورة مغلقة ينطفئ الجمر عند نفاد O₂؛ ولإطفاء حريق صغير نغطيه ببطانية إطفاء لمنع وصول ثنائي الأكسجين.',
+            'تطبيق في المخبر والحياة اليومية : في قارورة مغلقة ينطفئ الجمر عند نفاد O₂؛ ولإطفاء نار نغطيها لمنع وصول ثنائي الأكسجين.',
           tone: 'extinguished' as const,
         };
       }
       if (!elements.energy) {
         return {
-          badge: 'لا يبدأ الاحتراق — تمت إزالة طاقة التنشيط (التسخين)',
-          title: '❄️ ماذا يحدث عند غياب طاقة التنشيط (الحرارة)؟',
+          badge: 'لا يبدأ الاحتراق — غياب الحرارة (تسخين أولي)',
+          title: '❄️ ماذا يحدث عند غياب الحرارة (التسخين الأولي)؟',
           description:
-            'قطعة الفحم (الكربون C) موضوعة في الهواء بوجود ثنائي الأكسجين (O₂)، لكنها في درجة الحرارة العادية لا تشتعل تلقائيًا! لا بد من تسخينها أولًا بمصدر حراري (طاقة تنشيط) لكي يبدأ التحول الكيميائي.',
+            'قطعة الفحم (الكربون C) موضوعة في الهواء بوجود ثنائي الأكسجين (O₂)، لكنها في درجة الحرارة العادية لا تشتعل تلقائيًا! لا بد من تسخينها أولًا بمصدر حراري (تسخين أولي) لكي يبدأ التحول الكيميائي.',
           realLifeApplication:
-            'تطبيق في الأمن والسلامة : رش الماء على الجمر يبرّده وينزع منه الحرارة (طاقة التنشيط) فينكسر مثلث الاحتراق وتنطفئ النار.',
+            'تطبيق في الأمن والسلامة : رش الماء على الجمر يبرّده وينزع منه الحرارة فينكسر مثلث الحريق وتنطفئ النار.',
           tone: 'extinguished' as const,
         };
       }
     }
 
     return {
-      badge: `لا يحدث احتراق — غياب عنصرين أو أكثر (${activeCount} / 3)`,
-      title: `⚠️ مثلث الاحتراق مكسور : غياب ${missing.join(' و ')}`,
+      badge: `لا يحدث احتراق — غياب ضلعين أو أكثر (${activeCount} / 3)`,
+      title: `⚠️ مثلث الحريق مكسور : غياب ${missing.join(' و ')}`,
       description:
-        'لا يمكن أن يحدث الاحتراق إلا إذا توفرت أضلاع مثلث الاحتراق الثلاثة في آنٍ واحد. اضغط على العناصر المفقودة لإعادتها وملاحظة اشتعال الكربون من جديد.',
+        'لا يمكن أن يحدث الاحتراق إلا باجتماع أضلاع مثلث الحريق الثلاثة معًا في آنٍ واحد. اضغط على الأضلاع المفقودة لإعادتها وملاحظة اشتعال الكربون من جديد.',
       realLifeApplication:
-        'قاعدة علمية : إزالة ضلع واحد فقط من مثلث الاحتراق كافية لمنع الاحتراق أو إيقافه.',
+        'قاعدة علمية : إذا غاب ضلع واحد توقف الاحتراق.',
       tone: 'extinguished' as const,
     };
   };
@@ -132,11 +132,11 @@ export const FireTriangleSimulator: React.FC = () => {
               <span>محاكي تفاعلي · Simulation</span>
             </span>
             <h4 className="text-sm sm:text-base font-bold text-[#831843]">
-              محاكي «مثلث الاحتراق» (Triangle du feu) — جرّب إزالة كل عنصر!
+              محاكي «مثلث الحريق» (Triangle du feu) — جرّب إزالة كل ضلع!
             </h4>
           </div>
           <p className="text-xs text-[#4A4A4A]">
-            انقر لفتح المحاكاة التفاعلية وتجريب إزالة أو إعادة عناصر مثلث الاحتراق الثلاثة (الكربون C، ثنائي الأكسجين O₂، طاقة التنشيط).
+            انقر لفتح المحاكاة التفاعلية وتجريب إزالة أو إعادة أضلاع مثلث الحريق الثلاثة (مادة قابلة للاحتراق، ثنائي الأكسجين، حرارة / تسخين أولي).
           </p>
         </div>
 
@@ -301,7 +301,7 @@ export const FireTriangleSimulator: React.FC = () => {
               )}
             </div>
 
-            {/* VERTEX 1 (TOP) : طاقة التنشيط (الحرارة) */}
+            {/* VERTEX 1 (TOP) : حرارة (تسخين أولي) */}
             <button
               type="button"
               onClick={() => toggleElement('energy')}
@@ -310,7 +310,7 @@ export const FireTriangleSimulator: React.FC = () => {
                   ? 'bg-amber-50 border-amber-500 text-amber-950 hover:bg-amber-100'
                   : 'bg-slate-100 border-dashed border-slate-400 text-slate-500 opacity-75 hover:opacity-100'
               }`}
-              title="انقر لإزالة أو إعادة طاقة التنشيط"
+              title="انقر لإزالة أو إعادة الحرارة (التسخين الأولي)"
             >
               <Flame
                 className={`w-4 h-4 shrink-0 ${
@@ -319,7 +319,7 @@ export const FireTriangleSimulator: React.FC = () => {
               />
               <div className="text-right">
                 <div className="text-xs font-bold leading-tight">
-                  3. طاقة تنشيط (حرارة)
+                  3. حرارة (تسخين أولي)
                 </div>
                 <div className="text-[10px] font-mono">
                   {elements.energy ? '✓ متوفرة (انقر للإزالة)' : '✗ مُزالة (انقر للإعادة)'}
@@ -384,7 +384,7 @@ export const FireTriangleSimulator: React.FC = () => {
         {/* 3 Interactive Element Control Cards (5 cols) */}
         <div className="lg:col-span-5 space-y-2.5">
           <div className="text-xs font-bold text-[#4A4A4A] mb-1">
-            تحكم في أضلاع مثلث الاحتراق الثلاثة (انقر للإزالة أو الإعادة):
+            تحكم في أضلاع مثلث الحريق الثلاثة (انقر للإزالة أو الإعادة):
           </div>
 
           {/* Card 1 : الكربون C */}
@@ -400,12 +400,12 @@ export const FireTriangleSimulator: React.FC = () => {
             <div className="space-y-0.5">
               <div className="flex items-center gap-2">
                 <span className="text-xs sm:text-sm font-bold text-[#0F766E]">
-                  1. المادة القابلة للاحتراق : الكربون
+                  1. مادة قابلة للاحتراق : الكربون
                 </span>
                 <ChemicalFormula formula="C" size="sm" />
               </div>
               <p className="text-[11px] text-[#6B6B6B]">
-                Combustible — قطعة الفحم التي تحترق
+                قطعة الفحم (الكربون C) القابلة للاحتراق
               </p>
             </div>
             <span
@@ -442,12 +442,12 @@ export const FireTriangleSimulator: React.FC = () => {
             <div className="space-y-0.5">
               <div className="flex items-center gap-2">
                 <span className="text-xs sm:text-sm font-bold text-sky-700">
-                  2. المؤكسد : ثنائي الأكسجين
+                  2. ثنائي الأكسجين
                 </span>
                 <ChemicalFormula formula="O2" size="sm" />
               </div>
               <p className="text-[11px] text-[#6B6B6B]">
-                Comburant — الغاز الموجود في الهواء والضروري للاحتراق
+                الغاز الموجود في الهواء والضروري للاحتراق
               </p>
             </div>
             <span
@@ -471,7 +471,7 @@ export const FireTriangleSimulator: React.FC = () => {
             </span>
           </button>
 
-          {/* Card 3 : طاقة التنشيط */}
+          {/* Card 3 : حرارة / تسخين أولي */}
           <button
             type="button"
             onClick={() => toggleElement('energy')}
@@ -484,11 +484,11 @@ export const FireTriangleSimulator: React.FC = () => {
             <div className="space-y-0.5">
               <div className="flex items-center gap-2">
                 <span className="text-xs sm:text-sm font-bold text-amber-800">
-                  3. طاقة التنشيط : التسخين / اللهب 🔥
+                  3. حرارة : تسخين أولي 🔥
                 </span>
               </div>
               <p className="text-[11px] text-[#6B6B6B]">
-                Énergie d’activation — الحرارة الابتدائية لإشعال الكربون
+                الحرارة الابتدائية لإشعال قطعة الكربون حتى التوهج
               </p>
             </div>
             <span

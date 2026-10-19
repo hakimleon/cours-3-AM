@@ -66,8 +66,8 @@ export const DEFAULT_COURSE_GALLERY_IMAGES: LightboxImageItem[] = [
   {
     id: 'img-c03-main',
     src: '/src/assets/images/c03_combustion_carbone_1790805665478.jpg',
-    alt: 'وضعية الانطلاق للدرس 03 : تسخين قطعة كربون وإدخالها في وعاء الهواء ثم الكشف بماء الجير',
-    captionArabic: 'الدرس 03 — وضعية الانطلاق : احتراق الكربون في الهواء والكشف عن الغاز الناتج بماء الجير',
+    alt: 'وضعية الانطلاق للدرس 03 : تسخين قطعة كربون وإدخالها في وعاء الهواء ثم الكشف برائق الكلس',
+    captionArabic: 'الدرس 03 — وضعية الانطلاق : احتراق الكربون في الهواء والكشف عن الغاز الناتج برائق الكلس',
     captionFrench: 'Cours 03 · Combustion du carbone dans l’air et test à l’eau de chaux (CO₂)',
     courseBadge: 'الدرس 03',
   },
@@ -81,10 +81,18 @@ export const DEFAULT_COURSE_GALLERY_IMAGES: LightboxImageItem[] = [
   },
   {
     id: 'img-c05-main',
-    src: '/src/assets/images/c05_equilibrage_equation_1790807535324.jpg',
-    alt: 'وضعية الانطلاق للدرس 05 : مقارنة معادلة غير موزونة ومعادلة موزونة في كفتي ميزان الذرات',
-    captionArabic: 'الدرس 05 — وضعية الانطلاق : موازنة معادلة التفاعل الكيميائي لتحقيق انحفاظ الذرات في طرفي المعادلة',
-    captionFrench: 'Cours 05 · Équilibrer une équation de réaction chimique (2 H₂ + O₂ ⟶ 2 H₂O)',
+    src: '/src/assets/images/c05_balance_parfaite_1791924387470.jpg',
+    alt: 'وضعية الانطلاق للدرس 05 : مقارنة كتابة غير موزونة ومعادلة موزونة على كفتي ميزان الذرات',
+    captionArabic: 'الدرس 05 — وضعية الانطلاق : موازنة معادلة التفاعل الكيميائي لتحقيق انحفاظ نوع الذرات وعددها في طرفي المعادلة',
+    captionFrench: 'Cours 05 · Équilibrer une équation de réaction chimique (Conservation des atomes)',
+    courseBadge: 'الدرس 05',
+  },
+  {
+    id: 'img-c05-water',
+    src: '/src/assets/images/c05_boules_pate_1791923086179.jpg',
+    alt: 'النموذج الجزيئي بالتراص الحبيبي لاصطناع الماء الموزون : 2H₂(g) + O₂(g) ⟶ 2H₂O(l)',
+    captionArabic: 'الدرس 05 — النموذج الجزيئي بالتراص الحبيبي لاصطناع الماء الموزون : 2H₂(g) + O₂(g) ⟶ 2H₂O(l)',
+    captionFrench: 'Cours 05 · Modèle moléculaire : 2 H₂(g) + O₂(g) ⟶ 2 H₂O(l)',
     courseBadge: 'الدرس 05',
   },
   {
