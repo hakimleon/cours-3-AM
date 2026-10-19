@@ -31,6 +31,7 @@ import {
   Zap,
   Table2,
   HelpCircle,
+  ShieldAlert,
 } from 'lucide-react';
 
 // ============================================================================
@@ -270,11 +271,11 @@ export const PhysicsSchemaRenderer: React.FC<{ schema: PhysicsSchemaOrFigure }> 
             <text x="360" y="200" fontSize="13" fontWeight="bold" fill="#0284C7">+</text>
             {/* Labels */}
             <text x="115" y="58" textAnchor="middle" fontSize="12" fontWeight="bold" fill="#0F766E">غاز ثنائي الهيدروجين H₂</text>
-            <text x="115" y="75" textAnchor="middle" fontSize="11" fill="#6B6B6B">(المهبط · Cathode −)</text>
+            <text x="115" y="75" textAnchor="middle" fontSize="11" fill="#6B6B6B">(القطب السالب −)</text>
             <line x1="175" y1="60" x2="230" y2="55" stroke="#0F766E" strokeWidth="1.5" strokeDasharray="3 3" />
 
             <text x="485" y="58" textAnchor="middle" fontSize="12" fontWeight="bold" fill="#0284C7">غاز ثنائي الأكسجين O₂</text>
-            <text x="485" y="75" textAnchor="middle" fontSize="11" fill="#6B6B6B">(المصعد · Anode +)</text>
+            <text x="485" y="75" textAnchor="middle" fontSize="11" fill="#6B6B6B">(القطب الموجب +)</text>
             <line x1="370" y1="45" x2="420" y2="55" stroke="#0284C7" strokeWidth="1.5" strokeDasharray="3 3" />
 
             <text x="300" y="172" textAnchor="middle" fontSize="11" fontWeight="bold" fill="#0369A1">
@@ -495,6 +496,15 @@ export const PhysicsExperienceBlock: React.FC<{ data: PhysicsExperienceItem }> =
         </div>
       )}
 
+      {data.safetyWarning && (
+        <div className="flex items-start gap-2.5 p-3 rounded-[10px] bg-[#FEF2F2] border border-[#FCA5A5] text-[#991B1B]">
+          <ShieldAlert className="w-4 h-4 text-[#DC2626] shrink-0 mt-0.5" />
+          <div className="text-xs sm:text-[13px] font-semibold leading-relaxed">
+            <ChemPhysText text={data.safetyWarning} />
+          </div>
+        </div>
+      )}
+
       {data.materials && data.materials.length > 0 && (
         <div className="space-y-1.5">
           <div className="text-xs font-bold text-[#8C8C8C]">الوسائل والمواد المستعملة (Matériel & Réactifs) :</div>
@@ -636,8 +646,16 @@ export const PhysicsFormulaBlock: React.FC<{ data: PhysicsFormulaItem }> = ({ da
                   </span>
                 )}
               </div>
-              <div dir="ltr" className="font-mono font-bold text-[#0F766E] bg-white px-2 py-1 rounded border border-[#E2D9D0]">
-                {uv.symbol} ({uv.unit})
+              <div
+                dir="rtl"
+                className="flex items-center gap-1.5 font-bold text-[#0F766E] bg-white px-2.5 py-1 rounded-[8px] border border-[#E2D9D0]"
+              >
+                <ChemicalFormula formula={uv.symbol} size="sm" />
+                {uv.unit && (
+                  <span className="text-[11px] font-sans font-medium text-[#4A4A4A]">
+                    {uv.unit}
+                  </span>
+                )}
               </div>
             </div>
           ))}
@@ -697,11 +715,48 @@ export const PhysicsTableBlock: React.FC<{ data: PhysicsTableItem }> = ({ data }
           <tbody className="divide-y divide-[#EAE2DA]">
             {data.rows.map((row, rIdx) => (
               <tr key={rIdx} className="hover:bg-[#F6F0EB]/40 transition-colors">
-                {row.map((cell, cIdx) => (
-                  <td key={cIdx} className="py-3 px-4 text-[#4A4A4A] leading-relaxed">
-                    <ChemPhysText text={cell} />
-                  </td>
-                ))}
+                {row.map((cell, cIdx) => {
+                  const isEquationCell = cell.includes('⟶') || cell.includes('→');
+                  return (
+                    <td
+                      key={cIdx}
+                      style={{ height: 'auto', overflow: 'visible' }}
+                      className={`py-3.5 px-3 sm:px-4 text-[#4A4A4A] align-middle leading-relaxed overflow-visible h-auto ${
+                        isEquationCell ? 'font-sans' : ''
+                      }`}
+                    >
+                      {isEquationCell ? (() => {
+                        const arrowMatch = cell.includes('⟶') ? '⟶' : '→';
+                        const parts = cell.split(arrowMatch);
+                        const lhs = parts[0]?.trim();
+                        const rhs = parts[1]?.trim();
+                        return (
+                          <div
+                            dir="ltr"
+                            style={{
+                              height: 'auto',
+                              overflow: 'visible',
+                              unicodeBidi: 'isolate',
+                            }}
+                            className="flex flex-col items-center justify-center text-center font-sans font-bold leading-relaxed overflow-visible text-[10.5px] sm:text-xs text-[#1A1A1A] py-1.5 px-2 rounded-[8px] bg-[#FAF7F4] border border-[#0F766E]/25 mx-auto max-w-full"
+                          >
+                            <span className="text-[#0F766E] text-center w-full break-words">
+                              <ChemicalFormula formula={lhs} size="sm" />
+                            </span>
+                            <span className="text-[#0F766E] font-bold text-xs sm:text-sm my-0.5 select-none leading-none">
+                              ⟶
+                            </span>
+                            <span className="text-[#0284C7] text-center w-full break-words">
+                              <ChemicalFormula formula={rhs} size="sm" />
+                            </span>
+                          </div>
+                        );
+                      })() : (
+                        <ChemPhysText text={cell} />
+                      )}
+                    </td>
+                  );
+                })}
               </tr>
             ))}
           </tbody>
@@ -910,39 +965,42 @@ export const PhysicsApplicationCard: React.FC<{ item: PhysicsApplicationQuestion
 
   return (
     <div className="bg-[#FFFFFF] rounded-[14px] border border-[#E5DDD5] p-5 space-y-3">
-      <div className="flex flex-wrap items-center justify-between gap-2">
-        <div className="flex items-center gap-2">
-          <span className="w-7 h-7 rounded-[8px] bg-[#0F766E] text-white font-bold text-xs flex items-center justify-center">
-            {item.number}
-          </span>
-          <h4 className="text-sm sm:text-base font-bold text-[#4A4A4A]">
-            <ChemPhysText text={item.title} />
-          </h4>
+      {/* Group énoncé (Titre, Contexte, Questions, Données) de façon atomique pour éviter toute coupure en pagination PDF */}
+      <div className="application-enonce-group space-y-3">
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <div className="flex items-center gap-2">
+            <span className="w-7 h-7 rounded-[8px] bg-[#0F766E] text-white font-bold text-xs flex items-center justify-center">
+              {item.number}
+            </span>
+            <h4 className="text-sm sm:text-base font-bold text-[#4A4A4A]">
+              <ChemPhysText text={item.title} />
+            </h4>
+          </div>
+          {item.difficultyLabel && (
+            <span className="text-xs font-semibold text-[#8C8C8C]">{item.difficultyLabel}</span>
+          )}
         </div>
-        {item.difficultyLabel && (
-          <span className="text-xs font-semibold text-[#8C8C8C]">{item.difficultyLabel}</span>
+
+        <p className="text-sm text-[#4A4A4A] leading-[1.85]">
+          <ChemPhysText text={item.prompt} />
+        </p>
+
+        {item.subQuestions && item.subQuestions.length > 0 && (
+          <ol className="space-y-1.5 pr-5 list-decimal text-xs sm:text-sm text-[#4A4A4A]">
+            {item.subQuestions.map((sq, i) => (
+              <li key={i}>
+                <ChemPhysText text={sq} />
+              </li>
+            ))}
+          </ol>
+        )}
+
+        {item.formulaOrData && (
+          <div className="p-3 rounded-[10px] bg-[#F6F0EB]/70 border border-[#E2D9D0] text-center" dir="ltr">
+            <ChemicalFormula formula={item.formulaOrData} size="md" />
+          </div>
         )}
       </div>
-
-      <p className="text-sm text-[#4A4A4A] leading-[1.85]">
-        <ChemPhysText text={item.prompt} />
-      </p>
-
-      {item.subQuestions && item.subQuestions.length > 0 && (
-        <ol className="space-y-1.5 pr-5 list-decimal text-xs sm:text-sm text-[#4A4A4A]">
-          {item.subQuestions.map((sq, i) => (
-            <li key={i}>
-              <ChemPhysText text={sq} />
-            </li>
-          ))}
-        </ol>
-      )}
-
-      {item.formulaOrData && (
-        <div className="p-3 rounded-[10px] bg-[#F6F0EB]/70 border border-[#E2D9D0] text-center" dir="ltr">
-          <ChemicalFormula formula={item.formulaOrData} size="md" />
-        </div>
-      )}
 
       <div className="pt-1">
         <button
@@ -969,13 +1027,13 @@ export const PhysicsApplicationCard: React.FC<{ item: PhysicsApplicationQuestion
                 {st.formulaOrChem && (
                   <div
                     className={`p-2.5 rounded-[8px] bg-white border border-[#E2D9D0] text-center ${
-                      /[\u0600-\u06FF]/.test(st.formulaOrChem)
+                      /[\u0600-\u06FF]/.test(st.formulaOrChem) && !(st.formulaOrChem.includes('⟶') || st.formulaOrChem.includes('→'))
                         ? 'text-xs sm:text-sm font-semibold text-[#1A1A1A] leading-relaxed'
                         : ''
                     }`}
-                    dir={/[\u0600-\u06FF]/.test(st.formulaOrChem) ? 'rtl' : 'ltr'}
+                    dir={/[\u0600-\u06FF]/.test(st.formulaOrChem) && !(st.formulaOrChem.includes('⟶') || st.formulaOrChem.includes('→')) ? 'rtl' : 'ltr'}
                   >
-                    {/[\u0600-\u06FF]/.test(st.formulaOrChem) ? (
+                    {/[\u0600-\u06FF]/.test(st.formulaOrChem) && !(st.formulaOrChem.includes('⟶') || st.formulaOrChem.includes('→')) ? (
                       <ChemPhysText text={st.formulaOrChem} />
                     ) : (
                       <ChemicalFormula formula={st.formulaOrChem} size="md" />
@@ -1278,38 +1336,44 @@ export const PhysicsVocabularyTable: React.FC<{ vocabulaire: TrilingualTerm[] }>
         <span>المصطلحات العلمية الأساسية · Vocabulaire Scientifique (العربية · Français)</span>
       </div>
 
-      <div className="overflow-x-auto rounded-[10px] border border-[#E2D9D0]">
-        <table className="w-full text-right border-collapse text-xs sm:text-sm">
+      <div className="w-full max-w-full rounded-[10px] border border-[#E2D9D0] overflow-hidden">
+        <table className="table-fixed w-full max-w-full text-right border-collapse text-xs sm:text-sm">
           <thead>
             <tr className="bg-[#F6F0EB] border-b border-[#E2D9D0] text-[#4A4A4A] font-bold">
-              <th className="py-2.5 px-3.5 text-right w-[24%]">المصطلح بالعربية</th>
-              <th className="py-2.5 px-3.5 text-left font-mono w-[26%]" dir="ltr">
+              <th className="py-2.5 px-3 text-right w-[24%] sm:w-[22%]">المصطلح بالعربية</th>
+              <th className="py-2.5 px-3 text-left font-mono w-[26%] sm:w-[24%]" dir="ltr">
                 Terme en Français
               </th>
               {hasExplanationCol && (
-                <th className="py-2.5 px-3.5 text-right w-[50%]">الرمز / الشرح العلمي</th>
+                <th className="py-2.5 px-3 text-right w-[50%] sm:w-[54%]">الرمز / الشرح العلمي</th>
               )}
             </tr>
           </thead>
           <tbody className="divide-y divide-[#EAE2DA]">
             {vocabulaire.map((v, idx) => (
               <tr key={idx} className="hover:bg-[#F6F0EB]/40 transition-colors align-top">
-                <td className="py-2.5 px-3.5 font-bold text-[#4A4A4A]">{v.arabic}</td>
+                <td className="py-2.5 px-3 font-bold text-[#4A4A4A] break-words">{v.arabic}</td>
                 <td
-                  className="py-2.5 px-3.5 font-mono text-left text-[#0F766E] font-semibold"
+                  className="py-2.5 px-3 font-mono text-left text-[#0F766E] font-semibold break-words"
                   dir="ltr"
                 >
                   {v.french}
                 </td>
                 {hasExplanationCol && (
-                  <td className="py-2.5 px-3.5 text-[#4A4A4A] leading-relaxed">
-                    <div className="flex flex-wrap items-center gap-2">
+                  <td className="py-2.5 px-3 text-[#4A4A4A] leading-relaxed break-words">
+                    <div className="flex flex-col gap-1.5 w-full max-w-full">
                       {v.symbolOrFormula && (
-                        <span className="px-2 py-0.5 rounded bg-[#F6F0EB] border border-[#E2D9D0] shrink-0">
-                          <ChemicalFormula formula={v.symbolOrFormula} size="sm" />
-                        </span>
+                        <div className="w-full max-w-full" dir="ltr">
+                          <span className="inline-flex flex-wrap max-w-full px-2 py-0.5 rounded bg-[#F6F0EB] border border-[#E2D9D0] text-[10px] sm:text-xs">
+                            <ChemicalFormula formula={v.symbolOrFormula} size="sm" />
+                          </span>
+                        </div>
                       )}
-                      {v.explanation && <span><ChemPhysText text={v.explanation} /></span>}
+                      {v.explanation && (
+                        <p className="text-xs text-[#4A4A4A] leading-relaxed break-words">
+                          <ChemPhysText text={v.explanation} />
+                        </p>
+                      )}
                     </div>
                   </td>
                 )}
@@ -1375,33 +1439,84 @@ export const PhysicsSummarySection: React.FC<{
 
       {pointsEssentiels && pointsEssentiels.length > 0 && (
         <div className={`grid ${gridColsClass} gap-3`}>
-          {pointsEssentiels.map((pt) => (
-            <div
-              key={pt.number}
-              className="p-3.5 rounded-[12px] bg-[#FAF7F4] border border-[#E5DDD5] flex flex-col justify-between gap-2.5"
-            >
-              <div className="space-y-1">
-                <div className="flex items-center gap-2">
-                  <span
-                    style={{ backgroundColor: theme.primaryHex }}
-                    className="w-5 h-5 rounded-[6px] text-white font-bold text-xs flex items-center justify-center shrink-0"
-                  >
-                    {pt.number}
-                  </span>
-                  <h4 className="text-xs sm:text-sm font-bold text-[#4A4A4A]">{pt.title}</h4>
+          {pointsEssentiels.map((pt) => {
+            const isCard6 = pt.number === 6;
+            return (
+              <div
+                key={pt.number}
+                data-card-number={pt.number}
+                className={`p-3.5 rounded-[12px] bg-[#FAF7F4] border border-[#E5DDD5] flex flex-col justify-between gap-2.5 ${
+                  isCard6 ? 'col-span-1 sm:col-span-2 md:col-span-2' : ''
+                }`}
+                style={isCard6 ? { gridColumn: 'span 2 / span 2' } : undefined}
+              >
+                <div className="space-y-1">
+                  <div className="flex items-center gap-2">
+                    <span
+                      style={{ backgroundColor: theme.primaryHex }}
+                      className="w-5 h-5 rounded-[6px] text-white font-bold text-xs flex items-center justify-center shrink-0"
+                    >
+                      {pt.number}
+                    </span>
+                    <h4 className="text-xs sm:text-sm font-bold text-[#4A4A4A]">{pt.title}</h4>
+                  </div>
+                  <p className="text-xs text-[#4A4A4A]/90 leading-relaxed break-words">
+                    <ChemPhysText text={pt.description} />
+                  </p>
                 </div>
-                <p className="text-xs text-[#4A4A4A]/90 leading-relaxed">
-                  <ChemPhysText text={pt.description} />
-                </p>
-              </div>
 
-              {pt.formulaOrSymbol && (
-                <div className="p-2 rounded-[8px] bg-white border border-[#E2D9D0] text-center" dir="ltr">
-                  <ChemicalFormula formula={pt.formulaOrSymbol} size="sm" />
-                </div>
-              )}
-            </div>
-          ))}
+                {pt.formulaOrSymbol && (
+                  <div
+                    className={`rounded-[8px] bg-white border border-[#E2D9D0] text-center w-full max-w-full ${
+                      isCard6 ? 'p-2 sm:p-2.5' : 'p-1.5 sm:p-2'
+                    }`}
+                    style={{
+                      maxWidth: '100%',
+                      textAlign: 'center',
+                    }}
+                    dir="ltr"
+                  >
+                    {isCard6 ? (
+                      <bdi
+                        dir="ltr"
+                        style={{ unicodeBidi: 'isolate', whiteSpace: 'nowrap' }}
+                        className="inline-block font-sans font-bold text-sm tracking-wide text-[#0F766E] whitespace-nowrap"
+                      >
+                        (s) , (g) , (l) , (aq)
+                      </bdi>
+                    ) : (pt.formulaOrSymbol.includes('⟶') || pt.formulaOrSymbol.includes('->')) ? (() => {
+                      const arrowMatch = pt.formulaOrSymbol.includes('⟶') ? '⟶' : '->';
+                      const parts = pt.formulaOrSymbol.split(arrowMatch);
+                      const lhs = parts[0]?.trim();
+                      const rhs = parts[1]?.trim();
+                      return (
+                        <div
+                          dir="ltr"
+                          style={{ unicodeBidi: 'isolate' }}
+                          className="flex flex-col items-center justify-center text-center font-sans font-bold py-1 px-1.5 leading-tight"
+                        >
+                          <span className="text-[#0F766E] text-xs leading-tight whitespace-nowrap">
+                            <ChemicalFormula formula={lhs} size="xs" />
+                          </span>
+                          <span className="text-[#0F766E] font-bold text-xs my-0.5 select-none leading-none">
+                            ⟶
+                          </span>
+                          <span className="text-[#0284C7] text-xs leading-tight whitespace-nowrap">
+                            <ChemicalFormula formula={rhs} size="xs" />
+                          </span>
+                        </div>
+                      );
+                    })() : (
+                      <ChemicalFormula
+                        formula={pt.formulaOrSymbol}
+                        size="sm"
+                      />
+                    )}
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </div>
       )}
 

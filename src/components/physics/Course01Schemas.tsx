@@ -538,14 +538,16 @@ export const Course01SchemaRenderer: React.FC<{ type: string }> = ({ type }) => 
     // ========================================================================
     // COURS 02 — 1. النشاط الاستكشافي : صورة توضيحية + 3 وضعيات ملاحظة (دون حرق المفاهيم)
     // ========================================================================
+    // COURS 02 — 1. النشاط الاستكشافي : صورة توضيحية + 3 وضعيات ملاحظة (دون حرق المفاهيم)
+    // ========================================================================
     case 'c02-discovery-setup':
       return (
         <div className="p-3.5 rounded-[12px] bg-white border border-[#E2D9D0] space-y-3.5" dir="rtl">
           <ZoomableCourseImage
-            src="/src/assets/images/c02_electrolyse_eau_1790802935276.jpg"
-            alt="وضعية الانطلاق للدرس 02 : مقارنة تبخر الماء مع تجربة تمرير تيار كهربائي في الماء"
-            captionArabic="صورة توضيحية : مقارنة بين تسخين الماء (تغير الحالة) وتمرير تيار كهربائي مستمر في وعاء به ماء مع أنبوبين منكسين"
-            captionFrench="Électrolyse de l’eau (rapport 2 : 1) vs Changement d’état physique"
+            src="/src/assets/images/c02_montage_depart_1791665805212.jpg"
+            alt="وضعية الانطلاق للدرس 02 : تجربة التحليل الكهربائي للماء في وعاء التحليل دون كشف طبيعة الغازين"
+            captionArabic="صورة توضيحية لوضعية الانطلاق : وعاء التحليل الكهربائي به ماء وNaOH مع أنبوبين منكّسين يجمعان غازين عديمي اللون غير معروفين مسبقًا، وتوصيل صحيح للمولد (+ أحمر و − أسود دون تقاطع أسلاك)"
+            captionFrench="Dispositif d’électrolyse au départ (câblage direct + et − sans croisement, gaz incolores non encore identifiés)"
             courseBadge="الدرس 02"
           />
 
@@ -554,14 +556,14 @@ export const Course01SchemaRenderer: React.FC<{ type: string }> = ({ type }) => 
             <div className="p-3 rounded-[10px] bg-[#FAF7F4] border border-[#E5DDD5] space-y-2 flex flex-col justify-between">
               <div className="space-y-1.5">
                 <div className="text-xs font-bold text-[#0F766E]">
-                  الملاحظة (أ) : تسخين الماء أو تجميده
+                  الملاحظة (أ) : تسخين الماء وتبريده
                 </div>
                 <p className="text-xs text-[#4A4A4A] leading-relaxed">
-                  عندما نبخر الماء السائل أو نجمده، يتغير مظهره الفيزيائي فقط، وعند تكثيف البخار يعود ماءً سائلًا له نفس الصيغة.
+                  عند تسخين الماء يتبخر، وعند تبريده يتكاثف ويعود ماءً سائلًا له نفس الخواص؛ إنه تغير فيزيائي يبقى فيه الماء دون تغير في طبيعته.
                 </p>
               </div>
               <div className="pt-1 border-t border-[#E5DDD5] flex items-center justify-between text-[11px] font-mono text-[#0F766E]" dir="ltr">
-                <span>H₂O (liquide) ⇄ H₂O (vapeur)</span>
+                <span>ماء (سائل) ⇄ ماء (بخار)</span>
               </div>
             </div>
 
@@ -569,14 +571,14 @@ export const Course01SchemaRenderer: React.FC<{ type: string }> = ({ type }) => 
             <div className="p-3 rounded-[10px] bg-[#FAF7F4] border border-[#E5DDD5] space-y-2 flex flex-col justify-between">
               <div className="space-y-1.5">
                 <div className="text-xs font-bold text-[#0F766E]">
-                  الملاحظة (ب) : تمرير تيار كهربائي في الماء
+                  الملاحظة (ب) : إضافة NaOH وتوصيل الدارة
                 </div>
                 <p className="text-xs text-[#4A4A4A] leading-relaxed">
-                  عند غلق الدارة مع مولد كهربائي مستمر، تنطلق فقاعات غازية عند القطبين، ويتجمع في الأنبوب الأول حجم غاز يساوي ضعف حجم الأنبوب الثاني.
+                  نملأ وعاء التحليل بالماء ونضيف قليلًا من هيدروكسيد الصوديوم NaOH لتسهيل مرور التيار، وننكس أنبوبي اختبار فوق القطبين.
                 </p>
               </div>
-              <div className="pt-1 border-t border-[#E5DDD5] flex items-center justify-between text-[11px] font-mono text-[#C94BA6]" dir="ltr">
-                <span>Volume (Tube 1) ≈ 2 × Volume (Tube 2)</span>
+              <div className="pt-1 border-t border-[#E5DDD5] flex items-center justify-between text-[11px] font-mono text-[#0F766E]" dir="ltr">
+                <span>ماء + NaOH(aq)</span>
               </div>
             </div>
 
@@ -584,14 +586,14 @@ export const Course01SchemaRenderer: React.FC<{ type: string }> = ({ type }) => 
             <div className="p-3 rounded-[10px] bg-[#FAF7F4] border border-[#E5DDD5] space-y-2 flex flex-col justify-between">
               <div className="space-y-1.5">
                 <div className="text-xs font-bold text-[#0F766E]">
-                  الملاحظة (ج) : اختبار الغازين المتجمعين
+                  الملاحظة (ج) : انطلاق فقاعات وتناقص مستوى الماء
                 </div>
                 <p className="text-xs text-[#4A4A4A] leading-relaxed">
-                  الغاز الأول (الأكبر حجمًا) يحدث فرقعة خفيفة عند تقريب عود ثقاب مشتعل، بينما الغاز الثاني (الأصغر حجمًا) يزيد من توهج عود ثقاب متوهج!
+                  عند غلق القاطعة، يتوهج المصباح وتنطلق فقاعات غازية لنوعين كيميائيين جديدين ويبدأ مستوى الماء في التناقص داخل أنبوبي الاختبار.
                 </p>
               </div>
               <div className="pt-1 border-t border-[#E5DDD5] flex items-center justify-between text-[11px] font-mono text-[#0F766E]" dir="ltr">
-                <span>Gaz 1 ≠ H₂O · Gaz 2 ≠ H₂O</span>
+                <span>ظهور نوعين غازيين جديدين</span>
               </div>
             </div>
           </div>
@@ -599,307 +601,144 @@ export const Course01SchemaRenderer: React.FC<{ type: string }> = ({ type }) => 
       );
 
     // ========================================================================
-    // COURS 02 — 2. التركيب التجريبي، الملاحظة وجمع الغازين بنسبة 2 : 1
+    // COURS 02 — 2. التركيب التجريبي : وعاء التحليل، الأقطاب، المولد والمصباح
     // ========================================================================
     case 'c02-electrolysis-apparatus':
       return (
-        <div className="p-4 rounded-[12px] bg-[#FAF7F4] border border-[#E2D9D0] space-y-3" dir="rtl">
-          <svg viewBox="0 0 680 280" className="w-full max-w-2xl mx-auto h-auto" dir="ltr">
-            <rect x="6" y="6" width="668" height="268" rx="14" fill="#FFFFFF" stroke="#E2D9D0" />
+        <div className="p-4 rounded-[12px] bg-[#FAF7F4] border border-[#E2D9D0] space-y-3.5" dir="rtl">
+          <ZoomableCourseImage
+            src="/src/assets/images/c02_montage_complet_1791665853524.jpg"
+            alt="التركيب التجريبي للتحليل الكهربائي للماء : وعاء التحليل، الأنابيب، القواطع والمولد"
+            captionArabic="التركيب التجريبي الكامل للتحليل الكهربائي للماء : القطب الموجب (+) للمولد موصول بالمسرى (+) والقطب السالب (−) موصول بالمسرى (−) دون تقاطع أسلاك، والغازان هما O₂ عند القطب الموجب و H₂ عند القطب السالب"
+            captionFrench="Montage expérimental complet : câblage direct (+ rouge et − noir sans croisement, O₂ au pôle + et H₂ au pôle −)"
+            courseBadge="الدرس 02"
+          />
 
-            {/* Electrolyzer vessel (وعاء يحتوي على الماء H₂O) */}
-            <path
-              d="M 200 60 L 200 182 Q 200 198 216 198 L 464 198 Q 480 198 480 182 L 480 60"
-              fill="#E0F2FE"
-              stroke="#0284C7"
-              strokeWidth="2.5"
-            />
-            <line x1="200" y1="82" x2="480" y2="82" stroke="#0284C7" strokeWidth="1.5" strokeDasharray="4 3" />
-
-            {/* Left Inverted Tube: Electrode (-) -> Gas 1 (Larger volume = 2V) */}
-            <rect x="246" y="24" width="56" height="145" rx="26" fill="#FFFFFF" stroke="#0F766E" strokeWidth="2.2" />
-            {/* Gas 1 space (double height: y=26 to y=106 -> 80px of gas!) */}
-            <rect x="248" y="26" width="52" height="80" rx="24" fill="#F0FDFA" />
-            {/* Remaining water in tube 1 */}
-            <rect x="248" y="106" width="52" height="63" fill="#BAE6FD" />
-            <line x1="248" y1="106" x2="300" y2="106" stroke="#0F766E" strokeWidth="2" />
-
-            {/* Rising bubbles in tube 1 */}
-            <circle cx="270" cy="145" r="3.5" fill="#FFFFFF" stroke="#0F766E" strokeWidth="1.2" />
-            <circle cx="278" cy="132" r="4" fill="#FFFFFF" stroke="#0F766E" strokeWidth="1.2" />
-            <circle cx="268" cy="118" r="3.5" fill="#FFFFFF" stroke="#0F766E" strokeWidth="1.2" />
-
-            {/* Right Inverted Tube: Electrode (+) -> Gas 2 (Smaller volume = 1V) */}
-            <rect x="378" y="24" width="56" height="145" rx="26" fill="#FFFFFF" stroke="#0284C7" strokeWidth="2.2" />
-            {/* Gas 2 space (single height: y=26 to y=66 -> 40px of gas!) */}
-            <rect x="380" y="26" width="52" height="40" rx="20" fill="#EFF6FF" />
-            {/* Remaining water in tube 2 */}
-            <rect x="380" y="66" width="52" height="103" fill="#BAE6FD" />
-            <line x1="380" y1="66" x2="432" y2="66" stroke="#0284C7" strokeWidth="2" />
-
-            {/* Rising bubbles in tube 2 */}
-            <circle cx="404" cy="145" r="3" fill="#FFFFFF" stroke="#0284C7" strokeWidth="1.2" />
-            <circle cx="410" cy="120" r="3.5" fill="#FFFFFF" stroke="#0284C7" strokeWidth="1.2" />
-            <circle cx="402" cy="92" r="3" fill="#FFFFFF" stroke="#0284C7" strokeWidth="1.2" />
-
-            {/* Electrodes */}
-            <rect x="269" y="152" width="10" height="46" rx="3" fill="#334155" />
-            <rect x="401" y="152" width="10" height="46" rx="3" fill="#334155" />
-
-            {/* Wires to DC Generator */}
-            <polyline
-              points="274,198 274,238 316,238"
-              fill="none"
-              stroke="#0F766E"
-              strokeWidth="2.5"
-            />
-            <polyline
-              points="406,198 406,238 364,238"
-              fill="none"
-              stroke="#DC2626"
-              strokeWidth="2.5"
-            />
-
-            {/* DC Generator (مولد كهربائي مستمر Générateur) */}
-            <circle cx="340" cy="238" r="22" fill="#FAF7F4" stroke="#4A4A4A" strokeWidth="2.2" />
-            <text x="340" y="243" textAnchor="middle" fontSize="14" fontWeight="bold" fill="#4A4A4A">
-              G
-            </text>
-            <text x="300" y="230" fontSize="15" fontWeight="bold" fill="#0F766E">
-              (−)
-            </text>
-            <text x="380" y="230" fontSize="15" fontWeight="bold" fill="#DC2626">
-              (+)
-            </text>
-            <text x="340" y="268" textAnchor="middle" fontSize="11" fontWeight="bold" fill="#4A4A4A">
-              مولد كهربائي مستمر (Générateur électrique)
-            </text>
-
-            {/* Left Callout : القطب الأول (-) — غاز 1 (حجم أكبر = 2V) */}
-            <rect x="20" y="34" width="165" height="78" rx="10" fill="#F0FDFA" stroke="#0F766E" strokeWidth="1.5" />
-            <text x="102" y="54" textAnchor="middle" fontSize="12" fontWeight="bold" fill="#0F766E">
-              القطب الأول (−) · Électrode
-            </text>
-            <text x="102" y="74" textAnchor="middle" fontSize="12" fontWeight="bold" fill="#4A4A4A">
-              غاز 1 : حجم أكبر (2V)
-            </text>
-            <text x="102" y="94" textAnchor="middle" fontSize="11" fill="#0F766E">
-              ضعف حجم الغاز الثاني
-            </text>
-            <line x1="185" y1="68" x2="246" y2="68" stroke="#0F766E" strokeWidth="1.5" strokeDasharray="3 3" />
-
-            {/* Right Callout : القطب الثاني (+) — غاز 2 (حجم أصغر = 1V) */}
-            <rect x="495" y="34" width="165" height="78" rx="10" fill="#EFF6FF" stroke="#0284C7" strokeWidth="1.5" />
-            <text x="577" y="54" textAnchor="middle" fontSize="12" fontWeight="bold" fill="#0284C7">
-              القطب الثاني (+) · Électrode
-            </text>
-            <text x="577" y="74" textAnchor="middle" fontSize="12" fontWeight="bold" fill="#4A4A4A">
-              غاز 2 : حجم أصغر (1V)
-            </text>
-            <text x="577" y="94" textAnchor="middle" fontSize="11" fill="#0284C7">
-              نصف حجم الغاز الأول
-            </text>
-            <line x1="434" y1="48" x2="495" y2="58" stroke="#0284C7" strokeWidth="1.5" strokeDasharray="3 3" />
-
-            {/* Ratio Badge 2 : 1 */}
-            <rect x="292" y="172" width="96" height="22" rx="6" fill="#FFFFFF" stroke="#0F766E" strokeWidth="1.2" />
-            <text x="340" y="187" textAnchor="middle" fontSize="11" fontWeight="bold" fill="#0F766E">
-              نسبة الحجوم 2 : 1
-            </text>
-            <text x="340" y="130" textAnchor="middle" fontSize="12" fontWeight="bold" fill="#0369A1">
-              الماء (H₂O)
-            </text>
-          </svg>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center text-xs">
+            <div className="p-2.5 rounded-[8px] bg-white border border-[#E2D9D0]">
+              <span className="font-bold text-[#0F766E] block">المولد الكهربائي</span>
+              <span className="text-[#6B6B6B] text-[11px]">تيار مستمر (+ أحمر / − أسود)</span>
+            </div>
+            <div className="p-2.5 rounded-[8px] bg-white border border-[#E2D9D0]">
+              <span className="font-bold text-[#0F766E] block">المصباح والقاطعة</span>
+              <span className="text-[#6B6B6B] text-[11px]">دلالة على مرور التيار</span>
+            </div>
+            <div className="p-2.5 rounded-[8px] bg-white border border-[#E2D9D0]">
+              <span className="font-bold text-[#0F766E] block">ماء + هيدروكسيد الصوديوم</span>
+              <span className="text-[#6B6B6B] text-[11px]">NaOH لتسهيل مرور التيار</span>
+            </div>
+            <div className="p-2.5 rounded-[8px] bg-white border border-[#E2D9D0]">
+              <span className="font-bold text-[#0F766E] block">أنبوبا اختبار</span>
+              <span className="text-[#6B6B6B] text-[11px]">لجمع الغازين الناتجين</span>
+            </div>
+          </div>
         </div>
       );
 
     // ========================================================================
-    // COURS 02 — 3. الكشف عن الغازين (H₂ و O₂) وبنية جزيء الماء كمادة مركبة
+    // COURS 02 — 3. الكشف عن الغازين الناتجين بواسطة عود الثقاب
     // ========================================================================
     case 'c02-gas-identification-tests':
       return (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5 p-3.5 rounded-[12px] bg-[#FAF7F4] border border-[#E2D9D0]" dir="rtl">
-          {/* Card A : الكشف عن غاز الهيدروجين H₂ */}
-          <div className="p-3.5 rounded-[12px] bg-white border border-[#0F766E]/35 space-y-2.5 flex flex-col justify-between">
-            <div className="space-y-1.5">
-              <div className="flex items-center justify-between gap-2">
-                <span className="px-2 py-0.5 rounded bg-[#0F766E]/10 text-[#0F766E] text-xs font-bold">
-                  أ. الأنبوب ذو الحجم الأكبر (2V)
-                </span>
-                <ChemicalFormula formula="H2" size="sm" />
-              </div>
-              <h5 className="text-xs sm:text-sm font-bold text-[#4A4A4A]">
-                الكشف عن ثنائي الهيدروجين (Dihydrogène)
-              </h5>
-              <p className="text-xs text-[#4A4A4A] leading-relaxed">
-                عند تقريب <strong>عود ثقاب مشتعل</strong> من فوهة الأنبوب، يحدث احتراق سريع ومميز مصحوب بـ<strong>فرقعة خفيفة (Pop)</strong>.
-              </p>
-            </div>
-            <div className="p-2.5 rounded-[8px] bg-[#F0FDFA] border border-[#0F766E]/25 text-center">
-              <div className="text-xs font-bold text-[#0F766E]">الغاز الناتج : ثنائي الهيدروجين</div>
-              <div className="text-xs font-mono font-bold text-[#4A4A4A]" dir="ltr">
-                Dihydrogène · الصيغة : H₂
-              </div>
-            </div>
-          </div>
+        <div className="p-3.5 rounded-[12px] bg-[#FAF7F4] border border-[#E2D9D0] space-y-3.5" dir="rtl">
+          <ZoomableCourseImage
+            src="/src/assets/images/c02_test_sans_mains_1791666998520.jpg"
+            alt="اختبارا الكشف عن غازي ثنائي الهيدروجين وثنائي الأكسجين بواسطة عود الثقاب المشتعل والمتوهج"
+            captionArabic="الكشف التجريبي عن الغازين عديمي اللون : تقريب عود ثقاب مشتعل يحدث فرقعة خفيفة (H₂)، وتقريب عود متوهج بدون لهب يزداد توهجًا (O₂)"
+            captionFrench="Tests d’identification des deux gaz incolores : tison enflammé (H₂) et tison incandescent sans flamme (O₂)"
+            courseBadge="الدرس 02"
+          />
 
-          {/* Card B : الكشف عن غاز الأكسجين O₂ */}
-          <div className="p-3.5 rounded-[12px] bg-white border border-[#0284C7]/35 space-y-2.5 flex flex-col justify-between">
-            <div className="space-y-1.5">
-              <div className="flex items-center justify-between gap-2">
-                <span className="px-2 py-0.5 rounded bg-[#0284C7]/10 text-[#0284C7] text-xs font-bold">
-                  ب. الأنبوب ذو الحجم الأصغر (1V)
-                </span>
-                <ChemicalFormula formula="O2" size="sm" />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+            {/* Card A : الكشف عن غاز الهيدروجين H₂ */}
+            <div className="p-3.5 rounded-[12px] bg-white border border-[#0F766E]/35 space-y-2 flex flex-col justify-between">
+              <div className="space-y-1.5">
+                <div className="flex items-center justify-between gap-2">
+                  <span className="px-2 py-0.5 rounded bg-[#0F766E]/10 text-[#0F766E] text-xs font-bold">
+                    الغاز الأول
+                  </span>
+                  <ChemicalFormula formula="H2" size="sm" />
+                </div>
+                <h5 className="text-xs sm:text-sm font-bold text-[#4A4A4A]">
+                  الكشف عن غاز ثنائي الهيدروجين (Dihydrogène)
+                </h5>
+                <p className="text-xs text-[#4A4A4A] leading-relaxed">
+                  عند تقريب <strong>عود ثقاب مشتعل</strong> من فوهة الأنبوب، يحدث احتراق سريع ومميز مصحوب بـ<strong>فرقعة خفيفة</strong>.
+                </p>
               </div>
-              <h5 className="text-xs sm:text-sm font-bold text-[#4A4A4A]">
-                الكشف عن ثنائي الأكسجين (Dioxygène)
-              </h5>
-              <p className="text-xs text-[#4A4A4A] leading-relaxed">
-                عند تقريب <strong>عود ثقاب متوهج</strong> (على وشك الانطفاء)، يزداد توهجًا ويشتعل من جديد لأنه غاز يساعد على استمرار الاحتراق.
-              </p>
-            </div>
-            <div className="p-2.5 rounded-[8px] bg-[#EFF6FF] border border-[#0284C7]/25 text-center">
-              <div className="text-xs font-bold text-[#0284C7]">الغاز الناتج : ثنائي الأكسجين</div>
-              <div className="text-xs font-mono font-bold text-[#4A4A4A]" dir="ltr">
-                Dioxygène · الصيغة : O₂
+              <div className="p-2.5 rounded-[8px] bg-[#F0FDFA] border border-[#0F766E]/25 text-center">
+                <div className="text-xs font-bold text-[#0F766E]">النوع الكيميائي : ثنائي الهيدروجين</div>
+                <div className="text-xs font-mono font-bold text-[#4A4A4A]" dir="ltr">
+                  الصيغة : H₂ · Dihydrogène
+                </div>
               </div>
             </div>
-          </div>
 
-          {/* Card C : تركيب جزيء الماء H₂O (مادة مركبة) */}
-          <div className="p-3.5 rounded-[12px] bg-white border border-[#C94BA6]/35 space-y-2.5 flex flex-col justify-between">
-            <div className="space-y-1.5">
-              <div className="flex items-center justify-between gap-2">
-                <span className="px-2 py-0.5 rounded bg-[#C94BA6]/10 text-[#C94BA6] text-xs font-bold">
-                  ج. الماء مادة مركبة
-                </span>
-                <ChemicalFormula formula="H2O" size="sm" />
+            {/* Card B : الكشف عن غاز الأكسجين O₂ */}
+            <div className="p-3.5 rounded-[12px] bg-white border border-[#0284C7]/35 space-y-2 flex flex-col justify-between">
+              <div className="space-y-1.5">
+                <div className="flex items-center justify-between gap-2">
+                  <span className="px-2 py-0.5 rounded bg-[#0284C7]/10 text-[#0284C7] text-xs font-bold">
+                    الغاز الثاني
+                  </span>
+                  <ChemicalFormula formula="O2" size="sm" />
+                </div>
+                <h5 className="text-xs sm:text-sm font-bold text-[#4A4A4A]">
+                  الكشف عن غاز ثنائي الأكسجين (Dioxygène)
+                </h5>
+                <p className="text-xs text-[#4A4A4A] leading-relaxed">
+                  عند تقريب <strong>عود ثقاب متوهج</strong> (جمرة بدون لهب) من فوهة الأنبوب، يزداد توهجًا ويشتعل اللهب من جديد لأنه غاز يساعد على الاحتراق.
+                </p>
               </div>
-              <h5 className="text-xs sm:text-sm font-bold text-[#4A4A4A]">
-                مكونات الفرد الكيميائي للماء (Corps composé)
-              </h5>
-              <svg viewBox="0 0 180 86" className="w-full h-18 mx-auto" dir="ltr">
-                <line x1="90" y1="30" x2="50" y2="64" stroke="#475569" strokeWidth="3" />
-                <line x1="90" y1="30" x2="130" y2="64" stroke="#475569" strokeWidth="3" />
-                <circle cx="90" cy="28" r="16" fill="#EF4444" stroke="#B91C1C" strokeWidth="1.5" />
-                <text x="90" y="33" textAnchor="middle" fontSize="12" fontWeight="bold" fill="#FFFFFF">
-                  O
-                </text>
-                <circle cx="48" cy="64" r="12" fill="#FFFFFF" stroke="#475569" strokeWidth="1.8" />
-                <text x="48" y="68" textAnchor="middle" fontSize="11" fontWeight="bold" fill="#1E293B">
-                  H
-                </text>
-                <circle cx="132" cy="64" r="12" fill="#FFFFFF" stroke="#475569" strokeWidth="1.8" />
-                <text x="132" y="68" textAnchor="middle" fontSize="11" fontWeight="bold" fill="#1E293B">
-                  H
-                </text>
-              </svg>
-            </div>
-            <div className="p-2.5 rounded-[8px] bg-[#FAF7F4] border border-[#C94BA6]/25 text-center text-xs font-bold text-[#4A4A4A]">
-              2 ذرتين هيدروجين (H) + 1 ذرة أكسجين (O)
+              <div className="p-2.5 rounded-[8px] bg-[#EFF6FF] border border-[#0284C7]/25 text-center">
+                <div className="text-xs font-bold text-[#0284C7]">النوع الكيميائي : ثنائي الأكسجين</div>
+                <div className="text-xs font-mono font-bold text-[#4A4A4A]" dir="ltr">
+                  الصيغة : O₂ · Dioxygène
+                </div>
+              </div>
             </div>
           </div>
         </div>
       );
 
     // ========================================================================
-    // COURS 02 — 5. التمثيل الجزيئي وإعادة ترتيب الذرات (2 H₂O ⟶ 2 H₂ + O₂)
+    // COURS 02 — 5. نموذج التفاعل الكيميائي : المتفاعلات والنواتج
     // ========================================================================
     case 'c02-molecular-rearrangement':
       return (
         <div className="p-4 rounded-[12px] bg-[#FAF7F4] border border-[#E2D9D0] space-y-3" dir="rtl">
-          <svg viewBox="0 0 680 210" className="w-full max-w-2xl mx-auto h-auto" dir="ltr">
-            {/* Left Box : قبل التحول (2 H₂O) */}
-            <rect x="14" y="14" width="245" height="182" rx="12" fill="#FFFFFF" stroke="#0284C7" strokeWidth="1.8" />
-            <text x="136" y="36" textAnchor="middle" fontSize="13" fontWeight="bold" fill="#0284C7">
-              قبل التحول : جزيئان من الماء (2 H₂O)
-            </text>
+          <div className="max-w-xl mx-auto space-y-3">
+            <div className="p-3 rounded-[10px] bg-white border border-[#0F766E] text-center space-y-2">
+              <div className="text-xs font-bold text-[#0F766E]">نموذج التفاعل الكيميائي للتحليل الكهربائي للماء</div>
+              <div className="py-2 text-center" dir="ltr">
+                <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-[10px] bg-[#FAF7F4] border-2 border-[#0F766E]/40 shadow-xs text-sm sm:text-base font-bold text-[#1A1A1A]">
+                  <span className="font-sans text-[#0F766E]">ماء (<span className="chem-state-l">l</span>)</span>
+                  <span className="text-lg font-bold text-[#0F766E] px-1 select-none">⟶</span>
+                  <span className="font-sans text-[#0284C7]">ثنائي الهيدروجين (g) + ثنائي الأكسجين (g)</span>
+                </div>
+              </div>
+              <div className="text-[11px] text-[#6B6B6B]">
+                التفاعل الكيميائي يفسر تحول الأنواع الكيميائية وتشكل أنواع جديدة ولا يبرز الأنواع التي لا تشارك في التحول.
+              </div>
+            </div>
 
-            {/* Molecule 1 of H2O */}
-            <g transform="translate(75, 92)">
-              <line x1="0" y1="-16" x2="-26" y2="18" stroke="#475569" strokeWidth="2.8" />
-              <line x1="0" y1="-16" x2="26" y2="18" stroke="#475569" strokeWidth="2.8" />
-              <circle cx="0" cy="-16" r="15" fill="#EF4444" stroke="#B91C1C" strokeWidth="1.5" />
-              <text x="0" y="-11" textAnchor="middle" fontSize="11" fontWeight="bold" fill="#FFFFFF">O</text>
-              <circle cx="-26" cy="18" r="11" fill="#F8FAFC" stroke="#475569" strokeWidth="1.6" />
-              <text x="-26" y="22" textAnchor="middle" fontSize="10" fontWeight="bold" fill="#1E293B">H</text>
-              <circle cx="26" cy="18" r="11" fill="#F8FAFC" stroke="#475569" strokeWidth="1.6" />
-              <text x="26" y="22" textAnchor="middle" fontSize="10" fontWeight="bold" fill="#1E293B">H</text>
-              <text x="0" y="46" textAnchor="middle" fontSize="11" fontWeight="bold" fill="#4A4A4A">H₂O</text>
-            </g>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs">
+              <div className="p-3 rounded-[10px] bg-white border border-[#E2D9D0] space-y-1">
+                <div className="font-bold text-[#0F766E]">المتفاعلات (المواد المختفية) :</div>
+                <div className="text-[#4A4A4A] font-semibold">• الماء H₂O(<span className="chem-state-l">l</span>)</div>
+                <div className="text-[11px] text-[#6B6B6B]">نوع كيميائي يختفي أثناء مرور التيار الكهربائي.</div>
+              </div>
+              <div className="p-3 rounded-[10px] bg-white border border-[#E2D9D0] space-y-1">
+                <div className="font-bold text-[#0284C7]">النواتج (المواد المتشكلة) :</div>
+                <div className="text-[#4A4A4A] font-semibold">• ثنائي الهيدروجين H₂(g) + ثنائي الأكسجين O₂(g)</div>
+                <div className="text-[11px] text-[#6B6B6B]">نوعان كيميائيان غازيان جديدان ظهرا في نهاية التحول.</div>
+              </div>
+            </div>
 
-            {/* Molecule 2 of H2O */}
-            <g transform="translate(195, 92)">
-              <line x1="0" y1="-16" x2="-26" y2="18" stroke="#475569" strokeWidth="2.8" />
-              <line x1="0" y1="-16" x2="26" y2="18" stroke="#475569" strokeWidth="2.8" />
-              <circle cx="0" cy="-16" r="15" fill="#EF4444" stroke="#B91C1C" strokeWidth="1.5" />
-              <text x="0" y="-11" textAnchor="middle" fontSize="11" fontWeight="bold" fill="#FFFFFF">O</text>
-              <circle cx="-26" cy="18" r="11" fill="#F8FAFC" stroke="#475569" strokeWidth="1.6" />
-              <text x="-26" y="22" textAnchor="middle" fontSize="10" fontWeight="bold" fill="#1E293B">H</text>
-              <circle cx="26" cy="18" r="11" fill="#F8FAFC" stroke="#475569" strokeWidth="1.6" />
-              <text x="26" y="22" textAnchor="middle" fontSize="10" fontWeight="bold" fill="#1E293B">H</text>
-              <text x="0" y="46" textAnchor="middle" fontSize="11" fontWeight="bold" fill="#4A4A4A">H₂O</text>
-            </g>
-
-            <text x="136" y="180" textAnchor="middle" fontSize="11" fontWeight="bold" fill="#6B6B6B">
-              المجموع : 4 ذرات H + 2 ذرتان O
-            </text>
-
-            {/* Center Arrow : إعادة ترتيب الذرات */}
-            <g transform="translate(340, 105)">
-              <text x="0" y="-26" textAnchor="middle" fontSize="11" fontWeight="bold" fill="#C94BA6">
-                تحليل كهربائي
-              </text>
-              <line x1="-62" y1="0" x2="55" y2="0" stroke="#C94BA6" strokeWidth="3" />
-              <polygon points="55,-6 68,0 55,6" fill="#C94BA6" />
-              <text x="0" y="22" textAnchor="middle" fontSize="10.5" fontWeight="bold" fill="#4A4A4A">
-                إعادة ترتيب الذرات
-              </text>
-            </g>
-
-            {/* Right Box : بعد التحول (2 H₂ + O₂) */}
-            <rect x="421" y="14" width="245" height="182" rx="12" fill="#FFFFFF" stroke="#0F766E" strokeWidth="1.8" />
-            <text x="543" y="36" textAnchor="middle" fontSize="13" fontWeight="bold" fill="#0F766E">
-              بعد التحول : 2 H₂ + O₂
-            </text>
-
-            {/* 2 Molecules of H2 (H—H) */}
-            <g transform="translate(485, 76)">
-              <line x1="-16" y1="0" x2="16" y2="0" stroke="#475569" strokeWidth="3" />
-              <circle cx="-16" cy="0" r="11" fill="#F8FAFC" stroke="#475569" strokeWidth="1.6" />
-              <text x="-16" y="4" textAnchor="middle" fontSize="10" fontWeight="bold" fill="#1E293B">H</text>
-              <circle cx="16" cy="0" r="11" fill="#F8FAFC" stroke="#475569" strokeWidth="1.6" />
-              <text x="16" y="4" textAnchor="middle" fontSize="10" fontWeight="bold" fill="#1E293B">H</text>
-            </g>
-            <g transform="translate(485, 114)">
-              <line x1="-16" y1="0" x2="16" y2="0" stroke="#475569" strokeWidth="3" />
-              <circle cx="-16" cy="0" r="11" fill="#F8FAFC" stroke="#475569" strokeWidth="1.6" />
-              <text x="-16" y="4" textAnchor="middle" fontSize="10" fontWeight="bold" fill="#1E293B">H</text>
-              <circle cx="16" cy="0" r="11" fill="#F8FAFC" stroke="#475569" strokeWidth="1.6" />
-              <text x="16" y="4" textAnchor="middle" fontSize="10" fontWeight="bold" fill="#1E293B">H</text>
-              <text x="0" y="26" textAnchor="middle" fontSize="11" fontWeight="bold" fill="#0F766E">
-                2 H₂ (حجمان)
-              </text>
-            </g>
-
-            {/* 1 Molecule of O2 (O=O) */}
-            <g transform="translate(602, 95)">
-              <line x1="-18" y1="-3" x2="18" y2="-3" stroke="#B91C1C" strokeWidth="2.5" />
-              <line x1="-18" y1="3" x2="18" y2="3" stroke="#B91C1C" strokeWidth="2.5" />
-              <circle cx="-18" cy="0" r="15" fill="#EF4444" stroke="#B91C1C" strokeWidth="1.5" />
-              <text x="-18" y="5" textAnchor="middle" fontSize="11" fontWeight="bold" fill="#FFFFFF">O</text>
-              <circle cx="18" cy="0" r="15" fill="#EF4444" stroke="#B91C1C" strokeWidth="1.5" />
-              <text x="18" y="5" textAnchor="middle" fontSize="11" fontWeight="bold" fill="#FFFFFF">O</text>
-              <text x="0" y="45" textAnchor="middle" fontSize="11" fontWeight="bold" fill="#DC2626">
-                1 O₂ (حجم واحد)
-              </text>
-            </g>
-
-            <text x="543" y="180" textAnchor="middle" fontSize="11" fontWeight="bold" fill="#6B6B6B">
-              المجموع : 4 ذرات H + 2 ذرتان O (انحفاظ الذرات)
-            </text>
-          </svg>
+            <div className="p-2.5 rounded-[8px] bg-[#F0FDFA] border border-[#0F766E]/20 text-xs text-[#0F766E] text-center font-bold">
+              ملاحظة أساسية : هيدروكسيد الصوديوم NaOH(aq) لا يتغير، ويسهل مرور التيار، فلا يظهر في نواتج التفاعل.
+            </div>
+          </div>
         </div>
       );
 
@@ -914,31 +753,31 @@ export const Course01SchemaRenderer: React.FC<{ type: string }> = ({ type }) => 
               {
                 step: '1. التجربة',
                 fr: 'Expérience',
-                desc: 'نمرر تيارًا كهربائيًا مستمرًا في الماء (H₂O).',
+                desc: 'نمرر تيارًا كهربائيًا مستمرًا في ماء أضيف إليه قليل من NaOH.',
                 color: 'border-[#0F766E] bg-white',
               },
               {
                 step: '2. الملاحظة',
                 fr: 'Observation',
-                desc: 'انطلاق فقاعات غازية وتجمع غازين بنسبة حجوم 2 : 1.',
+                desc: 'توهج المصباح، انطلاق فقاعات غازية وتناقص مستوى الماء في الأنبوبين.',
                 color: 'border-[#0F766E] bg-white',
               },
               {
                 step: '3. الكشف',
                 fr: 'Identification',
-                desc: 'أحدهما ثنائي الهيدروجين H₂ والآخر ثنائي الأكسجين O₂.',
+                desc: 'الكشف بعود الثقاب: فرقعة لثنائي الهيدروجين H₂ وزيادة لهب لثنائي الأكسجين O₂.',
                 color: 'border-[#0284C7] bg-white',
               },
               {
                 step: '4. التفسير',
                 fr: 'Interprétation',
-                desc: 'تفككت جزيئات الماء وأعيد ترتيب الذرات لتكوين أفراد جديدة.',
+                desc: 'تحول النوع الكيميائي (الماء) وتشكل نوعين جديدين دون أن يتغير NaOH.',
                 color: 'border-[#C94BA6] bg-white',
               },
               {
                 step: '5. الاستنتاج',
                 fr: 'Conclusion',
-                desc: 'الماء مركب كيميائي، والتحليل الكهربائي تحول كيميائي.',
+                desc: 'التحليل الكهربائي تحول كيميائي ينمذج بالتفاعل: ماء (l) ⟶ ثنائي الهيدروجين (g) + ثنائي الأكسجين (g).',
                 color: 'border-[#0F766E] bg-[#0F766E] text-white',
               },
             ].map((item, idx) => (
@@ -963,13 +802,13 @@ export const Course01SchemaRenderer: React.FC<{ type: string }> = ({ type }) => 
                     {item.fr}
                   </div>
                 </div>
-                <p
+                <div
                   className={`text-xs leading-relaxed ${
                     idx === 4 ? 'text-white font-semibold' : 'text-[#4A4A4A]'
                   }`}
                 >
-                  {item.desc}
-                </p>
+                  <ChemPhysText text={item.desc} />
+                </div>
               </div>
             ))}
           </div>
@@ -977,29 +816,29 @@ export const Course01SchemaRenderer: React.FC<{ type: string }> = ({ type }) => 
       );
 
     // ========================================================================
-    // COURS 02 — الخلاصة (الوحيدة في الدرس — RÈGLE 2) : مخطط الدرس الكامل
+    // COURS 02 — الخلاصة : مخطط الدرس الكامل للتحليل الكهربائي للماء
     // ========================================================================
     case 'c02-master-summary-diagram':
       return (
         <div className="p-4 rounded-[12px] bg-[#FAF7F4] border border-[#E2D9D0]" dir="rtl">
           <div className="max-w-lg mx-auto flex flex-col items-center space-y-2">
             <div className="w-full py-2 px-4 rounded-[10px] bg-[#0F766E] text-white font-bold text-xs sm:text-sm text-center">
-              التحليل الكهربائي للماء (L’électrolyse de l’eau)
+              التحول الكيميائي : التحليل الكهربائي للماء
             </div>
             <ArrowDown className="w-4 h-4 text-[#0F766E]" />
 
-            <div className="w-full py-2 px-4 rounded-[10px] bg-white border border-[#E2D9D0] text-center">
+            <div className="w-full py-2 px-4 rounded-[10px] bg-white border border-[#E2D9D0] text-center space-y-0.5">
               <div className="text-xs sm:text-sm font-bold text-[#4A4A4A]">
-                الماء السائل النقي (مادة مركبة · Corps composé)
+                الحالة الابتدائية : ماء (<span className="chem-state-l">l</span>) مع هيدروكسيد الصوديوم NaOH(aq)
               </div>
-              <div className="mt-0.5">
-                <ChemicalFormula formula="H2O" size="sm" />
+              <div className="text-[11px] text-[#6B6B6B]">
+                المتفاعل : الماء H₂O(<span className="chem-state-l">l</span>) · هيدروكسيد الصوديوم يسهل مرور التيار
               </div>
             </div>
             <ArrowDown className="w-4 h-4 text-[#C94BA6]" />
 
             <div className="px-4 py-1 rounded-full bg-[#C94BA6]/10 border border-[#C94BA6]/30 text-xs font-bold text-[#C94BA6]">
-              مرور تيار كهربائي مستمر (طاقة كهربائية)
+              الحالة الانتقالية : تعريض الماء لتيار كهربائي مستمر (ظهور فقاعات غازية)
             </div>
             <ArrowDown className="w-4 h-4 text-[#0F766E]" />
 
@@ -1007,22 +846,28 @@ export const Course01SchemaRenderer: React.FC<{ type: string }> = ({ type }) => 
               <div className="p-3 rounded-[10px] bg-white border border-[#0F766E] text-center space-y-1">
                 <div className="text-xs font-bold text-[#0F766E]">ثنائي الهيدروجين (Dihydrogène)</div>
                 <ChemicalFormula formula="H2" size="sm" />
-                <div className="text-[11px] text-[#6B6B6B]">حجم مضاعف (2 حجوم) · يحدث فرقعة</div>
+                <div className="text-[11px] text-[#6B6B6B]">ناتج جديد · نكشف عنه بفرقعة خفيفة مع عود الثقاب</div>
               </div>
               <div className="p-3 rounded-[10px] bg-white border border-[#0284C7] text-center space-y-1">
                 <div className="text-xs font-bold text-[#0284C7]">ثنائي الأكسجين (Dioxygène)</div>
                 <ChemicalFormula formula="O2" size="sm" />
-                <div className="text-[11px] text-[#6B6B6B]">حجم واحد (1 حجم) · يزيد اللهب توهجًا</div>
+                <div className="text-[11px] text-[#6B6B6B]">ناتج جديد · نكشف عنه بزيادة توهج عود الثقاب</div>
               </div>
             </div>
             <ArrowDown className="w-4 h-4 text-[#0F766E]" />
 
             <div className="w-full py-2.5 px-4 rounded-[10px] bg-[#0F766E] text-white text-center space-y-1">
               <div className="text-xs sm:text-sm font-bold">
-                ظهور أنواع كيميائية جديدة  تحول كيميائي (Transformation chimique)
+                نموذج التفاعل الكيميائي (الحالة النهائية)
               </div>
-              <div className="inline-block bg-white px-3 py-1 rounded-[8px] mt-1" dir="ltr">
-                <ChemicalFormula formula="2 H2O -> 2 H2 + O2" size="md" />
+              <div
+                className="inline-block bg-white text-[#1A1A1A] font-bold px-3 py-1.5 rounded-[8px] mt-1 text-xs sm:text-sm shadow-xs"
+                dir="ltr"
+                style={{ unicodeBidi: 'isolate' }}
+              >
+                <span className="font-sans text-[#0F766E]">ماء (<span className="chem-state-l">l</span>)</span>
+                <span className="text-sm font-bold text-[#0F766E] px-1.5 select-none shrink-0">⟶</span>
+                <span className="font-sans text-[#0284C7]">ثنائي الهيدروجين (g) + ثنائي الأكسجين (g)</span>
               </div>
             </div>
           </div>
@@ -1036,10 +881,10 @@ export const Course01SchemaRenderer: React.FC<{ type: string }> = ({ type }) => 
       return (
         <div className="p-3.5 rounded-[12px] bg-white border border-[#E2D9D0] space-y-3.5" dir="rtl">
           <ZoomableCourseImage
-            src="/src/assets/images/c03_combustion_carbone_1790805665478.jpg"
-            alt="وضعية الانطلاق للدرس 03 : تسخين قطعة كربون وإدخالها في وعاء الهواء ثم الكشف بماء الجير"
-            captionArabic="صورة توضيحية : مراحل تجربة إشعال قطعة الفحم (الكربون) في الهواء واختبار الغاز المتشكل بماء الجير"
-            captionFrench="Combustion du carbone dans l’air et test à l’eau de chaux"
+            src="/src/assets/images/c03_depart_montage_1791751750620.jpg"
+            alt="وضعية الانطلاق للدرس 03 : تسخين قطعة كربون وإدخالها في وعاء به وفرة من الهواء ثم اختبار الغاز برائق الكلس الصافي"
+            captionArabic="صورة توضيحية لوضعية الانطلاق : تسخين قطعة كربون بمصدر حراري وإدخالها في قارورة تحتوي على وفرة من الهواء (ثنائي الأكسجين كافٍ لحدوث احتراق تام)، وتمرير الغاز المتشكل إلى أنبوب اختبار به رائق الكلس الصافي دون الكشف المسبق عن طبيعة الغازين"
+            captionFrench="Dispositif expérimental au départ : combustion du carbone avec apport suffisant d’air et test au réactif limpide (sans révéler les gaz)"
             courseBadge="الدرس 03"
           />
 
@@ -1054,8 +899,8 @@ export const Course01SchemaRenderer: React.FC<{ type: string }> = ({ type }) => 
                   عند تسخين قطعة صغيرة من الفحم (الكربون) بمصدر حراري تصبح متوهجة (🔴)، وعند إدخالها في قارورة الهواء تزداد توهجًا وتبعث حرارة وضوءًا.
                 </p>
               </div>
-              <div className="pt-1 border-t border-[#E5DDD5] text-[11px] font-mono text-[#0F766E]" dir="ltr">
-                Carbone incandescent + Air → Chaleur + Lumière
+              <div className="pt-1 border-t border-[#E5DDD5] text-[11px] font-sans font-bold text-[#0F766E]" dir="ltr">
+                كربون متوهج + هواء ⟶ حرارة + ضوء
               </div>
             </div>
 
@@ -1066,11 +911,11 @@ export const Course01SchemaRenderer: React.FC<{ type: string }> = ({ type }) => 
                   الملاحظة (ب) : تناقص قطعة الكربون وتوقف التوهج
                 </div>
                 <p className="text-xs text-[#4A4A4A] leading-relaxed">
-                  أثناء الاحتراق يُستهلك جزء من قطعة الكربون الصلبة تدريجيًا، ثم ينطفئ التوهج عند نفاد الغاز المساعد على الاحتراق داخل القارورة المغلقة.
+                  أثناء الاحتراق يُستهلك جزء من قطعة الكربون الصلبة تدريجيًا، ثم ينطفئ التوهج عند استهلاك الغاز المساعد على الاحتراق داخل القارورة المغلقة.
                 </p>
               </div>
-              <div className="pt-1 border-t border-[#E5DDD5] text-[11px] font-mono text-[#C94BA6]" dir="ltr">
-                Consommation d’une partie du carbone
+              <div className="pt-1 border-t border-[#E5DDD5] text-[11px] font-sans font-bold text-[#C94BA6]" dir="ltr">
+                تناقص واستهلاك قطعة الكربون
               </div>
             </div>
 
@@ -1078,14 +923,14 @@ export const Course01SchemaRenderer: React.FC<{ type: string }> = ({ type }) => 
             <div className="p-3 rounded-[10px] bg-[#FAF7F4] border border-[#E5DDD5] space-y-2 flex flex-col justify-between">
               <div className="space-y-1.5">
                 <div className="text-xs font-bold text-[#0F766E]">
-                  الملاحظة (ج) : اختبار الغاز المتشكل بماء الجير
+                  الملاحظة (ج) : اختبار الغاز المتشكل برائق الكلس
                 </div>
                 <p className="text-xs text-[#4A4A4A] leading-relaxed">
-                  عند تمرير الغاز الموجود في القارورة بعد انتهاء الاحتراق داخل أنبوب به ماء الجير الصافي، نلاحظ أن ماء الجير يصبح عكرًا (أبيض حليبيًا).
+                  عند تمرير الغاز الموجود في القارورة بعد انتهاء الاحتراق داخل أنبوب به رائق الكلس الصافي، نلاحظ أن رائق الكلس يتعكّر (يصبح أبيض حليبيًا).
                 </p>
               </div>
-              <div className="pt-1 border-t border-[#E5DDD5] text-[11px] font-mono text-[#0F766E]" dir="ltr">
-                Eau de chaux limpide → Eau de chaux trouble
+              <div className="pt-1 border-t border-[#E5DDD5] text-[11px] font-sans font-bold text-[#0F766E]" dir="ltr">
+                رائق الكلس صافٍ ⟶ رائق الكلس عكر
               </div>
             </div>
           </div>
@@ -1093,198 +938,148 @@ export const Course01SchemaRenderer: React.FC<{ type: string }> = ({ type }) => 
       );
 
     // ========================================================================
-    // COURS 03 — 2. التركيب التجريبي لاحتراق الكربون والكشف عن CO₂ بماء الجير
+    // COURS 03 — 2. التركيب التجريبي الكامل لاحتراق الكربون والكشف برائق الكلس
     // ========================================================================
     case 'c03-combustion-and-limewater-test':
       return (
-        <div className="p-4 rounded-[12px] bg-[#FAF7F4] border border-[#E2D9D0] space-y-3" dir="rtl">
-          <svg viewBox="0 0 680 250" className="w-full max-w-2xl mx-auto h-auto">
-            <rect x="6" y="6" width="668" height="238" rx="14" fill="#FFFFFF" stroke="#E2D9D0" />
+        <div className="p-3.5 rounded-[12px] bg-white border border-[#E2D9D0] space-y-3.5" dir="rtl">
+          <ZoomableCourseImage
+            src="/src/assets/images/c03_experience_complete_1791752857884.jpg"
+            alt="احتراق الكربون داخل قارورة تحتوي على هواء كافٍ والكشف عن ثنائي أكسيد الكربون برائق الكلس"
+            captionArabic="احتراق الكربون داخل قارورة تحتوي على هواء كافٍ (وفرة من ثنائي الأكسجين)، وتشكل ثنائي أكسيد الكربون الذي يعكر رائق الكلس"
+            captionFrench="combustion du carbone dans l'air (dioxygène en quantité suffisante)"
+            courseBadge="الدرس 03"
+          />
 
-            {/* Stage 1 : احتراق الكربون في وعاء الهواء */}
-            <rect x="24" y="20" width="290" height="210" rx="12" fill="#FAF7F4" stroke="#E5DDD5" />
-            <text x="169" y="42" textAnchor="middle" fontSize="13" fontWeight="bold" fill="#0F766E">
-              1. احتراق قطعة كربون متوهجة في الهواء
-            </text>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div className="p-3 rounded-[10px] bg-[#FAF7F4] border border-[#E5DDD5] space-y-1.5">
+              <div className="text-xs font-bold text-[#0F766E]">
+                1. احتراق الكربون في غاز ثنائي الأكسجين
+              </div>
+              <p className="text-xs text-[#4A4A4A] leading-relaxed">
+                يتفاعل الكربون مع غاز ثنائي الأكسجين بعد التسخين الأولي، ويتوهج بشدة مع انبعاث حرارة وضوء وتشكل غاز جديد عديم اللون.
+              </p>
+              <div className="text-[11px] font-sans font-bold text-[#0F766E]" dir="ltr">
+                كربون (s) + ثنائي الأكسجين (g)
+              </div>
+            </div>
 
-            {/* Reaction Flask */}
-            <rect x="109" y="68" width="120" height="122" rx="14" fill="#F0F9FF" stroke="#0284C7" strokeWidth="2.2" />
-            {/* Stopper & wire spoon */}
-            <rect x="147" y="56" width="44" height="14" rx="4" fill="#64748B" />
-            <line x1="169" y1="70" x2="169" y2="132" stroke="#334155" strokeWidth="2.5" />
-            {/* Glowing Charcoal C */}
-            <circle cx="169" cy="136" r="14" fill="#1E293B" stroke="#EF4444" strokeWidth="3" />
-            <circle cx="169" cy="136" r="7" fill="#EF4444" />
-            <text x="169" y="140" textAnchor="middle" fontSize="10" fontWeight="bold" fill="#FFFFFF">
-              C
-            </text>
-
-            {/* Labels inside flask */}
-            <text x="169" y="96" textAnchor="middle" fontSize="11.5" fontWeight="bold" fill="#0369A1">
-              الهواء (ثنائي الأكسجين O₂)
-            </text>
-            <text x="169" y="175" textAnchor="middle" fontSize="11" fontWeight="bold" fill="#DC2626">
-              توهج + حرارة وضوء 🔥
-            </text>
-            <text x="169" y="212" textAnchor="middle" fontSize="11" fontWeight="bold" fill="#4A4A4A">
-              استهلاك جزء من الكربون وتشكل غاز جديد
-            </text>
-
-            {/* Arrow between Stage 1 and Stage 2 */}
-            <g transform="translate(340, 125)">
-              <line x1="-18" y1="0" x2="14" y2="0" stroke="#0F766E" strokeWidth="3" />
-              <polygon points="14,-6 25,0 14,6" fill="#0F766E" />
-              <text x="2" y="-12" textAnchor="middle" fontSize="10" fontWeight="bold" fill="#0F766E">
-                الغاز الناتج
-              </text>
-            </g>
-
-            {/* Stage 2 : الكشف عن الغاز الناتج بماء الجير */}
-            <rect x="372" y="20" width="284" height="210" rx="12" fill="#FAF7F4" stroke="#E5DDD5" />
-            <text x="514" y="42" textAnchor="middle" fontSize="13" fontWeight="bold" fill="#0F766E">
-              2. الكشف عن الغاز الناتج بماء الجير
-            </text>
-
-            {/* Beaker 1: Clear limewater */}
-            <rect x="404" y="78" width="76" height="96" rx="10" fill="#FFFFFF" stroke="#64748B" strokeWidth="2" />
-            <rect x="406" y="112" width="72" height="60" rx="8" fill="#E0F2FE" />
-            <text x="442" y="145" textAnchor="middle" fontSize="10.5" fontWeight="bold" fill="#0369A1">
-              ماء الجير صافي
-            </text>
-            <text x="442" y="192" textAnchor="middle" fontSize="10.5" fill="#6B6B6B">
-              قبل تمرير الغاز
-            </text>
-
-            {/* Small arrow */}
-            <line x1="490" y1="126" x2="522" y2="126" stroke="#C94BA6" strokeWidth="2.5" />
-            <polygon points="522,121 532,126 522,131" fill="#C94BA6" />
-            <text x="508" y="114" textAnchor="middle" fontSize="10" fontWeight="bold" fill="#C94BA6">
-              + CO₂
-            </text>
-
-            {/* Beaker 2: Cloudy limewater (ماء الجير عكر) */}
-            <rect x="542" y="78" width="84" height="96" rx="10" fill="#FFFFFF" stroke="#0F766E" strokeWidth="2.2" />
-            <rect x="544" y="112" width="80" height="60" rx="8" fill="#E2E8F0" />
-            <circle cx="566" cy="134" r="4" fill="#FFFFFF" />
-            <circle cx="586" cy="150" r="5" fill="#FFFFFF" />
-            <circle cx="602" cy="132" r="4" fill="#FFFFFF" />
-            <text x="584" y="145" textAnchor="middle" fontSize="11" fontWeight="bold" fill="#0F766E">
-              يصبح عكرًا!
-            </text>
-            <text x="584" y="192" textAnchor="middle" fontSize="11" fontWeight="bold" fill="#0F766E">
-              دليل وجود CO₂
-            </text>
-
-            <text x="514" y="216" textAnchor="middle" fontSize="11.5" fontWeight="bold" fill="#4A4A4A">
-              ماء الجير (Eau de chaux) يتعكر بوجود ثنائي أكسيد الكربون (CO₂)
-            </text>
-          </svg>
+            <div className="p-3 rounded-[10px] bg-[#FAF7F4] border border-[#E5DDD5] space-y-1.5">
+              <div className="text-xs font-bold text-[#0F766E]">
+                2. الكشف عن الناتج برائق الكلس
+              </div>
+              <p className="text-xs text-[#4A4A4A] leading-relaxed">
+                الغاز الناتج هو غاز ثنائي أكسيد الكربون (CO₂)، ويُكشف عنه تجريبيًا بتعكر رائق الكلس الذي كان صافيًا قبل التجربة.
+              </p>
+              <div className="text-[11px] font-sans font-bold text-[#0284C7]" dir="ltr">
+                ثنائي أكسيد الكربون (g) ← يعكّر رائق الكلس
+              </div>
+            </div>
+          </div>
         </div>
       );
 
     // ========================================================================
-    // COURS 03 — 3. المتفاعلات والناتج والتمثيل الذري والجزيئي (C + O₂ ⟶ CO₂)
+    // COURS 03 — 3. المتفاعلات والناتج : الربط بين النوع الكيميائي والفرد الكيميائي
     // ========================================================================
     case 'c03-reactants-products-molecular':
       return (
         <div className="p-4 rounded-[12px] bg-[#FAF7F4] border border-[#E2D9D0] space-y-3" dir="rtl">
-          <svg viewBox="0 0 680 215" className="w-full max-w-2xl mx-auto h-auto">
-            {/* Left Box : قبل التحول — المتفاعلات (Réactifs : C + O₂) */}
-            <rect x="14" y="14" width="250" height="186" rx="12" fill="#FFFFFF" stroke="#0284C7" strokeWidth="1.8" />
-            <text x="139" y="38" textAnchor="middle" fontSize="13" fontWeight="bold" fill="#0284C7">
-              قبل التحول : المتفاعلات (Réactifs)
-            </text>
+          <div className="text-center space-y-1">
+            <h4 className="text-xs sm:text-sm font-bold text-[#0F766E]">
+              الربط بين المستوى العياني (النوع الكيميائي) والمستوى المجهري (الفرد الكيميائي)
+            </h4>
+            <p className="text-[11.5px] text-[#6B6B6B]">
+              المتفاعلات تستهلك وتتحول إلى ناتج جديد، وثنائي الأزوت في الهواء لا يشارك في التحول
+            </p>
+          </div>
 
-            {/* Carbon atom C */}
-            <g transform="translate(76, 102)">
-              <circle cx="0" cy="0" r="18" fill="#1E293B" stroke="#0F172A" strokeWidth="2" />
-              <text x="0" y="5" textAnchor="middle" fontSize="13" fontWeight="bold" fill="#FFFFFF">
-                C
-              </text>
-              <text x="0" y="38" textAnchor="middle" fontSize="11.5" fontWeight="bold" fill="#4A4A4A">
-                ذرة كربون (1 C)
-              </text>
-            </g>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 items-stretch">
+            {/* المتفاعلات */}
+            <div className="p-3.5 rounded-[10px] bg-white border border-[#0284C7]/40 space-y-2 flex flex-col justify-between">
+              <div className="space-y-1.5">
+                <div className="text-xs font-bold text-[#0284C7] flex items-center justify-between">
+                  <span>المتفاعلات (قبل التحول)</span>
+                  <span className="text-[10.5px] font-mono">Réactifs</span>
+                </div>
+                <div className="space-y-2 pt-1">
+                  <div className="p-2 rounded-[8px] bg-[#F0F9FF] border border-[#BAE6FD] text-xs">
+                    <div className="font-bold text-[#0369A1]">الكربون (نوع عياني)</div>
+                    <div className="text-[#4A4A4A] text-[11px] flex items-center gap-1.5 mt-0.5">
+                      <span>الفرد المجهري : ذرة الكربون</span>
+                      <span className="px-1.5 py-0.2 rounded bg-white font-mono font-bold text-[#0284C7] border border-[#BAE6FD]" dir="ltr">C</span>
+                    </div>
+                  </div>
+                  <div className="p-2 rounded-[8px] bg-[#F0F9FF] border border-[#BAE6FD] text-xs">
+                    <div className="font-bold text-[#0369A1]">ثنائي الأكسجين (نوع عياني)</div>
+                    <div className="text-[#4A4A4A] text-[11px] flex items-center gap-1.5 mt-0.5">
+                      <span>الفرد المجهري : جزيء O₂</span>
+                      <span className="px-1.5 py-0.2 rounded bg-white font-mono font-bold text-[#0284C7] border border-[#BAE6FD]" dir="ltr">O₂</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="text-[11px] text-[#0369A1] font-semibold pt-1 border-t border-[#E0F2FE]">
+                يُستهلكان أثناء التحول
+              </div>
+            </div>
 
-            <text x="128" y="108" textAnchor="middle" fontSize="18" fontWeight="bold" fill="#4A4A4A">
-              +
-            </text>
+            {/* سهم التحول */}
+            <div className="p-3 rounded-[10px] bg-white border border-[#E2D9D0] flex flex-col items-center justify-center text-center space-y-2">
+              <div className="text-xs font-bold text-[#C94BA6]">
+                نموذج التحول الكيميائي
+              </div>
+              <div
+                style={{ height: 'auto', overflow: 'visible' }}
+                className="p-2 rounded-[8px] bg-[#FDF2F8] border border-[#FBCFE8] w-full text-center overflow-visible"
+              >
+                <div
+                  dir="ltr"
+                  style={{ unicodeBidi: 'isolate', whiteSpace: 'nowrap', overflow: 'visible', height: 'auto' }}
+                  className="font-bold font-sans text-xs sm:text-[13px] text-[#831843] whitespace-nowrap leading-normal"
+                >
+                  كربون (s) + ثنائي الأكسجين (g) ⟶ ثنائي أكسيد الكربون (g)
+                </div>
+              </div>
+              <p className="text-[11px] text-[#4A4A4A] leading-relaxed">
+                تفاعل احتراق يحتاج حرارة (تسخين أولي) لبدئه. ثنائي الأزوت N₂ الموجود في الهواء لا يشارك فلا يظهر في النموذج.
+              </p>
+            </div>
 
-            {/* Dioxygen molecule O2 (O—O) */}
-            <g transform="translate(192, 102)">
-              <line x1="-17" y1="-3" x2="17" y2="-3" stroke="#B91C1C" strokeWidth="2.5" />
-              <line x1="-17" y1="3" x2="17" y2="3" stroke="#B91C1C" strokeWidth="2.5" />
-              <circle cx="-17" cy="0" r="15" fill="#EF4444" stroke="#B91C1C" strokeWidth="1.5" />
-              <text x="-17" y="5" textAnchor="middle" fontSize="11" fontWeight="bold" fill="#FFFFFF">
-                O
-              </text>
-              <circle cx="17" cy="0" r="15" fill="#EF4444" stroke="#B91C1C" strokeWidth="1.5" />
-              <text x="17" y="5" textAnchor="middle" fontSize="11" fontWeight="bold" fill="#FFFFFF">
-                O
-              </text>
-              <text x="0" y="38" textAnchor="middle" fontSize="11.5" fontWeight="bold" fill="#4A4A4A">
-                جزيء O₂ (2 O)
-              </text>
-            </g>
-
-            <text x="139" y="182" textAnchor="middle" fontSize="11" fontWeight="bold" fill="#6B6B6B">
-              المجموع قبل التحول : 1 ذرة C + 2 ذرتان O
-            </text>
-
-            {/* Center Arrow : احتراق وإعادة ترتيب الذرات */}
-            <g transform="translate(342, 106)">
-              <text x="0" y="-24" textAnchor="middle" fontSize="11.5" fontWeight="bold" fill="#C94BA6">
-                احتراق (Combustion)
-              </text>
-              <line x1="-60" y1="0" x2="52" y2="0" stroke="#C94BA6" strokeWidth="3" />
-              <polygon points="52,-6 65,0 52,6" fill="#C94BA6" />
-              <text x="0" y="22" textAnchor="middle" fontSize="10.5" fontWeight="bold" fill="#4A4A4A">
-                إعادة ترتيب الذرات
-              </text>
-            </g>
-
-            {/* Right Box : بعد التحول — الناتج (Produit : CO₂) */}
-            <rect x="416" y="14" width="250" height="186" rx="12" fill="#FFFFFF" stroke="#0F766E" strokeWidth="1.8" />
-            <text x="541" y="38" textAnchor="middle" fontSize="13" fontWeight="bold" fill="#0F766E">
-              بعد التحول : الناتج (Produit)
-            </text>
-
-            {/* CO2 Molecule (O — C — O) */}
-            <g transform="translate(541, 102)">
-              <line x1="-42" y1="-3" x2="42" y2="-3" stroke="#334155" strokeWidth="2.8" />
-              <line x1="-42" y1="3" x2="42" y2="3" stroke="#334155" strokeWidth="2.8" />
-              <circle cx="-42" cy="0" r="15" fill="#EF4444" stroke="#B91C1C" strokeWidth="1.5" />
-              <text x="-42" y="5" textAnchor="middle" fontSize="11" fontWeight="bold" fill="#FFFFFF">
-                O
-              </text>
-              <circle cx="0" cy="0" r="18" fill="#1E293B" stroke="#0F172A" strokeWidth="2" />
-              <text x="0" y="5" textAnchor="middle" fontSize="13" fontWeight="bold" fill="#FFFFFF">
-                C
-              </text>
-              <circle cx="42" cy="0" r="15" fill="#EF4444" stroke="#B91C1C" strokeWidth="1.5" />
-              <text x="42" y="5" textAnchor="middle" fontSize="11" fontWeight="bold" fill="#FFFFFF">
-                O
-              </text>
-              <text x="0" y="38" textAnchor="middle" fontSize="12" fontWeight="bold" fill="#0F766E">
-                جزيء ثنائي أكسيد الكربون (CO₂)
-              </text>
-            </g>
-
-            <text x="541" y="182" textAnchor="middle" fontSize="11" fontWeight="bold" fill="#6B6B6B">
-              المجموع بعد التحول : 1 ذرة C + 2 ذرتان O (محفوظ)
-            </text>
-          </svg>
+            {/* النواتج */}
+            <div className="p-3.5 rounded-[10px] bg-white border border-[#0F766E]/40 space-y-2 flex flex-col justify-between">
+              <div className="space-y-1.5">
+                <div className="text-xs font-bold text-[#0F766E] flex items-center justify-between">
+                  <span>الناتج (بعد التحول)</span>
+                  <span className="text-[10.5px] font-mono">Produit</span>
+                </div>
+                <div className="p-2 rounded-[8px] bg-[#F0FDFA] border border-[#99F6E4] text-xs space-y-1 pt-1">
+                  <div className="font-bold text-[#0F766E]">ثنائي أكسيد الكربون (نوع عياني)</div>
+                  <div className="text-[#4A4A4A] text-[11px] flex items-center gap-1.5 mt-0.5">
+                    <span>الفرد المجهري : جزيء CO₂</span>
+                    <span className="px-1.5 py-0.2 rounded bg-white font-mono font-bold text-[#0F766E] border border-[#99F6E4]" dir="ltr">CO₂</span>
+                  </div>
+                </div>
+                <div className="p-2 rounded-[8px] bg-[#FEF2F2] border border-[#FECACA] text-[11px] text-[#991B1B]">
+                  الكشف التجريبي : يعكّر رائق الكلس الصافي
+                </div>
+              </div>
+              <div className="text-[11px] text-[#0F766E] font-semibold pt-1 border-t border-[#CCFBF1]">
+                نوع كيميائي جديد لم يكن موجودًا
+              </div>
+            </div>
+          </div>
         </div>
       );
 
     // ========================================================================
-    // COURS 03 — 4. محاكي مثلث الاحتراق التفاعلي (Triangle du feu) ودور ثنائي الأكسجين
+    // COURS 03 — 4. محاكي مثلث الحريق التفاعلي (Triangle du feu) ودور ثنائي الأكسجين
     // ========================================================================
     case 'c03-fire-triangle-and-air':
       return <FireTriangleSimulator />;
 
     // ========================================================================
-    // COURS 03 — الخلاصة (الوحيدة في الدرس — RÈGLE 2) : المخطط النهائي للدرس
+    // COURS 03 — الخلاصة : المخطط النهائي للدرس
     // ========================================================================
     case 'c03-master-summary-diagram':
       return (
@@ -1299,8 +1094,10 @@ export const Course01SchemaRenderer: React.FC<{ type: string }> = ({ type }) => 
               <div className="text-xs sm:text-sm font-bold text-[#0284C7]">
                 المتفاعلات (Réactifs) : الكربون + ثنائي الأكسجين
               </div>
-              <div dir="ltr">
-                <ChemicalFormula formula="C + O2" size="sm" />
+              <div className="flex items-center justify-center gap-1.5 text-xs font-mono font-bold text-[#0284C7]" dir="ltr">
+                <span className="px-2 py-0.5 rounded bg-[#F0F9FF] border border-[#BAE6FD]">C</span>
+                <span>+</span>
+                <span className="px-2 py-0.5 rounded bg-[#F0F9FF] border border-[#BAE6FD]">O₂</span>
               </div>
             </div>
             <ArrowDown className="w-4 h-4 text-[#C94BA6]" />
@@ -1309,23 +1106,27 @@ export const Course01SchemaRenderer: React.FC<{ type: string }> = ({ type }) => 
               <div className="text-xs sm:text-sm font-bold text-[#0F766E]">
                 الناتج (Produit) : غاز ثنائي أكسيد الكربون (Dioxyde de carbone)
               </div>
-              <div dir="ltr">
-                <ChemicalFormula formula="CO2" size="sm" />
+              <div className="flex items-center justify-center text-xs font-mono font-bold text-[#0F766E]" dir="ltr">
+                <span className="px-2 py-0.5 rounded bg-[#F0FDFA] border border-[#99F6E4]">CO₂</span>
               </div>
             </div>
             <ArrowDown className="w-4 h-4 text-[#0F766E]" />
 
             <div className="w-full py-2 px-4 rounded-[10px] bg-white border border-[#E2D9D0] text-center text-xs sm:text-sm font-bold text-[#4A4A4A]">
-              الكشف عن الغاز الناتج بـ«ماء الجير (Eau de chaux)» ← يصبح ماء الجير عكرًا
+              الكشف عن الغاز الناتج بـ«رائق الكلس» ← يتعكّر رائق الكلس
             </div>
             <ArrowDown className="w-4 h-4 text-[#0F766E]" />
 
-            <div className="w-full py-2.5 px-4 rounded-[10px] bg-[#0F766E] text-white text-center space-y-1">
+            <div className="w-full py-2.5 px-4 rounded-[10px] bg-[#0F766E] text-white text-center space-y-1.5">
               <div className="text-xs sm:text-sm font-bold">
-                نوع كيميائي جديد ظهر (CO₂) ← تحول كيميائي (Transformation chimique)
+                نموذج التفاعل الكيميائي لاحتراق الكربون
               </div>
-              <div className="inline-block bg-white px-3.5 py-1 rounded-[8px] mt-1" dir="ltr">
-                <ChemicalFormula formula="C + O2 -> CO2" size="md" />
+              <div
+                className="inline-block bg-white px-3.5 py-1.5 rounded-[8px] text-[#0F766E] font-bold text-xs sm:text-sm shadow-xs select-all font-sans whitespace-nowrap overflow-x-auto max-w-full"
+                dir="ltr"
+                style={{ unicodeBidi: 'isolate', whiteSpace: 'nowrap' }}
+              >
+                كربون (s) + ثنائي الأكسجين (g) ⟶ ثنائي أكسيد الكربون (g)
               </div>
             </div>
           </div>
@@ -1333,263 +1134,52 @@ export const Course01SchemaRenderer: React.FC<{ type: string }> = ({ type }) => 
       );
 
     // ========================================================================
-    // COURS 04 — 1. النشاط الاستكشافي : مخطط مقارن لحالتي اشتغال موقد البوتان
+    // COURS 04 — 1. النشاط الاستكشافي : مقارنة حالتي اشتغال موقد البوتان (صورة واقعية)
     // ========================================================================
     case 'c04-discovery-setup':
       return (
-        <div className="w-full" dir="rtl">
-          <svg viewBox="0 0 680 265" className="w-full max-w-2xl mx-auto h-auto">
-            <rect x="4" y="4" width="672" height="257" rx="14" fill="#FAF7F4" stroke="#E2D9D0" />
-
-            {/* ================= RIGHT PANEL (RTL First) : الحالة (1) فتحة دخول الهواء مفتوحة ================= */}
-            <g transform="translate(348, 14)">
-              <rect x="0" y="0" width="314" height="237" rx="12" fill="#FFFFFF" stroke="#0284C7" strokeWidth="1.8" />
-              <rect x="12" y="10" width="290" height="28" rx="8" fill="#E0F2FE" />
-              <text x="157" y="29" textAnchor="middle" fontSize="12" fontWeight="bold" fill="#0369A1">
-                الحالة (1) : فتحة دخول الهواء مفتوحة جيدًا
-              </text>
-
-              {/* Cold white porcelain saucer above flame */}
-              <path d="M 92 64 Q 157 78 222 64" fill="none" stroke="#64748B" strokeWidth="4" strokeLinecap="round" />
-              <text x="157" y="54" textAnchor="middle" fontSize="10.5" fontWeight="bold" fill="#334155">
-                صحن أبيض بارد : قطرات ماء فقط (لا يوجد أثر أسود)
-              </text>
-              {/* Condensation droplets (clean) */}
-              <circle cx="135" cy="73" r="3" fill="#38BDF8" />
-              <circle cx="157" cy="75" r="3.2" fill="#38BDF8" />
-              <circle cx="179" cy="73" r="3" fill="#38BDF8" />
-
-              {/* Clean Blue Flame */}
-              <path
-                d="M 157 82 C 140 105 138 128 157 142 C 176 128 174 105 157 82 Z"
-                fill="#0284C7"
-                opacity="0.88"
-              />
-              <path
-                d="M 157 98 C 148 112 148 128 157 138 C 166 128 166 112 157 98 Z"
-                fill="#7DD3FC"
-              />
-              <text x="235" y="114" textAnchor="middle" fontSize="11" fontWeight="bold" fill="#0284C7">
-                لهب أزرق صافٍ
-              </text>
-              <text x="235" y="129" textAnchor="middle" fontSize="9.5" fill="#475569" fontFamily="monospace">
-                Flamme bleue
-              </text>
-
-              {/* Burner tube & wide open air ring (virole) */}
-              <rect x="143" y="142" width="28" height="54" rx="3" fill="#64748B" stroke="#334155" strokeWidth="1.5" />
-              {/* Wide open air window */}
-              <rect x="147" y="166" width="20" height="14" rx="2" fill="#E0F2FE" stroke="#0284C7" strokeWidth="1.5" />
-              {/* Air arrows entering */}
-              <line x1="108" y1="173" x2="142" y2="173" stroke="#0284C7" strokeWidth="2.2" />
-              <polygon points="140,169 146,173 140,177" fill="#0284C7" />
-              <text x="72" y="170" textAnchor="middle" fontSize="10" fontWeight="bold" fill="#0369A1">
-                دخول هواء وفير
-              </text>
-              <text x="72" y="183" textAnchor="middle" fontSize="9" fill="#475569" fontFamily="monospace">
-                Virole ouverte
-              </text>
-
-              {/* Burner base & gas inlet */}
-              <rect x="117" y="196" width="80" height="12" rx="4" fill="#334155" />
-              <text x="157" y="224" textAnchor="middle" fontSize="10.5" fontWeight="bold" fill="#0F766E">
-                وقود : غاز البوتان (C₄H₁₀) + هواء كافٍ
-              </text>
-            </g>
-
-            {/* ================= LEFT PANEL (RTL Second) : الحالة (2) فتحة دخول الهواء شبه مغلقة ================= */}
-            <g transform="translate(18, 14)">
-              <rect x="0" y="0" width="314" height="237" rx="12" fill="#FFFFFF" stroke="#D97706" strokeWidth="1.8" />
-              <rect x="12" y="10" width="290" height="28" rx="8" fill="#FEF3C7" />
-              <text x="157" y="29" textAnchor="middle" fontSize="12" fontWeight="bold" fill="#B45309">
-                الحالة (2) : فتحة دخول الهواء شبه مغلقة
-              </text>
-
-              {/* Cold white porcelain saucer above flame with black soot deposit */}
-              <path d="M 92 64 Q 157 78 222 64" fill="none" stroke="#64748B" strokeWidth="4" strokeLinecap="round" />
-              {/* Black soot layer on underside of saucer */}
-              <ellipse cx="157" cy="72" rx="36" ry="5.5" fill="#0F172A" />
-              <circle cx="128" cy="74" r="2.5" fill="#38BDF8" />
-              <circle cx="186" cy="74" r="2.5" fill="#38BDF8" />
-              <text x="157" y="54" textAnchor="middle" fontSize="10.5" fontWeight="bold" fill="#92400E">
-                صحن أبيض بارد : تتوضع طبقة سوداء (سخام) + قطرات ماء
-              </text>
-
-              {/* Soot particles rising */}
-              <circle cx="148" cy="81" r="2.2" fill="#1E293B" />
-              <circle cx="165" cy="79" r="2.5" fill="#1E293B" />
-              <circle cx="157" cy="84" r="2" fill="#334155" />
-
-              {/* Yellow / Orange Luminous Flame */}
-              <path
-                d="M 157 80 C 134 104 132 128 157 142 C 182 128 180 104 157 80 Z"
-                fill="#F59E0B"
-              />
-              <path
-                d="M 157 95 C 145 112 145 128 157 138 C 169 128 169 112 157 95 Z"
-                fill="#FDE047"
-              />
-              <text x="236" y="114" textAnchor="middle" fontSize="11" fontWeight="bold" fill="#B45309">
-                لهب أصفر مضيء
-              </text>
-              <text x="236" y="129" textAnchor="middle" fontSize="9.5" fill="#475569" fontFamily="monospace">
-                Flamme jaune
-              </text>
-
-              {/* Burner tube & nearly closed air ring */}
-              <rect x="143" y="142" width="28" height="54" rx="3" fill="#64748B" stroke="#334155" strokeWidth="1.5" />
-              {/* Narrow slit (almost closed) */}
-              <rect x="154" y="166" width="5" height="14" rx="1" fill="#FEF3C7" stroke="#D97706" strokeWidth="1.2" />
-              <line x1="114" y1="173" x2="140" y2="173" stroke="#D97706" strokeWidth="1.5" strokeDasharray="3 2" />
-              <text x="72" y="170" textAnchor="middle" fontSize="10" fontWeight="bold" fill="#B45309">
-                دخول هواء قليل
-              </text>
-              <text x="72" y="183" textAnchor="middle" fontSize="9" fill="#475569" fontFamily="monospace">
-                Virole quasi fermée
-              </text>
-
-              {/* Burner base */}
-              <rect x="117" y="196" width="80" height="12" rx="4" fill="#334155" />
-              <text x="157" y="224" textAnchor="middle" fontSize="10.5" fontWeight="bold" fill="#B45309">
-                وقود : غاز البوتان (C₄H₁₀) + هواء غير كافٍ
-              </text>
-            </g>
-          </svg>
+        <div className="w-full space-y-3" dir="rtl">
+          <ZoomableCourseImage
+            src="/src/assets/images/c04_burners_comparison_1791830547041.jpg"
+            alt="مقارنة تجريبية لموقد غاز البوتان بحسب حالة فتحة دخول الهواء"
+            captionArabic="مقارنة بين حالتي اشتغال موقد البوتان : فتحة هواء مفتوحة (لهب أزرق صافٍ وقطرات ماء) مقابل فتحة شبه مغلقة (لهب أصفر مضيء وترسب السخام الأسود)"
+            captionFrench="Comparaison des deux modes de fonctionnement du brûleur au butane (Virole ouverte vs quasi-fermée)"
+            courseBadge="الدرس 04"
+          />
         </div>
       );
 
     // ========================================================================
-    // COURS 04 — 2. الاحتراق التام للبوتان (C₄H₁₀) والكشف التجريبي عن الناتجين (H₂O و CO₂)
-    // (تسلسل طبيعي من اليمين إلى اليسار RTL : مرحلة 1 على اليمين ⟵ مرحلة 2 على اليسار)
+    // COURS 04 — 2. الاحتراق التام للبوتان : الكشف عن ناتجيه الماء ورائق الكلس (صورة واقعية)
     // ========================================================================
     case 'c04-complete-combustion-tests':
       return (
         <div className="w-full space-y-3" dir="rtl">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {/* Test A : الكشف عن الماء H₂O بكبريتات النحاس اللامائية */}
-            <div className="p-3.5 rounded-[12px] bg-white border border-[#0284C7]/40 space-y-2.5">
-              <div className="flex items-center justify-between">
-                <span className="text-xs sm:text-sm font-bold text-[#0284C7]">
-                  <ChemPhysText text="أ. الكشف عن الماء (H₂O) : كبريتات النحاس اللامائية" />
-                </span>
-                <ChemicalFormula formula="H2O" size="sm" />
-              </div>
-              <svg viewBox="0 0 320 150" className="w-full max-w-[320px] mx-auto h-auto">
-                {/* Step 1 (RIGHT side in RTL) : Inverted cold beaker over blue flame with mist */}
-                <rect x="178" y="14" width="132" height="104" rx="10" fill="#F8FAFC" stroke="#94A3B8" strokeWidth="1.6" />
-                <path d="M 216 82 L 216 34 Q 216 28 222 28 L 266 28 Q 272 28 272 34 L 272 82" fill="#E0F2FE" fillOpacity="0.45" stroke="#0284C7" strokeWidth="1.8" />
-                <circle cx="226" cy="42" r="2.3" fill="#0284C7" />
-                <circle cx="244" cy="36" r="2.5" fill="#0284C7" />
-                <circle cx="262" cy="42" r="2.3" fill="#0284C7" />
-                <path d="M 244 80 C 237 90 237 98 244 104 C 251 98 251 90 244 80 Z" fill="#0284C7" />
-                <text x="244" y="113" textAnchor="middle" fontSize="9.5" fontWeight="bold" fill="#334155">
-                  1. كأس مقلوبة (تشكل ضباب)
-                </text>
+          <ZoomableCourseImage
+            src="/src/assets/images/c04_exp_setup_1791831264477.jpg"
+            alt="الكشف التجريبي عن ناتجي الاحتراق التام لغاز البوتان : تكاثف قطرات الماء على الجدار البارد وتعكر رائق الكلس"
+            captionArabic="الكشف التجريبي عن ناتجي الاحتراق التام : كأس باردة منكسة وممسوكة بملقط معدني أعلى اللهب الأزرق مع تكاثف قطرات ماء، ومقارنة رائق الكلس (صافٍ) مع رائق الكلس (عكر)"
+            captionFrench="Tests d’identification des produits de combustion complète : Buée/gouttelettes d’eau et comparaison de l’eau de chaux (limpide vs trouble)"
+            courseBadge="الدرس 04"
+          />
 
-                {/* Arrow pointing RTL (from right 170 to left 140) */}
-                <line x1="170" y1="66" x2="142" y2="66" stroke="#0284C7" strokeWidth="2.4" />
-                <polygon points="144,61 135,66 144,71" fill="#0284C7" />
-                <text x="156" y="56" textAnchor="middle" fontSize="8.5" fontWeight="bold" fill="#0284C7">
-                  إضافة
-                </text>
-
-                {/* Step 2 (LEFT side in RTL) : Anhydrous CuSO4 turns from white to blue */}
-                <rect x="10" y="14" width="126" height="104" rx="10" fill="#EFF6FF" stroke="#0284C7" strokeWidth="1.8" />
-                <text x="73" y="32" textAnchor="middle" fontSize="9.5" fontWeight="bold" fill="#1D4ED8">
-                  كبريتات النحاس اللامائية
-                </text>
-                <ellipse cx="73" cy="60" rx="42" ry="15" fill="#2563EB" stroke="#1D4ED8" strokeWidth="1.5" />
-                <text x="73" y="58" textAnchor="middle" fontSize="9" fontWeight="bold" fill="#FFFFFF">
-                  تتحول إلى زرقاء
-                </text>
-                <text x="73" y="70" textAnchor="middle" fontSize="7.5" fontWeight="bold" fill="#DBEAFE">
-                  أبيض ⟶ أزرق
-                </text>
-                <text x="73" y="98" textAnchor="middle" fontSize="9.5" fontWeight="bold" fill="#0284C7">
-                  2. دليل تشكل الماء (H₂O)
-                </text>
-
-                <text x="160" y="138" textAnchor="middle" fontSize="9.5" fontWeight="bold" fill="#475569">
-                  كبريتات النحاس اللامائية : بيضاء ⟶ زرقاء (دليل تشكل H₂O)
-                </text>
-              </svg>
-            </div>
-
-            {/* Test B : الكشف عن ثنائي أكسيد الكربون CO₂ بماء الجير */}
-            <div className="p-3.5 rounded-[12px] bg-white border border-[#0F766E]/40 space-y-2.5">
-              <div className="flex items-center justify-between">
-                <span className="text-xs sm:text-sm font-bold text-[#0F766E]">
-                  <ChemPhysText text="ب. الكشف عن ثنائي أكسيد الكربون (CO₂) : ماء الجير" />
-                </span>
-                <ChemicalFormula formula="CO2" size="sm" />
-              </div>
-              <svg viewBox="0 0 320 150" className="w-full max-w-[320px] mx-auto h-auto">
-                {/* Step 1 (RIGHT side in RTL) : Upright beaker + clear limewater */}
-                <rect x="178" y="14" width="132" height="104" rx="10" fill="#F8FAFC" stroke="#94A3B8" strokeWidth="1.6" />
-                <path d="M 218 32 L 218 82 Q 218 88 224 88 L 264 88 Q 270 88 270 82 L 270 32" fill="#FFFFFF" stroke="#64748B" strokeWidth="1.8" />
-                <rect x="220" y="60" width="48" height="26" rx="3" fill="#E0F2FE" />
-                <text x="244" y="77" textAnchor="middle" fontSize="9.5" fontWeight="bold" fill="#0369A1">
-                  ماء جير صافي
-                </text>
-                <text x="244" y="106" textAnchor="middle" fontSize="9.5" fontWeight="bold" fill="#334155">
-                  1. سكب ورجّ الكأس
-                </text>
-
-                {/* Arrow pointing RTL (from right 170 to left 140) */}
-                <line x1="170" y1="66" x2="142" y2="66" stroke="#0F766E" strokeWidth="2.4" />
-                <polygon points="144,61 135,66 144,71" fill="#0F766E" />
-                <text x="156" y="56" textAnchor="middle" fontSize="8.5" fontWeight="bold" fill="#0F766E">
-                  تفاعل
-                </text>
-
-                {/* Step 2 (LEFT side in RTL) : Cloudy limewater */}
-                <rect x="10" y="14" width="126" height="104" rx="10" fill="#F0FDFA" stroke="#0F766E" strokeWidth="1.8" />
-                <path d="M 42 32 L 42 82 Q 42 88 48 88 L 96 88 Q 102 88 102 82 L 102 32" fill="#FFFFFF" stroke="#0F766E" strokeWidth="1.8" />
-                <rect x="44" y="56" width="56" height="30" rx="3" fill="#CBD5E1" />
-                <text x="72" y="68" textAnchor="middle" fontSize="9.5" fontWeight="bold" fill="#0F172A">
-                  يتعكر
-                </text>
-                <text x="72" y="80" textAnchor="middle" fontSize="8" fontWeight="bold" fill="#475569">
-                  (راسب حليبي)
-                </text>
-                <text x="72" y="106" textAnchor="middle" fontSize="9.5" fontWeight="bold" fill="#0F766E">
-                  2. دليل تشكل غاز (CO₂)
-                </text>
-
-                <text x="160" y="138" textAnchor="middle" fontSize="9.5" fontWeight="bold" fill="#475569">
-                  ماء الجير : رائق صافٍ ⟶ يتعكر (دليل تشكل CO₂)
-                </text>
-              </svg>
-            </div>
-          </div>
-
-          <div className="p-3 rounded-[10px] bg-white border border-[#E5DDD5] flex flex-col sm:flex-row items-center justify-between gap-2.5 text-xs">
-            <span className="font-bold text-[#0F766E]">
-              حصيلة الاحتراق التام لغاز البوتان (قبل موازنة المعادلة في الدرس 05) :
+          <div className="p-3.5 rounded-[12px] bg-white border border-[#E5DDD5] flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
+            <span className="font-bold text-[#0F766E] shrink-0 text-center sm:text-right">
+              نموذج التفاعل الكيميائي لاحتراق البوتان التام :
             </span>
             <div
               dir="ltr"
-              style={{ unicodeBidi: 'isolate' }}
-              className="inline-flex flex-wrap items-center gap-1.5 sm:gap-2 px-3 py-1.5 rounded-[8px] bg-[#FAF7F4] border border-[#E2D9D0] font-bold text-[#1E293B]"
+              style={{ unicodeBidi: 'isolate', overflow: 'visible', height: 'auto' }}
+              className="flex flex-col items-center justify-center text-center font-sans font-bold leading-normal overflow-visible text-xs text-[#1A1A1A] py-2 px-4 rounded-[10px] bg-[#FAF7F4] border border-[#0F766E]/30 w-full sm:w-auto"
             >
-              <span className="inline-flex items-center gap-1">
-                <span dir="rtl">غاز البوتان</span>
-                <span className="px-1.5 py-0.5 rounded bg-white text-[#0F766E] border border-[#0F766E]/20 text-xs font-mono" dir="ltr" style={{ unicodeBidi: 'isolate' }}>C₄H₁₀</span>
+              <span className="text-[#0F766E] text-center whitespace-normal break-words leading-snug">
+                <ChemicalFormula formula="بوتان (g) + ثنائي الأكسجين (g)" size="sm" />
               </span>
-              <span className="text-[#64748B] font-bold px-1 select-none" dir="ltr">+</span>
-              <span className="inline-flex items-center gap-1">
-                <span dir="rtl">ثنائي الأكسجين</span>
-                <span className="px-1.5 py-0.5 rounded bg-white text-[#0F766E] border border-[#0F766E]/20 text-xs font-mono" dir="ltr" style={{ unicodeBidi: 'isolate' }}>O₂</span>
+              <span className="text-[#0F766E] font-bold text-sm my-0.5 select-none leading-none">
+                ⟶
               </span>
-              <span className="text-[#0F766E] font-bold text-base px-2 select-none" dir="ltr" style={{ unicodeBidi: 'isolate' }}>→</span>
-              <span className="inline-flex items-center gap-1">
-                <span dir="rtl">ثنائي أكسيد الكربون</span>
-                <span className="px-1.5 py-0.5 rounded bg-white text-[#0F766E] border border-[#0F766E]/20 text-xs font-mono" dir="ltr" style={{ unicodeBidi: 'isolate' }}>CO₂</span>
-              </span>
-              <span className="text-[#64748B] font-bold px-1 select-none" dir="ltr">+</span>
-              <span className="inline-flex items-center gap-1">
-                <span dir="rtl">الماء</span>
-                <span className="px-1.5 py-0.5 rounded bg-white text-[#0F766E] border border-[#0F766E]/20 text-xs font-mono" dir="ltr" style={{ unicodeBidi: 'isolate' }}>H₂O</span>
+              <span className="text-[#0284C7] text-center whitespace-normal break-words leading-snug">
+                <ChemicalFormula formula="ثنائي أكسيد الكربون (g) + ماء (g)" size="sm" />
               </span>
             </div>
           </div>
@@ -1817,6 +1407,123 @@ export const Course01SchemaRenderer: React.FC<{ type: string }> = ({ type }) => 
       );
 
     // ========================================================================
+    // COURS 04 — 5. مخطط التمييز بين النوع الكيميائي والفرد الكيميائي لاحتراق البوتان
+    // ========================================================================
+    case 'c04-species-entities-cards':
+      return (
+        <div className="p-4 rounded-[14px] bg-[#FAF7F4] border border-[#E2D9D0] space-y-3.5" dir="rtl">
+          {/* Header didactique bilingue */}
+          <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#E2D9D0] pb-2.5">
+            <div className="flex items-center gap-2">
+              <span className="w-2.5 h-2.5 rounded-full bg-[#0F766E]" />
+              <h4 className="text-xs sm:text-sm font-bold text-[#1A1A1A]">
+                المستويان المتكاملان لوصف الجملة الكيميائية في احتراق البوتان
+              </h4>
+            </div>
+            <span className="text-[11px] font-mono text-[#0F766E]" dir="ltr">
+              Espèces (Macroscopique) vs Entités (Microscopique)
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+            {/* Card 1 : قبل التحول (المتفاعلات) */}
+            <div className="p-3.5 rounded-[12px] bg-white border border-[#0284C7]/40 space-y-2.5 flex flex-col justify-between shadow-2xs">
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold text-[#0284C7]">قبل التحول (المتفاعلات)</span>
+                  <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-sky-100 text-[#0284C7]" dir="ltr">Réactifs</span>
+                </div>
+                {/* عياني */}
+                <div className="p-2 rounded-[8px] bg-[#F0F9FF] border border-sky-200 space-y-1">
+                  <div className="text-[10px] font-bold text-[#0369A1]">المستوى العياني (النوع الكيميائي):</div>
+                  <div className="text-xs font-bold text-[#1E293B]">غاز البوتان + غاز ثنائي الأكسجين</div>
+                </div>
+                {/* مجهري */}
+                <div className="p-2 rounded-[8px] bg-white border border-[#0284C7]/30 space-y-1">
+                  <div className="text-[10px] font-bold text-[#0284C7]">المستوى المجهري (الفرد الكيميائي):</div>
+                  <div className="flex items-center gap-1.5 flex-wrap text-xs font-bold" dir="ltr">
+                    <span className="px-1.5 py-0.5 rounded bg-sky-50 text-[#0284C7] border border-sky-200">C₄H₁₀</span>
+                    <span className="text-[#64748B]">+</span>
+                    <span className="px-1.5 py-0.5 rounded bg-sky-50 text-[#0284C7] border border-sky-200">O₂</span>
+                  </div>
+                </div>
+              </div>
+              <div className="text-[10.5px] text-[#475569] leading-relaxed pt-1 border-t border-sky-100">
+                ثنائي الأزوت N₂ الموجود في الهواء لا يشارك في التحول فلا يُذكر بين المتفاعلات.
+              </div>
+            </div>
+
+            {/* Card 2 : نواتج الاحتراق التام */}
+            <div className="p-3.5 rounded-[12px] bg-white border border-[#0F766E]/40 space-y-2.5 flex flex-col justify-between shadow-2xs">
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold text-[#0F766E]">نواتج الاحتراق التام (بوفرة O₂)</span>
+                  <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-teal-100 text-[#0F766E]" dir="ltr">Complète</span>
+                </div>
+                {/* عياني */}
+                <div className="p-2 rounded-[8px] bg-[#F0FDFA] border border-teal-200 space-y-1">
+                  <div className="text-[10px] font-bold text-[#0F766E]">المستوى العياني (النوع الكيميائي):</div>
+                  <div className="text-xs font-bold text-[#1E293B]">غاز ثنائي أكسيد الكربون + الماء</div>
+                </div>
+                {/* مجهري */}
+                <div className="p-2 rounded-[8px] bg-white border border-[#0F766E]/30 space-y-1">
+                  <div className="text-[10px] font-bold text-[#0F766E]">المستوى المجهري (الفرد الكيميائي):</div>
+                  <div className="flex items-center gap-1.5 flex-wrap text-xs font-bold" dir="ltr">
+                    <span className="px-1.5 py-0.5 rounded bg-teal-50 text-[#0F766E] border border-teal-200">CO₂</span>
+                    <span className="text-[#64748B]">+</span>
+                    <span className="px-1.5 py-0.5 rounded bg-teal-50 text-[#0F766E] border border-teal-200">H₂O</span>
+                  </div>
+                </div>
+              </div>
+              <div className="text-[10.5px] text-[#475569] leading-relaxed pt-1 border-t border-teal-100">
+                يتشكل ناتجان فقط: CO₂ (يعكّر رائق الكلس) والماء H₂O (يتكاثف على الأسطح الباردة).
+              </div>
+            </div>
+
+            {/* Card 3 : نواتج الاحتراق غير التام */}
+            <div className="p-3.5 rounded-[12px] bg-white border border-amber-400 space-y-2.5 flex flex-col justify-between shadow-2xs">
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold text-amber-800">نواتج الاحتراق غير التام (بنقص O₂)</span>
+                  <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-900" dir="ltr">Incomplète</span>
+                </div>
+                {/* عياني */}
+                <div className="p-2 rounded-[8px] bg-[#FFFBEB] border border-amber-200 space-y-1">
+                  <div className="text-[10px] font-bold text-amber-800">المستوى العياني (النوع الكيميائي):</div>
+                  <div className="text-xs font-bold text-[#1E293B]">CO₂ + ماء + أحادي أكسيد الكربون + سخام</div>
+                </div>
+                {/* مجهري */}
+                <div className="p-2 rounded-[8px] bg-white border border-amber-300 space-y-1">
+                  <div className="text-[10px] font-bold text-amber-800">المستوى المجهري (الفرد الكيميائي):</div>
+                  <div className="flex items-center gap-1 flex-wrap text-xs font-bold" dir="ltr">
+                    <span className="px-1 py-0.5 rounded bg-teal-50 text-[#0F766E] border border-teal-200 text-[11px]">CO₂</span>
+                    <span className="px-1 py-0.5 rounded bg-sky-50 text-[#0284C7] border border-sky-200 text-[11px]">H₂O</span>
+                    <span className="px-1 py-0.5 rounded bg-rose-50 text-rose-700 border border-rose-200 text-[11px]">CO</span>
+                    <span className="px-1 py-0.5 rounded bg-slate-100 text-slate-800 border border-slate-300 text-[11px]">C</span>
+                  </div>
+                </div>
+              </div>
+              <div className="text-[10.5px] text-[#475569] leading-relaxed pt-1 border-t border-amber-100">
+                ينتج أحادي أكسيد الكربون السام (CO) وجسيمات السخام السوداء (C) بسبب عدم كفاية O₂.
+              </div>
+            </div>
+          </div>
+
+          {/* Bandeau de synthèse pédagogique */}
+          <div className="p-2.5 rounded-[10px] bg-white border border-[#E2D9D0] flex items-center justify-between gap-2 text-xs">
+            <span className="font-bold text-[#0F766E]">نموذج التفاعل الكيميائي لاحتراق البوتان التام :</span>
+            <div
+              dir="ltr"
+              style={{ unicodeBidi: 'isolate', whiteSpace: 'nowrap' }}
+              className="inline-flex items-center px-2.5 py-1 rounded-[6px] bg-[#FAF7F4] border border-[#0F766E]/30 font-bold text-xs text-[#1A1A1A] whitespace-nowrap overflow-x-auto max-w-full shrink-0"
+            >
+              <ChemicalFormula formula="بوتان (g) + ثنائي الأكسجين (g) ⟶ ثنائي أكسيد الكربون (g) + ماء (g)" size="sm" />
+            </div>
+          </div>
+        </div>
+      );
+
+    // ========================================================================
     // COURS 04 — المخطط التحصيلي للدرس : مقارنة شاملة بين الاحتراق التام وغير التام
     // ========================================================================
     case 'c04-master-summary-diagram':
@@ -1853,7 +1560,7 @@ export const Course01SchemaRenderer: React.FC<{ type: string }> = ({ type }) => 
                   <ChemPhysText text="الناتجان المتشكلان : ثنائي أكسيد الكربون (CO₂) + الماء (H₂O)" />
                 </div>
                 <p className="text-[11px] text-[#4A4A4A] leading-relaxed">
-                  <ChemPhysText text="لهب أزرق صافٍ · يعكر غاز (CO₂) ماء الجير الصافي، ويزرّق الماء (H₂O) كبريتات النحاس اللامائية البيضاء." />
+                  <ChemPhysText text="لهب أزرق صافٍ · يعكر غاز (CO₂) رائق الكلس الصافي، ويتكاثف الماء (H₂O) على شكل قطرات ندى على الجدار البارد للكأس." />
                 </p>
               </div>
 
@@ -1892,9 +1599,9 @@ export const Course01SchemaRenderer: React.FC<{ type: string }> = ({ type }) => 
       return (
         <div className="p-3.5 rounded-[12px] bg-white border border-[#E2D9D0] space-y-3.5" dir="rtl">
           <ZoomableCourseImage
-            src="/src/assets/images/c05_equilibrage_equation_1790807535324.jpg"
-            alt="وضعية الانطلاق للدرس 05 : مقارنة معادلة غير موزونة ومعادلة موزونة في كفتي ميزان الذرات"
-            captionArabic="صورة توضيحية : مقارنة بين كتابة غير موزونة (كفتا الميزان غير متعادلتين) ومعادلة موزونة تحترم انحفاظ الذرات"
+            src="/src/assets/images/c05_balance_parfaite_1791924387470.jpg"
+            alt="وضعية الانطلاق للدرس 05 : مقارنة كتابة غير موزونة ومعادلة موزونة على كفتي ميزان الذرات"
+            captionArabic="صورة توضيحية : مقارنة بين كتابة غير موزونة (كفتا الميزان غير متعادلتين) ومعادلة موزونة تحترم انحفاظ نوع الذرات وعددها"
             captionFrench="Équilibrer une équation de réaction chimique (Conservation des atomes)"
             courseBadge="الدرس 05"
           />
@@ -1904,14 +1611,25 @@ export const Course01SchemaRenderer: React.FC<{ type: string }> = ({ type }) => 
             <div className="p-3 rounded-[10px] bg-[#FAF7F4] border border-[#E5DDD5] space-y-2 flex flex-col justify-between">
               <div className="space-y-1.5">
                 <div className="text-xs font-bold text-[#0F766E]">
-                  الحالة (أ) : احتراق الكربون (C + O₂ ⟶ CO₂)
+                  الحالة (أ) : احتراق الكربون
+                </div>
+                <div className="py-2 px-2 rounded bg-white border border-[#E2D9D0] flex flex-col items-center justify-center text-center font-sans font-bold" dir="ltr">
+                  <span className="text-[#0F766E] text-xs leading-tight whitespace-nowrap">
+                    <ChemicalFormula formula="C(s) + O2(g)" size="xs" />
+                  </span>
+                  <span className="text-[#0F766E] font-bold text-xs my-0.5 select-none leading-none">
+                    ⟶
+                  </span>
+                  <span className="text-[#0284C7] text-xs leading-tight whitespace-nowrap">
+                    <ChemicalFormula formula="CO2(g)" size="xs" />
+                  </span>
                 </div>
                 <p className="text-xs text-[#4A4A4A] leading-relaxed">
-                  في طرف المتفاعلات لدينا ذرة كربون واحدة (1 C) وذرتا أكسجين (2 O)، وفي طرف النواتج لدينا 1 C و 2 O: العددان متساويان مباشرة!
+                  في طرف المتفاعلات لدينا 1 ذرة C و 2 ذرتان O، وفي طرف النواتج لدينا 1 ذرة C و 2 ذرتان O: نوع الذرات وعددها متساويان مباشرة!
                 </p>
               </div>
-              <div className="pt-1 border-t border-[#E5DDD5] text-[11px] font-mono text-[#0F766E]" dir="ltr">
-                1 C , 2 O = 1 C , 2 O (Équilibrée)
+              <div className="pt-1 border-t border-[#E5DDD5] text-[11px] font-sans font-bold text-[#0F766E] text-center" dir="rtl">
+                معادلة موزونة منذ البداية ✓
               </div>
             </div>
 
@@ -1919,14 +1637,25 @@ export const Course01SchemaRenderer: React.FC<{ type: string }> = ({ type }) => 
             <div className="p-3 rounded-[10px] bg-[#FAF7F4] border border-[#E5DDD5] space-y-2 flex flex-col justify-between">
               <div className="space-y-1.5">
                 <div className="text-xs font-bold text-amber-800">
-                  الحالة (ب) : اصطناع الماء (H₂ + O₂ ⟶ H₂O ؟)
+                  الحالة (ب) : تكوين الماء
+                </div>
+                <div className="py-2 px-2 rounded bg-white border border-[#E2D9D0] flex flex-col items-center justify-center text-center font-sans font-bold" dir="ltr">
+                  <span className="text-[#0F766E] text-xs leading-tight whitespace-nowrap">
+                    <ChemicalFormula formula="H2(g) + O2(g)" size="xs" />
+                  </span>
+                  <span className="text-[#0F766E] font-bold text-xs my-0.5 select-none leading-none">
+                    ⟶
+                  </span>
+                  <span className="text-[#0284C7] text-xs leading-tight whitespace-nowrap">
+                    <ChemicalFormula formula="H2O(l)" size="xs" />
+                  </span>
                 </div>
                 <p className="text-xs text-[#4A4A4A] leading-relaxed">
-                  في المتفاعلات لدينا ذرتا أكسجين (2 O في O₂)، بينما في جزيء واحد من الماء (H₂O) توجد ذرة أكسجين واحدة فقط (1 O)!
+                  في المتفاعلات لدينا 2 ذرتان O في ثنائي الأكسجين، بينما في جزيء الماء الواحد توجد 1 ذرة O فقط: كفتا الميزان غير متعادلتين!
                 </p>
               </div>
-              <div className="pt-1 border-t border-[#E5DDD5] text-[11px] font-mono text-amber-800" dir="ltr">
-                2 O (réactifs) ≠ 1 O (produit)
+              <div className="pt-1 border-t border-[#E5DDD5] text-[11px] font-sans font-bold text-amber-800 text-center" dir="rtl">
+                كتابة غير موزونة (2 ≠ 1) ❌
               </div>
             </div>
 
@@ -1934,14 +1663,25 @@ export const Course01SchemaRenderer: React.FC<{ type: string }> = ({ type }) => 
             <div className="p-3 rounded-[10px] bg-[#FAF7F4] border border-[#E5DDD5] space-y-2 flex flex-col justify-between">
               <div className="space-y-1.5">
                 <div className="text-xs font-bold text-rose-800">
-                  الحالة (ج) : احتراق البوتان (C₄H₁₀ + O₂ ⟶ CO₂ + H₂O ؟)
+                  الحالة (ج) : احتراق غاز البوتان
+                </div>
+                <div className="py-2 px-2 rounded bg-white border border-[#E2D9D0] flex flex-col items-center justify-center text-center font-sans font-bold" dir="ltr">
+                  <span className="text-[#0F766E] text-xs leading-tight whitespace-nowrap">
+                    <ChemicalFormula formula="C4H10(g) + O2(g)" size="xs" />
+                  </span>
+                  <span className="text-[#0F766E] font-bold text-xs my-0.5 select-none leading-none">
+                    ⟶
+                  </span>
+                  <span className="text-[#0284C7] text-xs leading-tight whitespace-nowrap">
+                    <ChemicalFormula formula="CO2(g) + H2O(l)" size="xs" />
+                  </span>
                 </div>
                 <p className="text-xs text-[#4A4A4A] leading-relaxed">
-                  في المتفاعلات لدينا 4 ذرات C و 10 ذرات H، بينما كتبنا في النواتج جزيئًا واحدًا من CO₂ (1 C) وجزيئًا واحدًا من H₂O (2 H)!
+                  في المتفاعلات لدينا 4 ذرات C و 10 ذرات H، بينما كتبنا في النواتج ذرة C واحدة وذرتا H فقط: اختلال في نوع الذرات وعددها!
                 </p>
               </div>
-              <div className="pt-1 border-t border-[#E5DDD5] text-[11px] font-mono text-rose-800" dir="ltr">
-                4 C , 10 H ≠ 1 C , 2 H (Non équilibrée)
+              <div className="pt-1 border-t border-[#E5DDD5] text-[11px] font-sans font-bold text-rose-800 text-center" dir="rtl">
+                كتابة غير موزونة تحتاج موازنة ❌
               </div>
             </div>
           </div>
@@ -1949,222 +1689,231 @@ export const Course01SchemaRenderer: React.FC<{ type: string }> = ({ type }) => 
       );
 
     // ========================================================================
-    // COURS 05 — 2. الفرق الحاسم بين المعامل الستوكيومتري (Coefficient) والمؤشر (Indice)
+    // COURS 05 — 2. الفرق الحاسم بين المعامل الستوكومتري (Coefficient) والمؤشر (Indice)
     // ========================================================================
     case 'c05-coefficient-vs-subscript':
       return (
         <div className="p-4 rounded-[12px] bg-[#FAF7F4] border border-[#E2D9D0] space-y-3" dir="rtl">
-          <svg viewBox="0 0 680 215" className="w-full max-w-2xl mx-auto h-auto">
-            <rect x="8" y="8" width="664" height="199" rx="14" fill="#FFFFFF" stroke="#E2D9D0" />
+          <svg viewBox="0 0 680 220" className="w-full max-w-2xl mx-auto h-auto">
+            <rect x="8" y="8" width="664" height="204" rx="14" fill="#FFFFFF" stroke="#E2D9D0" />
 
             {/* Central Big Formula : 2 H₂O */}
-            <g transform="translate(340, 88)" dir="ltr">
+            <g transform="translate(340, 88)">
               {/* Coefficient 2 */}
               <rect x="-86" y="-38" width="44" height="58" rx="10" fill="#F0FDFA" stroke="#0F766E" strokeWidth="2.5" />
-              <text x="-64" y="4" textAnchor="middle" fontSize="36" fontWeight="bold" fill="#0F766E" fontFamily="monospace">
+              <text x="-64" y="6" textAnchor="middle" fontSize="38" fontWeight="bold" fill="#0F766E" fontFamily="system-ui, -apple-system, sans-serif">
                 2
               </text>
 
               {/* H */}
-              <text x="-18" y="4" textAnchor="middle" fontSize="34" fontWeight="bold" fill="#1E293B" fontFamily="monospace">
+              <text x="-18" y="6" textAnchor="middle" fontSize="36" fontWeight="bold" fill="#1E293B" fontFamily="system-ui, -apple-system, sans-serif">
                 H
               </text>
 
               {/* Subscript 2 */}
               <rect x="2" y="-12" width="28" height="36" rx="7" fill="#FEF2F2" stroke="#DC2626" strokeWidth="2" />
-              <text x="16" y="15" textAnchor="middle" fontSize="22" fontWeight="bold" fill="#DC2626" fontFamily="monospace">
+              <text x="16" y="16" textAnchor="middle" fontSize="24" fontWeight="bold" fill="#DC2626" fontFamily="system-ui, -apple-system, sans-serif">
                 2
               </text>
 
               {/* O */}
-              <text x="52" y="4" textAnchor="middle" fontSize="34" fontWeight="bold" fill="#1E293B" fontFamily="monospace">
+              <text x="52" y="6" textAnchor="middle" fontSize="36" fontWeight="bold" fill="#1E293B" fontFamily="system-ui, -apple-system, sans-serif">
                 O
               </text>
             </g>
 
-            {/* Right Callout : المعامل الستوكيومتري (Coefficient) */}
-            <rect x="22" y="24" width="206" height="118" rx="10" fill="#F0FDFA" stroke="#0F766E" strokeWidth="1.8" />
-            <text x="125" y="46" textAnchor="middle" fontSize="12" fontWeight="bold" fill="#0F766E">
-              ✔ المعامل الستوكيومتري (2)
+            {/* Right Callout : المعامل الستوكومتري */}
+            <rect x="22" y="24" width="216" height="118" rx="10" fill="#F0FDFA" stroke="#0F766E" strokeWidth="1.8" />
+            <text x="130" y="48" textAnchor="middle" fontSize="13" fontWeight="bold" fill="#0F766E">
+              ✔ المعامل الستوكومتري (2)
             </text>
-            <text x="125" y="64" textAnchor="middle" fontSize="10" fontWeight="bold" fill="#0F766E">
-              Coefficient stœchiométrique
+            <text x="130" y="74" textAnchor="middle" fontSize="11" fill="#4A4A4A">
+              يوضع أمام الصيغة الكيميائية
             </text>
-            <text x="125" y="86" textAnchor="middle" fontSize="10.5" fill="#4A4A4A">
-              يوضع أمام الصيغة ويمثل عدد الجزيئات
+            <text x="130" y="94" textAnchor="middle" fontSize="11" fill="#4A4A4A">
+              يضرب كل ذرات الصيغة :
             </text>
-            <text x="125" y="104" textAnchor="middle" fontSize="10.5" fontWeight="bold" fill="#0F766E">
-              (2 H₂O = جزيئان من الماء : 4 H و 2 O)
+            <text x="130" y="112" textAnchor="middle" fontSize="11.5" fontWeight="bold" fill="#0F766E">
+              2H₂O = 4 ذرات H و 2 ذرتا O
             </text>
-            <text x="125" y="126" textAnchor="middle" fontSize="10.5" fontWeight="bold" fill="#047857">
-              ✔ يُسمح بتغييره أثناء الموازنة
+            <text x="130" y="132" textAnchor="middle" fontSize="11" fontWeight="bold" fill="#047857">
+              ✔ نغيّره لموازنة المعادلة
             </text>
 
-            {/* Left Callout : المؤشر (Indice) */}
-            <rect x="452" y="24" width="206" height="118" rx="10" fill="#FEF2F2" stroke="#DC2626" strokeWidth="1.8" />
-            <text x="555" y="46" textAnchor="middle" fontSize="12" fontWeight="bold" fill="#DC2626">
+            {/* Left Callout : المؤشر الصغير */}
+            <rect x="442" y="24" width="216" height="118" rx="10" fill="#FEF2F2" stroke="#DC2626" strokeWidth="1.8" />
+            <text x="550" y="48" textAnchor="middle" fontSize="13" fontWeight="bold" fill="#DC2626">
               ❌ المؤشر الصغير (₂)
             </text>
-            <text x="555" y="64" textAnchor="middle" fontSize="10" fontWeight="bold" fill="#DC2626">
-              Indice (Subscript)
+            <text x="550" y="74" textAnchor="middle" fontSize="11" fill="#4A4A4A">
+              جزء من هوية الفرد الكيميائي
             </text>
-            <text x="555" y="86" textAnchor="middle" fontSize="10.5" fill="#4A4A4A">
-              يحدد عدد الذرات داخل الجزيء الواحد
+            <text x="550" y="94" textAnchor="middle" fontSize="11" fill="#4A4A4A">
+              يحدد عدد الذرات داخل الجزيء
             </text>
-            <text x="555" y="104" textAnchor="middle" fontSize="10.5" fontWeight="bold" fill="#B91C1C">
-              (H₂O ≠ H₂O₂ الماء الأكسجيني)
+            <text x="550" y="112" textAnchor="middle" fontSize="10.5" fontWeight="bold" fill="#B91C1C">
+              تغيير المؤشر يعني نوعًا مختلفًا عن الماء
             </text>
-            <text x="555" y="126" textAnchor="middle" fontSize="10.5" fontWeight="bold" fill="#DC2626">
-              ❌ يمنع تغييره أثناء الموازنة!
+            <text x="550" y="132" textAnchor="middle" fontSize="11" fontWeight="bold" fill="#DC2626">
+              ❌ لا نغيّره أبدًا!
             </text>
 
             {/* Bottom summary bar */}
-            <rect x="22" y="154" width="636" height="38" rx="8" fill="#FAF7F4" stroke="#E5DDD5" />
-            <text x="340" y="178" textAnchor="middle" fontSize="11.5" fontWeight="bold" fill="#4A4A4A">
-              قاعدة ذهبية : في 2 H₂O المعامل (2) يضرب كامل الصيغة  عدد ذرات H = 2×2 = 4 وعدد ذرات O = 2×1 = 2
+            <rect x="22" y="156" width="636" height="42" rx="8" fill="#FAF7F4" stroke="#E5DDD5" />
+            <text x="340" y="182" textAnchor="middle" fontSize="12" fontWeight="bold" fill="#4A4A4A">
+              القاعدة الأساسية : نوازن المعادلة بتغيير المعاملات فقط، ولا نغيّر المؤشرات أبدًا
             </text>
           </svg>
         </div>
       );
 
     // ========================================================================
-    // COURS 05 — 3. التمثيل الجزيئي لموازنة معادلة اصطناع الماء (2 H₂ + O₂ ⟶ 2 H₂O)
+    // COURS 05 — 3. النموذج الجزيئي بالتراص الحبيبي لموازنة معادلة تكوين الماء
     // ========================================================================
     case 'c05-water-synthesis-microscopic':
       return (
-        <div className="p-4 rounded-[12px] bg-[#FAF7F4] border border-[#E2D9D0] space-y-3" dir="rtl">
-          <svg viewBox="0 0 680 210" className="w-full max-w-2xl mx-auto h-auto">
-            {/* Left : المتفاعلات (2 H₂ + O₂) */}
-            <rect x="14" y="14" width="254" height="182" rx="12" fill="#FFFFFF" stroke="#0284C7" strokeWidth="1.8" />
-            <text x="141" y="38" textAnchor="middle" fontSize="13" fontWeight="bold" fill="#0284C7">
-              المتفاعلات (Réactifs) : 2 H₂ + O₂
-            </text>
+        <div className="p-3.5 rounded-[12px] bg-white border border-[#E2D9D0] space-y-3" dir="rtl">
+          <ZoomableCourseImage
+            src="/src/assets/images/c05_boules_pate_1791923086179.jpg"
+            alt="النموذج الجزيئي بالتراص الحبيبي لاصطناع الماء الموزون : 2H₂(g) + O₂(g) ⟶ 2H₂O(l)"
+            captionArabic="النموذج الجزيئي بالتراص الحبيبي (كرات المعجون) لاصطناع الماء الموزون : 2H₂(g) + O₂(g) ⟶ 2H₂O(l) دون عصي ربط، مع انحفاظ نوع الذرات وعددها"
+            captionFrench="Modèle moléculaire de l'équation équilibrée : 2 H₂(g) + O₂(g) ⟶ 2 H₂O(l)"
+            courseBadge="الدرس 05"
+          />
 
-            {/* Two H2 molecules */}
-            <g transform="translate(76, 86)">
-              <circle cx="-10" cy="0" r="10" fill="#FFFFFF" stroke="#475569" strokeWidth="2" />
-              <circle cx="10" cy="0" r="10" fill="#FFFFFF" stroke="#475569" strokeWidth="2" />
-              <text x="0" y="24" textAnchor="middle" fontSize="10" fontWeight="bold" fill="#334155">H₂</text>
-            </g>
-            <g transform="translate(76, 134)">
-              <circle cx="-10" cy="0" r="10" fill="#FFFFFF" stroke="#475569" strokeWidth="2" />
-              <circle cx="10" cy="0" r="10" fill="#FFFFFF" stroke="#475569" strokeWidth="2" />
-              <text x="0" y="24" textAnchor="middle" fontSize="10" fontWeight="bold" fill="#334155">H₂</text>
-            </g>
-
-            <text x="132" y="114" textAnchor="middle" fontSize="18" fontWeight="bold" fill="#4A4A4A">+</text>
-
-            {/* One O2 molecule */}
-            <g transform="translate(196, 108)">
-              <circle cx="-13" cy="0" r="14" fill="#EF4444" stroke="#B91C1C" strokeWidth="1.8" />
-              <text x="-13" y="4" textAnchor="middle" fontSize="10" fontWeight="bold" fill="#FFFFFF">O</text>
-              <circle cx="13" cy="0" r="14" fill="#EF4444" stroke="#B91C1C" strokeWidth="1.8" />
-              <text x="13" y="4" textAnchor="middle" fontSize="10" fontWeight="bold" fill="#FFFFFF">O</text>
-              <text x="0" y="30" textAnchor="middle" fontSize="11" fontWeight="bold" fill="#B91C1C">1 O₂</text>
-            </g>
-
-            <text x="141" y="182" textAnchor="middle" fontSize="11" fontWeight="bold" fill="#0284C7">
-              المجموع : 4 ذرات H و 2 ذرتان O
-            </text>
-
-            {/* Center Arrow */}
-            <g transform="translate(340, 105)">
-              <text x="0" y="-20" textAnchor="middle" fontSize="11" fontWeight="bold" fill="#C94BA6">
-                إعادة ترتيب الذرات
-              </text>
-              <line x1="-56" y1="0" x2="48" y2="0" stroke="#C94BA6" strokeWidth="3" />
-              <polygon points="48,-6 60,0 48,6" fill="#C94BA6" />
-              <text x="0" y="20" textAnchor="middle" fontSize="10" fontWeight="bold" fill="#4A4A4A" dir="ltr">
-                H₂ + H₂ + O₂ ⟶ H₂O + H₂O
-              </text>
-            </g>
-
-            {/* Right : النواتج (2 H₂O) */}
-            <rect x="412" y="14" width="254" height="182" rx="12" fill="#FFFFFF" stroke="#0F766E" strokeWidth="1.8" />
-            <text x="539" y="38" textAnchor="middle" fontSize="13" fontWeight="bold" fill="#0F766E">
-              النواتج (Produits) : 2 H₂O
-            </text>
-
-            <H2OMiniSvg x={495} y={96} scale={1.35} />
-            <H2OMiniSvg x={585} y={96} scale={1.35} />
-            <text x="495" y="136" textAnchor="middle" fontSize="10.5" fontWeight="bold" fill="#0F766E">H₂O (1)</text>
-            <text x="585" y="136" textAnchor="middle" fontSize="10.5" fontWeight="bold" fill="#0F766E">H₂O (2)</text>
-
-            <text x="539" y="182" textAnchor="middle" fontSize="11" fontWeight="bold" fill="#0F766E">
-              المجموع : 4 ذرات H و 2 ذرتان O (متوازن ✓)
-            </text>
-          </svg>
+          <div className="p-3 rounded-[10px] bg-[#FAF7F4] border border-[#E5DDD5] space-y-2">
+            <div className="text-xs font-bold text-[#0F766E]">
+              قراءة المعادلة الموزونة بالنموذج الجزيئي المجهري :
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs">
+              <div className="p-2 rounded bg-white border border-[#E2D9D0] text-center space-y-1">
+                <span className="font-bold text-[#0284C7] block">المتفاعلات</span>
+                <span dir="ltr" className="font-sans font-bold text-xs block text-[#1E293B]">2H₂(g) + O₂(g)</span>
+                <span className="text-[11px] text-[#4A4A4A] block">4 ذرات H بيضاء + ذرتا O حمراوان</span>
+              </div>
+              <div className="p-2 rounded bg-white border border-[#E2D9D0] text-center space-y-1 flex flex-col justify-center">
+                <span className="font-bold text-[#C94BA6] block">إعادة ترتيب الذرات</span>
+                <span className="font-bold text-base block text-[#C94BA6]">⟶</span>
+                <span className="text-[11px] text-[#6B6B6B] block">لا تُفقد ذرة ولا تُنشأ</span>
+              </div>
+              <div className="p-2 rounded bg-white border border-[#E2D9D0] text-center space-y-1">
+                <span className="font-bold text-[#0F766E] block">النواتج</span>
+                <span dir="ltr" className="font-sans font-bold text-xs block text-[#1E293B]">2H₂O(l)</span>
+                <span className="text-[11px] text-[#4A4A4A] block">4 ذرات H بيضاء + ذرتا O حمراوان</span>
+              </div>
+            </div>
+          </div>
         </div>
       );
 
     // ========================================================================
-    // COURS 05 — 4. مراحل موازنة معادلة الاحتراق التام للبوتان خطوة بخطوة
+    // COURS 05 — 4. مراحل موازنة معادلة احتراق البوتان خطوة بخطوة
     // ========================================================================
     case 'c05-butane-step-by-step':
       return (
         <div className="p-4 rounded-[12px] bg-[#FAF7F4] border border-[#E2D9D0] space-y-3" dir="rtl">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {/* الخطوة 1 : موازنة الكربون C */}
-            <div className="p-3 rounded-[10px] bg-white border border-[#E5DDD5] space-y-1.5">
-              <div className="flex items-center justify-between">
-                <span className="px-2 py-0.5 rounded bg-[#0F766E] text-white text-xs font-bold">
+            <div className="p-3.5 rounded-[10px] bg-white border border-[#E5DDD5] space-y-2">
+              <div className="flex flex-wrap items-center justify-between gap-1.5 pb-1 border-b border-[#E5DDD5]/60">
+                <span className="px-2 py-0.5 rounded bg-[#0F766E] text-white text-xs font-bold shrink-0">
                   الخطوة 1 : موازنة الكربون (C)
                 </span>
-                <span className="text-xs font-mono font-bold text-[#0F766E]" dir="ltr">4 C = 4 C</span>
+                <bdi dir="ltr" style={{ unicodeBidi: 'isolate', whiteSpace: 'nowrap' }} className="text-xs font-sans font-bold text-[#0F766E] whitespace-nowrap">
+                  4 C = 4 C
+                </bdi>
               </div>
-              <p className="text-xs text-[#4A4A4A]">
-                يوجد 4 ذرات C في جزيء <span dir="ltr" className="font-mono font-bold">C₄H₁₀</span>، فنضع المعامل <strong>4</strong> أمام <span dir="ltr" className="font-mono font-bold">CO₂</span>:
+              <p className="text-xs text-[#4A4A4A] leading-relaxed">
+                يوجد 4 ذرات C في جزيء <bdi dir="ltr" className="font-sans font-bold">C₄H₁₀</bdi>، فنضع المعامل <strong>4</strong> أمام <bdi dir="ltr" className="font-sans font-bold">CO₂</bdi>:
               </p>
-              <div className="py-1 px-2.5 rounded bg-[#FAF7F4] border border-[#E5DDD5] text-center" dir="ltr">
-                <ChemicalFormula formula="C4H10 + O2 -> 4 CO2 + H2O" size="sm" />
+              <div className="py-2 px-2 rounded bg-[#FAF7F4] border border-[#E5DDD5] flex flex-col items-center justify-center text-center font-sans font-bold" dir="ltr">
+                <span className="text-[#0F766E] text-xs leading-tight whitespace-nowrap">
+                  <ChemicalFormula formula="C4H10(g) + O2(g)" size="xs" />
+                </span>
+                <span className="text-[#0F766E] font-bold text-xs my-0.5 select-none leading-none">
+                  ⟶
+                </span>
+                <span className="text-[#0284C7] text-xs leading-tight whitespace-nowrap">
+                  <ChemicalFormula formula="4 CO2(g) + H2O(l)" size="xs" />
+                </span>
               </div>
             </div>
 
             {/* الخطوة 2 : موازنة الهيدروجين H */}
-            <div className="p-3 rounded-[10px] bg-white border border-[#E5DDD5] space-y-1.5">
-              <div className="flex items-center justify-between">
-                <span className="px-2 py-0.5 rounded bg-[#0284C7] text-white text-xs font-bold">
+            <div className="p-3.5 rounded-[10px] bg-white border border-[#E5DDD5] space-y-2">
+              <div className="flex flex-wrap items-center justify-between gap-1.5 pb-1 border-b border-[#E5DDD5]/60">
+                <span className="px-2 py-0.5 rounded bg-[#0284C7] text-white text-xs font-bold shrink-0">
                   الخطوة 2 : موازنة الهيدروجين (H)
                 </span>
-                <span className="text-xs font-mono font-bold text-[#0284C7]" dir="ltr">10 H = 5 × 2 H</span>
+                <bdi dir="ltr" style={{ unicodeBidi: 'isolate', whiteSpace: 'nowrap' }} className="text-xs font-sans font-bold text-[#0284C7] whitespace-nowrap">
+                  10 H = 5 × 2 H
+                </bdi>
               </div>
-              <p className="text-xs text-[#4A4A4A]">
-                يوجد 10 ذرات H في <span dir="ltr" className="font-mono font-bold">C₄H₁₀</span>، فنضع المعامل <strong>5</strong> أمام <span dir="ltr" className="font-mono font-bold">H₂O</span>:
+              <p className="text-xs text-[#4A4A4A] leading-relaxed">
+                يوجد 10 ذرات H في <bdi dir="ltr" className="font-sans font-bold">C₄H₁₀</bdi>، فنضع المعامل <strong>5</strong> أمام <bdi dir="ltr" className="font-sans font-bold">H₂O</bdi>:
               </p>
-              <div className="py-1 px-2.5 rounded bg-[#FAF7F4] border border-[#E5DDD5] text-center" dir="ltr">
-                <ChemicalFormula formula="C4H10 + O2 -> 4 CO2 + 5 H2O" size="sm" />
+              <div className="py-2 px-2 rounded bg-[#FAF7F4] border border-[#E5DDD5] flex flex-col items-center justify-center text-center font-sans font-bold" dir="ltr">
+                <span className="text-[#0F766E] text-xs leading-tight whitespace-nowrap">
+                  <ChemicalFormula formula="C4H10(g) + O2(g)" size="xs" />
+                </span>
+                <span className="text-[#0F766E] font-bold text-xs my-0.5 select-none leading-none">
+                  ⟶
+                </span>
+                <span className="text-[#0284C7] text-xs leading-tight whitespace-nowrap">
+                  <ChemicalFormula formula="4 CO2(g) + 5 H2O(l)" size="xs" />
+                </span>
               </div>
             </div>
 
             {/* الخطوة 3 : موازنة الأكسجين O */}
-            <div className="p-3 rounded-[10px] bg-white border border-[#E5DDD5] space-y-1.5">
-              <div className="flex items-center justify-between">
-                <span className="px-2 py-0.5 rounded bg-[#C94BA6] text-white text-xs font-bold">
-                  الخطوة 3 : حساب وموازنة الأكسجين (O)
+            <div className="p-3.5 rounded-[10px] bg-white border border-[#E5DDD5] space-y-2">
+              <div className="flex flex-wrap items-center justify-between gap-1.5 pb-1 border-b border-[#E5DDD5]/60">
+                <span className="px-2 py-0.5 rounded bg-[#C94BA6] text-white text-xs font-bold shrink-0">
+                  الخطوة 3 : موازنة الأكسجين (خطوة مؤقتة)
                 </span>
-                <span className="text-xs font-mono font-bold text-[#C94BA6]" dir="ltr">8 + 5 = 13 O</span>
+                <bdi dir="ltr" style={{ unicodeBidi: 'isolate', whiteSpace: 'nowrap' }} className="text-xs font-sans font-bold text-[#C94BA6] whitespace-nowrap">
+                  8 + 5 = 13 O
+                </bdi>
               </div>
-              <p className="text-xs text-[#4A4A4A]">
-                في النواتج: <span dir="ltr" className="font-mono">4×2 + 5×1 = 13 O</span>، فنضع الكسر <span dir="ltr" className="font-mono font-bold">13/2</span> أمام <span dir="ltr" className="font-mono font-bold">O₂</span>:
+              <p className="text-xs text-[#4A4A4A] leading-relaxed">
+                في النواتج: <bdi dir="ltr" style={{ unicodeBidi: 'isolate', whiteSpace: 'nowrap' }} className="font-sans font-bold text-[#1E293B] whitespace-nowrap">(4 × 2) + (5 × 1) = 8 + 5 = 13 O</bdi>، فنضع الكسر <bdi dir="ltr" className="font-sans font-bold">13/2</bdi> أمام <bdi dir="ltr" className="font-sans font-bold">O₂</bdi> كخطوة مؤقتة:
               </p>
-              <div className="py-1 px-2.5 rounded bg-[#FAF7F4] border border-[#E5DDD5] text-center" dir="ltr">
-                <ChemicalFormula formula="C4H10 + 13/2 O2 -> 4 CO2 + 5 H2O" size="sm" />
+              <div className="py-2 px-2 rounded bg-[#FAF7F4] border border-[#E5DDD5] flex flex-col items-center justify-center text-center font-sans font-bold" dir="ltr">
+                <span className="text-[#0F766E] text-xs leading-tight whitespace-nowrap">
+                  <ChemicalFormula formula="C4H10(g) + 13/2 O2(g)" size="xs" />
+                </span>
+                <span className="text-[#0F766E] font-bold text-xs my-0.5 select-none leading-none">
+                  ⟶
+                </span>
+                <span className="text-[#0284C7] text-xs leading-tight whitespace-nowrap">
+                  <ChemicalFormula formula="4 CO2(g) + 5 H2O(l)" size="xs" />
+                </span>
               </div>
             </div>
 
-            {/* الخطوة 4 : ضرب المعاملات في 2 للحصول على أعداد صحيحة */}
-            <div className="p-3 rounded-[10px] bg-[#F0FDFA] border-2 border-[#0F766E] space-y-1.5">
-              <div className="flex items-center justify-between">
-                <span className="px-2 py-0.5 rounded bg-[#0F766E] text-white text-xs font-bold">
-                  الخطوة 4 : الضرب في 2 (معاملات صحيحة)
+            {/* الخطوة 4 : ضرب المعاملات في 2 للحصول على أعداد طبيعية */}
+            <div className="p-3.5 rounded-[10px] bg-[#F0FDFA] border-2 border-[#0F766E] space-y-2">
+              <div className="flex flex-wrap items-center justify-between gap-1.5 pb-1 border-b border-[#0F766E]/20">
+                <span className="px-2 py-0.5 rounded bg-[#0F766E] text-white text-xs font-bold shrink-0">
+                  الخطوة 4 : الضرب في 2 (معاملات طبيعية نهائية)
                 </span>
-                <span className="text-xs font-mono font-bold text-[#0F766E]" dir="ltr">8 C · 20 H · 26 O</span>
+                <bdi dir="ltr" style={{ unicodeBidi: 'isolate', whiteSpace: 'nowrap' }} className="text-xs font-sans font-bold text-[#0F766E] whitespace-nowrap">
+                  8 C · 20 H · 26 O
+                </bdi>
               </div>
-              <p className="text-xs text-[#4A4A4A]">
-                نضرب جميع معاملات المعادلة في <strong>2</strong> فنتحصل على المعادلة النهائية الموزونة:
+              <p className="text-xs text-[#4A4A4A] leading-relaxed">
+                نضرب جميع معاملات المعادلة في <strong>2</strong> للحصول على أصغر أعداد طبيعية:
               </p>
-              <div className="py-1 px-2.5 rounded bg-white border border-[#0F766E]/40 text-center" dir="ltr">
-                <ChemicalFormula formula="2 C4H10 + 13 O2 -> 8 CO2 + 10 H2O" size="sm" />
+              <div className="py-2 px-2 rounded bg-white border border-[#0F766E]/40 flex flex-col items-center justify-center text-center font-sans font-bold" dir="ltr">
+                <span className="text-[#0F766E] text-xs leading-tight whitespace-nowrap">
+                  <ChemicalFormula formula="2 C4H10(g) + 13 O2(g)" size="xs" />
+                </span>
+                <span className="text-[#0F766E] font-bold text-xs my-0.5 select-none leading-none">
+                  ⟶
+                </span>
+                <span className="text-[#0284C7] text-xs leading-tight whitespace-nowrap">
+                  <ChemicalFormula formula="8 CO2(g) + 10 H2O(l)" size="xs" />
+                </span>
               </div>
             </div>
           </div>
@@ -2175,42 +1924,42 @@ export const Course01SchemaRenderer: React.FC<{ type: string }> = ({ type }) => 
       );
 
     // ========================================================================
-    // COURS 05 — الخلاصة (الوحيدة في الدرس — RÈGLE 2) : منهجية موازنة المعادلات الكيميائية
+    // COURS 05 — الخلاصة : منهجية موازنة المعادلات الكيميائية
     // ========================================================================
     case 'c05-master-summary-diagram':
       return (
         <div className="p-4 rounded-[12px] bg-[#FAF7F4] border border-[#E2D9D0]" dir="rtl">
           <div className="max-w-xl mx-auto flex flex-col items-center space-y-2">
             <div className="w-full py-2 px-4 rounded-[10px] bg-[#0F766E] text-white font-bold text-xs sm:text-sm text-center">
-              مبدأ موازنة معادلة التفاعل الكيميائي : انحفاظ الذرات نوعًا وعددًا
+              مبدأ موازنة معادلة التفاعل الكيميائي : انحفاظ نوع الذرات وعددها
             </div>
             <ArrowDown className="w-4 h-4 text-[#0F766E]" />
 
             <div className="w-full py-2 px-4 rounded-[10px] bg-white border border-[#0284C7] text-center text-xs sm:text-sm font-bold text-[#0284C7]">
-              عدد ذرات كل عنصر في المتفاعلات (Réactifs) = عدد ذرات العنصر نفسه في النواتج (Produits)
+              نوع الذرات وعددها في المتفاعلات = نوع الذرات وعددها في النواتج
             </div>
             <ArrowDown className="w-4 h-4 text-[#C94BA6]" />
 
             <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-2.5">
               <div className="p-2.5 rounded-[10px] bg-[#F0FDFA] border border-[#0F766E] text-center text-xs font-bold text-[#0F766E]">
-                ✔ نغير فقط المعاملات الستوكيومترية الموضوعة أمام الصيغ الكيميائية
+                ✔ نغيّر فقط المعاملات الستوكومترية (أصغر الأعداد الطبيعية) أمام الصيغ
               </div>
               <div className="p-2.5 rounded-[10px] bg-rose-50 border border-rose-300 text-center text-xs font-bold text-rose-800">
-                ❌ لا نغير أبدًا المؤشرات الصغيرة داخل الصيغ (H₂O ≠ H₂O₂)
+                ❌ لا نغيّر أبدًا المؤشرات داخل الصيغ الكيميائية
               </div>
             </div>
             <ArrowDown className="w-4 h-4 text-[#0F766E]" />
 
             <div className="w-full py-2.5 px-4 rounded-[10px] bg-[#0F766E] text-white text-center space-y-1.5">
               <div className="text-xs sm:text-sm font-bold">
-                المعادلتان المرجعيتان للحفظ بعد الموازنة :
+                المعادلتان المرجعيتان للحفظ بالمعاملات والحالات الفيزيائية :
               </div>
-              <div className="flex flex-wrap items-center justify-center gap-2" dir="ltr">
-                <span className="bg-white px-3 py-1 rounded-[8px]">
-                  <ChemicalFormula formula="2 H2 + O2 -> 2 H2O" size="sm" />
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-2" dir="ltr">
+                <span className="bg-white px-3 py-1 rounded-[8px] text-xs">
+                  <ChemicalFormula formula="2 H2(g) + O2(g) -> 2 H2O(l)" size="sm" />
                 </span>
-                <span className="bg-white px-3 py-1 rounded-[8px]">
-                  <ChemicalFormula formula="2 C4H10 + 13 O2 -> 8 CO2 + 10 H2O" size="sm" />
+                <span className="bg-white px-3 py-1 rounded-[8px] text-xs">
+                  <ChemicalFormula formula="2 C4H10(g) + 13 O2(g) -> 8 CO2(g) + 10 H2O(l)" size="sm" />
                 </span>
               </div>
             </div>
@@ -2219,8 +1968,8 @@ export const Course01SchemaRenderer: React.FC<{ type: string }> = ({ type }) => 
       );
 
     // ========================================================================
-    // COURS 06 : العوامل المؤثرة في التفاعل الكيميائي
-    // (Les facteurs influençant une réaction chimique)
+    // COURS 06 : العوامل المؤثرة في التحوّل الكيميائي
+    // (Les facteurs influençant une transformation chimique)
     // ========================================================================
 
     case 'c06-discovery-setup':
@@ -2228,37 +1977,37 @@ export const Course01SchemaRenderer: React.FC<{ type: string }> = ({ type }) => 
         <div className="p-4 sm:p-6 bg-[#FAF7F4] rounded-[12px] border border-[#E2D9D0] space-y-4">
           <ZoomableCourseImage
             src="/src/assets/images/c06_facteurs_reaction_1790808515013.jpg"
-            alt="وضعية الانطلاق للدرس 06 : تأثير درجة الحرارة (ماء بارد مقابل ماء دافئ) وسطح التلامس (قرص كامل مقابل مسحوق) على سرعة التفاعل الكيميائي"
-            captionArabic="الدرس 06 — وضعية الانطلاق : مقارنة تجريبية لتأثير درجة الحرارة (Température) وسطح التلامس (Surface de contact) على سرعة التفاعل الكيميائي"
-            captionFrench="Cours 06 · Expériences comparatives : Température (Eau froide vs Eau tiède) et Surface de contact (Comprimé entier vs Poudre)"
+            alt="وضعية الانطلاق للدرس 06 : تأثير درجة الحرارة وسطح التلامس على سرعة التحوّل الكيميائي"
+            captionArabic="الدرس 06 — وضعية الانطلاق : مقارنة تجريبية لتأثير درجة الحرارة وسطح التلامس على سرعة التحوّل الكيميائي"
+            captionFrench="Cours 06 · Expériences comparatives : Température (10 °C vs 50 °C) et Surface de contact (Comprimé entier vs Poudre)"
             courseBadge="الدرس 06"
           />
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-right">
             <div className="bg-white rounded-[10px] p-3.5 border border-[#E2D9D0] space-y-1">
               <div className="text-xs font-bold text-[#6B6B6B]">
-                1. اختلاف سرعة التحولات في الطبيعة
+                1. اختلاف سرعة التحوّلات في الطبيعة
               </div>
               <div className="text-xs font-semibold text-[#1A1A1A] leading-relaxed">
-                احتراق الخشب أو الغاز يحدث <strong className="text-[#C2410C]">بسرعة</strong>، بينما صدأ الحديد يحدث <strong className="text-[#1D4ED8]">ببطء</strong> على مدى أيام.
+                احتراق الخشب أو الغاز يحدث <strong className="text-[#C2410C]">بسرعة</strong>، بينما صدأ الحديد يحدث <strong className="text-[#1D4ED8]">ببطء</strong> على مدى أيام أو أسابيع.
               </div>
             </div>
 
             <div className="bg-[#FFF7ED] rounded-[10px] p-3.5 border border-[#FDBA74] space-y-1">
               <div className="text-xs font-bold text-[#C2410C]">
-                2. تجربة درجة الحرارة (Température)
+                2. تجربة درجة الحرارة
               </div>
               <div className="text-xs font-semibold text-[#1A1A1A] leading-relaxed">
-                القرص الفوار في <strong className="text-[#C2410C]">الماء الدافئ (50°C)</strong> يتفاعل ويفور أسرع بكثير منه في <strong className="text-[#1D4ED8]">الماء البارد (10°C)</strong>.
+                القرص الفوار في <strong className="text-[#C2410C]">الماء الدافئ (<bdi dir="ltr" style={{ whiteSpace: 'nowrap' }}>50 °C</bdi>)</strong> يفور ويتفاعل أسرع بكثير منه في <strong className="text-[#1D4ED8]">الماء البارد (<bdi dir="ltr" style={{ whiteSpace: 'nowrap' }}>10 °C</bdi>)</strong>.
               </div>
             </div>
 
             <div className="bg-[#F0FDFA] rounded-[10px] p-3.5 border border-[#99F6E4] space-y-1">
               <div className="text-xs font-bold text-[#0F766E]">
-                3. تجربة سطح التلامس (Surface de contact)
+                3. تجربة سطح التلامس
               </div>
               <div className="text-xs font-semibold text-[#1A1A1A] leading-relaxed">
-                <strong className="text-[#0F766E]">مسحوق القرص (Poudre)</strong> يتفاعل أسرع بكثير من <strong className="text-[#4A4A4A]">القرص الكامل المتماسك</strong> بنفس الكتلة.
+                <strong className="text-[#0F766E]">مسحوق القرص</strong> يتفاعل أسرع بكثير من <strong className="text-[#4A4A4A]">القرص الكامل المتماسك</strong> بنفس الكتلة.
               </div>
             </div>
           </div>
@@ -2270,71 +2019,53 @@ export const Course01SchemaRenderer: React.FC<{ type: string }> = ({ type }) => 
         <div className="p-4 sm:p-6 bg-[#FAF7F4] rounded-[12px] border border-[#E2D9D0] space-y-4">
           <div className="text-center space-y-1">
             <div className="text-xs sm:text-sm font-bold text-[#1A1A1A]">
-              تصنيف التفاعلات الكيميائية حسب سرعة حدوثها (Vitesse de réaction)
+              تصنيف التحوّلات الكيميائية حسب سرعتها
             </div>
             <div className="text-[11px] text-[#6B6B6B]">
-              لا تحدث جميع التحولات الكيميائية بنفس السرعة، بل تنقسم إلى ثلاث فئات زمنية
+              تختلف سرعة التحوّلات الكيميائية، وتنقسم إلى صنفين رئيسيين حسب المدة اللازمة لحدوثها
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {/* Fast reaction */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl mx-auto">
+            {/* Fast transformation */}
             <div className="bg-white rounded-[12px] p-4 border-2 border-[#EA580C] space-y-2.5 flex flex-col justify-between">
               <div className="space-y-1.5">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-[#C2410C]">1. تفاعل سريع</span>
+                  <span className="text-xs font-bold text-[#C2410C]">1. تحوّل سريع</span>
                   <span className="text-[11px] font-mono font-bold text-[#C2410C]" dir="ltr">
-                    Réaction rapide
+                    Transformation rapide
                   </span>
                 </div>
                 <div className="text-xs text-[#2B2B2B] leading-relaxed">
-                  يحدث في لحظات وجيزة (أجزاء من الثانية أو بضع ثوانٍ) بمجرد تلامس المتفاعلات وتوفر شروط التفاعل.
+                  يحدث في لحظات وجيزة أو بضع ثوانٍ بمجرد تلامس المتفاعلات وتوفر الشروط اللازمة.
                 </div>
               </div>
               <div className="p-2.5 rounded-[8px] bg-[#FFF7ED] border border-[#FED7AA] text-[11px] text-[#9A3412] space-y-1">
-                <div className="font-bold">أمثلة مألوفة :</div>
-                <div>• احتراق غاز البوتان أو الورق أو الخشب.</div>
-                <div>• فوران قرص فوار في ماء دافئ.</div>
+                <div className="font-bold">أمثلة من المنهاج :</div>
+                <div>• احتراق شمعة.</div>
+                <div>• احتراق الغاز.</div>
+                <div>• قرص فوار في الماء.</div>
               </div>
             </div>
 
-            {/* Slow reaction */}
+            {/* Slow transformation */}
             <div className="bg-white rounded-[12px] p-4 border-2 border-[#0284C7] space-y-2.5 flex flex-col justify-between">
               <div className="space-y-1.5">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-[#0369A1]">2. تفاعل بطيء</span>
+                  <span className="text-xs font-bold text-[#0369A1]">2. تحوّل بطيء</span>
                   <span className="text-[11px] font-mono font-bold text-[#0369A1]" dir="ltr">
-                    Réaction lente
+                    Transformation lente
                   </span>
                 </div>
                 <div className="text-xs text-[#2B2B2B] leading-relaxed">
-                  يستغرق عدة دقائق أو ساعات أو أيام لكي نلاحظ تغير الجملة الكيميائية وتشكل النواتج.
+                  يستغرق عدة ساعات أو أيام لكي تبرز نواتجه وتتغير الجملة الكيميائية.
                 </div>
               </div>
               <div className="p-2.5 rounded-[8px] bg-[#F0F9FF] border border-[#BAE6FD] text-[11px] text-[#0369A1] space-y-1">
-                <div className="font-bold">أمثلة مألوفة :</div>
-                <div>• تشكل صدأ الحديد في الهواء الرطب.</div>
-                <div>• تخمر العجين أو هضم الأغذية.</div>
-              </div>
-            </div>
-
-            {/* Very slow reaction */}
-            <div className="bg-white rounded-[12px] p-4 border-2 border-[#0F766E] space-y-2.5 flex flex-col justify-between">
-              <div className="space-y-1.5">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-[#0F766E]">3. تفاعل بطيء جدًا</span>
-                  <span className="text-[11px] font-mono font-bold text-[#0F766E]" dir="ltr">
-                    Réaction très lente
-                  </span>
-                </div>
-                <div className="text-xs text-[#2B2B2B] leading-relaxed">
-                  يمتد على مدى شهور أو سنوات طويلة بحيث لا نلاحظ تغيره بالعين المجردة في اللحظة نفسها.
-                </div>
-              </div>
-              <div className="p-2.5 rounded-[8px] bg-[#F0FDFA] border border-[#99F6E4] text-[11px] text-[#0F766E] space-y-1">
-                <div className="font-bold">أمثلة مألوفة :</div>
-                <div>• تآكل المعادن العميق عبر السنين.</div>
-                <div>• التحولات الكيميائية الجيولوجية البطيئة.</div>
+                <div className="font-bold">أمثلة من المنهاج :</div>
+                <div>• صدأ الحديد.</div>
+                <div>• تحوّل الحليب إلى رايب.</div>
+                <div>• تشكّل زنجارة النحاس.</div>
               </div>
             </div>
           </div>
@@ -2346,10 +2077,10 @@ export const Course01SchemaRenderer: React.FC<{ type: string }> = ({ type }) => 
         <div className="p-4 sm:p-6 bg-[#FAF7F4] rounded-[12px] border border-[#E2D9D0] space-y-5">
           <div className="text-center space-y-1">
             <div className="text-xs sm:text-sm font-bold text-[#1A1A1A]">
-              العامل الأول : تأثير درجة الحرارة (Température) وتفسيره المجهري
+              العامل الأول : تأثير درجة الحرارة وتفسيره المجهري
             </div>
             <div className="text-[11px] text-[#6B6B6B]">
-              مقارنة حركة الجسيمات والتصادمات الفعالة (Chocs efficaces) بين الماء البارد والماء الدافئ
+              مقارنة اضطراب حركة الأفراد الكيميائية والتصادمات بينها في الماء البارد والماء الدافئ
             </div>
           </div>
 
@@ -2358,31 +2089,27 @@ export const Course01SchemaRenderer: React.FC<{ type: string }> = ({ type }) => 
             <div className="bg-white rounded-[12px] p-4 border-2 border-[#38BDF8] space-y-3">
               <div className="flex items-center justify-between border-b border-[#E0F2FE] pb-2">
                 <span className="text-xs sm:text-sm font-bold text-[#0369A1]">
-                  الكأس (A) : ماء بارد (Eau froide · 10°C)
+                  الكأس (A) : ماء بارد (<bdi dir="ltr" style={{ whiteSpace: 'nowrap' }}>10 °C</bdi>)
                 </span>
-                <span className="text-[11px] font-bold text-[#0284C7]">تفاعل أبطأ</span>
+                <span className="text-[11px] font-bold text-[#0284C7]">تحوّل أبطأ</span>
               </div>
 
               <svg viewBox="0 0 260 125" className="w-full h-32 bg-[#F0F9FF] rounded-[10px] border border-[#BAE6FD]">
-                {/* Beaker outline */}
                 <path d="M 55 20 L 55 105 Q 55 112 65 112 L 195 112 Q 205 112 205 105 L 205 20" fill="#E0F2FE" stroke="#0284C7" strokeWidth="2.5" />
-                {/* Water level */}
                 <line x1="56" y1="35" x2="204" y2="35" stroke="#0284C7" strokeWidth="1.5" strokeDasharray="4 2" />
-                {/* Slow particles with short motion arrows */}
                 <circle cx="95" cy="65" r="8" fill="#0284C7" />
                 <line x1="95" y1="65" x2="108" y2="58" stroke="#0369A1" strokeWidth="2" />
                 <circle cx="155" cy="60" r="8" fill="#0284C7" />
                 <line x1="155" y1="60" x2="143" y2="68" stroke="#0369A1" strokeWidth="2" />
                 <circle cx="125" cy="92" r="10" fill="#64748B" />
                 <text x="125" y="95" textAnchor="middle" className="text-[8px] fill-white font-bold">قرص</text>
-                {/* Few bubbles */}
                 <circle cx="120" cy="48" r="3" fill="#FFFFFF" stroke="#0284C7" strokeWidth="1" />
                 <circle cx="135" cy="44" r="2.5" fill="#FFFFFF" stroke="#0284C7" strokeWidth="1" />
               </svg>
 
               <div className="text-xs text-[#2B2B2B] space-y-1 leading-relaxed">
                 <div>• <strong>الملاحظة العيانية :</strong> فوران خفيف وانطلاق بطيء للفقاعات الغازية.</div>
-                <div>• <strong>التفسير المجهري :</strong> درجة الحرارة منخفضة ⟵ حركة الجسيمات بطيئة ⟵ <strong>تصادمات فعالة قليلة</strong> في الثانية.</div>
+                <div>• <strong>التفسير المجهري :</strong> درجة الحرارة منخفضة ⟵ اضطراب الأفراد الكيميائية بطيء ⟵ <strong>تصادمات قليلة</strong> بين الأفراد الكيميائية.</div>
               </div>
             </div>
 
@@ -2390,16 +2117,14 @@ export const Course01SchemaRenderer: React.FC<{ type: string }> = ({ type }) => 
             <div className="bg-white rounded-[12px] p-4 border-2 border-[#EA580C] space-y-3">
               <div className="flex items-center justify-between border-b border-[#FFEDD5] pb-2">
                 <span className="text-xs sm:text-sm font-bold text-[#C2410C]">
-                  الكأس (B) : ماء دافئ (Eau tiède · 50°C)
+                  الكأس (B) : ماء دافئ (<bdi dir="ltr" style={{ whiteSpace: 'nowrap' }}>50 °C</bdi>)
                 </span>
-                <span className="text-[11px] font-bold text-[#EA580C]">تفاعل أسرع بكثير</span>
+                <span className="text-[11px] font-bold text-[#EA580C]">تحوّل أسرع بكثير</span>
               </div>
 
               <svg viewBox="0 0 260 125" className="w-full h-32 bg-[#FFF7ED] rounded-[10px] border border-[#FED7AA]">
-                {/* Beaker outline */}
                 <path d="M 55 20 L 55 105 Q 55 112 65 112 L 195 112 Q 205 112 205 105 L 205 20" fill="#FFEDD5" stroke="#EA580C" strokeWidth="2.5" />
                 <line x1="56" y1="35" x2="204" y2="35" stroke="#EA580C" strokeWidth="1.5" strokeDasharray="4 2" />
-                {/* Fast particles with long motion vectors and collision sparks */}
                 <circle cx="88" cy="62" r="8" fill="#EA580C" />
                 <line x1="88" y1="62" x2="115" y2="78" stroke="#C2410C" strokeWidth="2.5" />
                 <circle cx="172" cy="58" r="8" fill="#EA580C" />
@@ -2407,9 +2132,7 @@ export const Course01SchemaRenderer: React.FC<{ type: string }> = ({ type }) => 
                 <circle cx="105" cy="92" r="7" fill="#EA580C" />
                 <line x1="105" y1="92" x2="122" y2="88" stroke="#C2410C" strokeWidth="2.5" />
                 <circle cx="130" cy="90" r="9" fill="#64748B" />
-                {/* Collision star */}
                 <circle cx="130" cy="76" r="5" fill="#F59E0B" />
-                {/* Many vigorous bubbles */}
                 <circle cx="112" cy="52" r="3.5" fill="#FFFFFF" stroke="#EA580C" strokeWidth="1.2" />
                 <circle cx="128" cy="44" r="4" fill="#FFFFFF" stroke="#EA580C" strokeWidth="1.2" />
                 <circle cx="144" cy="50" r="3.5" fill="#FFFFFF" stroke="#EA580C" strokeWidth="1.2" />
@@ -2419,31 +2142,31 @@ export const Course01SchemaRenderer: React.FC<{ type: string }> = ({ type }) => 
 
               <div className="text-xs text-[#2B2B2B] space-y-1 leading-relaxed">
                 <div>• <strong>الملاحظة العيانية :</strong> فوران شديد وانطلاق غزير وسريع للغاز.</div>
-                <div>• <strong>التفسير المجهري :</strong> ارتفاع الحرارة يزيد <strong>الاضطراب الحراري</strong> وسرعة الجسيمات ⟵ <strong>تصادمات فعالة كثيرة جدًا</strong>.</div>
+                <div>• <strong>التفسير المجهري :</strong> ارتفاع الحرارة يزيد <strong>اضطراب حركة الأفراد الكيميائية</strong> ⟵ <strong>تصادمات كثيرة جدًا</strong> بين الأفراد الكيميائية.</div>
               </div>
             </div>
           </div>
 
-          {/* Microscopic causal chain */}
-          <div className="bg-white rounded-[12px] p-3.5 border border-[#E2D9D0]">
-            <div className="text-[11px] font-bold text-[#6B6B6B] text-center mb-2">
-              السلسلة السببية للتفسير المجهري لتأثير درجة الحرارة :
+          {/* Microscopic vertical causal chain with ↓ */}
+          <div className="bg-white rounded-[12px] p-4 border border-[#E2D9D0]">
+            <div className="text-[11px] font-bold text-[#6B6B6B] text-center mb-3">
+              السلسلة السببية المجهرية لتأثير درجة الحرارة :
             </div>
-            <div className="flex flex-wrap items-center justify-center gap-2 text-xs font-bold">
-              <span className="px-3 py-1.5 rounded-[8px] bg-[#FFF7ED] border border-[#FDBA74] text-[#C2410C]">
-                درجة الحرارة ↑ (Température ↑)
+            <div className="flex flex-col items-center justify-center gap-1.5 max-w-sm mx-auto text-center font-sans">
+              <span className="w-full py-1.5 px-3 rounded-[8px] bg-[#FFF7ED] border border-[#FDBA74] text-[#C2410C] font-bold text-xs">
+                درجة الحرارة ↑
               </span>
-              <span className="text-[#9A3412]">⟵</span>
-              <span className="px-3 py-1.5 rounded-[8px] bg-[#FEF3C7] border border-[#FDE68A] text-[#92400E]">
-                حركة واضطراب الجسيمات ↑ (Agitation ↑)
+              <span className="text-[#C2410C] font-bold text-sm select-none">↓</span>
+              <span className="w-full py-1.5 px-3 rounded-[8px] bg-[#FEF3C7] border border-[#FDE68A] text-[#92400E] font-bold text-xs">
+                اضطراب (حركة) الأفراد الكيميائية ↑
               </span>
-              <span className="text-[#9A3412]">⟵</span>
-              <span className="px-3 py-1.5 rounded-[8px] bg-[#F0FDFA] border border-[#99F6E4] text-[#0F766E]">
-                التصادمات الفعالة تزداد ↑ (Chocs efficaces ↑)
+              <span className="text-[#92400E] font-bold text-sm select-none">↓</span>
+              <span className="w-full py-1.5 px-3 rounded-[8px] bg-[#F0FDFA] border border-[#99F6E4] text-[#0F766E] font-bold text-xs">
+                التصادمات بين الأفراد الكيميائية ↑
               </span>
-              <span className="text-[#0F766E]">⟵</span>
-              <span className="px-3 py-1.5 rounded-[8px] bg-[#0F766E] text-white">
-                سرعة التفاعل تزداد ↑ (Vitesse ↑)
+              <span className="text-[#0F766E] font-bold text-sm select-none">↓</span>
+              <span className="w-full py-1.5 px-3 rounded-[8px] bg-[#0F766E] text-white font-bold text-xs">
+                سرعة التحوّل الكيميائي ↑
               </span>
             </div>
           </div>
@@ -2455,10 +2178,10 @@ export const Course01SchemaRenderer: React.FC<{ type: string }> = ({ type }) => 
         <div className="p-4 sm:p-6 bg-[#FAF7F4] rounded-[12px] border border-[#E2D9D0] space-y-5">
           <div className="text-center space-y-1">
             <div className="text-xs sm:text-sm font-bold text-[#1A1A1A]">
-              العامل الثاني : تأثير سطح التلامس (Surface de contact — درجة تجزئة المتفاعلات)
+              العامل الثاني : تأثير سطح التلامس (تجزئة المتفاعلات)
             </div>
             <div className="text-[11px] text-[#6B6B6B]">
-              مقارنة التفاعل على المستوى المجهري بين قطعة صلبة متماسكة ومسحوق مجزأ من المادة نفسها وبنفس الكتلة
+              مقارنة التحوّل على المستوى المجهري بين قطعة صلبة متماسكة ومسحوق مجزأ من المادة نفسها وبنفس الكتلة
             </div>
           </div>
 
@@ -2467,13 +2190,12 @@ export const Course01SchemaRenderer: React.FC<{ type: string }> = ({ type }) => 
             <div className="bg-white rounded-[12px] p-4 border border-[#CBD5E1] space-y-3">
               <div className="flex items-center justify-between border-b border-[#F1F5F9] pb-2">
                 <span className="text-xs sm:text-sm font-bold text-[#334155]">
-                  1. قطعة صلبة متماسكة (Comprimé entier / Bloc)
+                  1. قطعة صلبة متماسكة
                 </span>
                 <span className="text-[11px] font-bold text-[#64748B]">سطح تلامس صغير</span>
               </div>
 
               <svg viewBox="0 0 260 120" className="w-full h-30 bg-[#F8FAFC] rounded-[10px] border border-[#E2E8F0]">
-                {/* Compact block of 3x3 particles */}
                 <g transform="translate(95, 30)">
                   {[0, 1, 2].map((r) =>
                     [0, 1, 2].map((c) => (
@@ -2489,18 +2211,17 @@ export const Course01SchemaRenderer: React.FC<{ type: string }> = ({ type }) => 
                     ))
                   )}
                 </g>
-                {/* Surrounding water/acid particles hitting only outer perimeter */}
                 <circle cx="55" cy="60" r="6" fill="#0284C7" />
                 <line x1="63" y1="60" x2="88" y2="60" stroke="#0284C7" strokeWidth="2" />
                 <circle cx="205" cy="60" r="6" fill="#0284C7" />
                 <line x1="197" y1="60" x2="172" y2="60" stroke="#0284C7" strokeWidth="2" />
                 <text x="130" y="112" textAnchor="middle" className="text-[9px] fill-[#475569] font-bold">
-                  الجسيمات الداخلية محجوبة لا تتصادم مباشرة
+                  الأفراد الكيميائية الداخلية محجوبة لا تتصادم مباشرة
                 </text>
               </svg>
 
               <div className="text-xs text-[#2B2B2B] leading-relaxed">
-                الجسيمات الموجودة على السطح الخارجي فقط هي المعرضة للتصادم مع المتفاعل الآخر، بينما تبقى الجسيمات الداخلية في قلب القطعة محجوبة حتى تتآكل الطبقات الخارجية.
+                الأفراد الكيميائية الموجودة على السطح الخارجي فقط هي المعرضة للتصادم مع المتفاعل الآخر، بينما تبقى الأفراد الداخلية محجوبة حتى تتآكل الطبقات الخارجية.
               </div>
             </div>
 
@@ -2508,13 +2229,12 @@ export const Course01SchemaRenderer: React.FC<{ type: string }> = ({ type }) => 
             <div className="bg-white rounded-[12px] p-4 border-2 border-[#0F766E] space-y-3">
               <div className="flex items-center justify-between border-b border-[#CCFBF1] pb-2">
                 <span className="text-xs sm:text-sm font-bold text-[#0F766E]">
-                  2. مسحوق مجزأ (Poudre — نفس الكتلة)
+                  2. مسحوق مجزأ (بنفس الكتلة)
                 </span>
                 <span className="text-[11px] font-bold text-[#0F766E]">سطح تلامس كبير جدًا</span>
               </div>
 
               <svg viewBox="0 0 260 120" className="w-full h-30 bg-[#F0FDFA] rounded-[10px] border border-[#99F6E4]">
-                {/* Dispersed particles all exposed */}
                 {[
                   { x: 55, y: 38 },
                   { x: 105, y: 32 },
@@ -2538,32 +2258,36 @@ export const Course01SchemaRenderer: React.FC<{ type: string }> = ({ type }) => 
                   </g>
                 ))}
                 <text x="130" y="112" textAnchor="middle" className="text-[9px] fill-[#0F766E] font-bold">
-                  جميع الجسيمات معرضة للتصادم المباشر في نفس اللحظة!
+                  جميع الأفراد الكيميائية معرضة للتصادم المباشر في نفس اللحظة!
                 </text>
               </svg>
 
               <div className="text-xs text-[#2B2B2B] leading-relaxed">
-                عند تفتيت المادة الصلبة إلى مسحوق، يزداد <strong>سطح التلامس (Surface de contact)</strong> بشكل هائل، فتتصادم جميع الجسيمات في آن واحد وتزداد سرعة التفاعل.
+                عند تجزئة المادة الصلبة إلى مسحوق، يكبر <strong>سطح التلامس</strong> بشكل هائل، فتتصادم معظم الأفراد الكيميائية في آن واحد وتزداد سرعة التحوّل.
               </div>
             </div>
           </div>
 
-          <div className="bg-white rounded-[12px] p-3.5 border border-[#E2D9D0]">
-            <div className="flex flex-wrap items-center justify-center gap-2 text-xs font-bold">
-              <span className="px-3 py-1.5 rounded-[8px] bg-[#F0FDFA] border border-[#99F6E4] text-[#0F766E]">
-                تجزئة المادة إلى مسحوق (Poudre)
+          {/* Microscopic vertical causal chain with ↓ */}
+          <div className="bg-white rounded-[12px] p-4 border border-[#E2D9D0]">
+            <div className="text-[11px] font-bold text-[#6B6B6B] text-center mb-3">
+              السلسلة السببية المجهرية لتأثير سطح التلامس :
+            </div>
+            <div className="flex flex-col items-center justify-center gap-1.5 max-w-sm mx-auto text-center font-sans">
+              <span className="w-full py-1.5 px-3 rounded-[8px] bg-[#F0FDFA] border border-[#99F6E4] text-[#0F766E] font-bold text-xs">
+                تجزئة المتفاعل الصلب إلى مسحوق
               </span>
-              <span className="text-[#0F766E]">⟵</span>
-              <span className="px-3 py-1.5 rounded-[8px] bg-[#F0FDFA] border border-[#99F6E4] text-[#0F766E]">
-                سطح التلامس يزداد ↑ (Surface de contact ↑)
+              <span className="text-[#0F766E] font-bold text-sm select-none">↓</span>
+              <span className="w-full py-1.5 px-3 rounded-[8px] bg-[#CCFBF1] border border-[#5EEAD4] text-[#0D9488] font-bold text-xs">
+                سطح التلامس ↑
               </span>
-              <span className="text-[#0F766E]">⟵</span>
-              <span className="px-3 py-1.5 rounded-[8px] bg-[#FFF7ED] border border-[#FDBA74] text-[#C2410C]">
-                التصادمات الفعالة تزداد ↑
+              <span className="text-[#0D9488] font-bold text-sm select-none">↓</span>
+              <span className="w-full py-1.5 px-3 rounded-[8px] bg-[#FFF7ED] border border-[#FDBA74] text-[#C2410C] font-bold text-xs">
+                التصادمات بين الأفراد الكيميائية ↑
               </span>
-              <span className="text-[#0F766E]">⟵</span>
-              <span className="px-3 py-1.5 rounded-[8px] bg-[#0F766E] text-white">
-                سرعة التفاعل تزداد ↑
+              <span className="text-[#C2410C] font-bold text-sm select-none">↓</span>
+              <span className="w-full py-1.5 px-3 rounded-[8px] bg-[#0F766E] text-white font-bold text-xs">
+                سرعة التحوّل الكيميائي ↑
               </span>
             </div>
           </div>
@@ -2575,20 +2299,20 @@ export const Course01SchemaRenderer: React.FC<{ type: string }> = ({ type }) => 
         <div className="p-4 sm:p-6 bg-[#FAF7F4] rounded-[12px] border border-[#E2D9D0] space-y-4">
           <div className="text-center space-y-1">
             <div className="text-xs sm:text-sm font-bold text-[#1A1A1A]">
-              العامل الثالث : تركيب المزيج الابتدائي (تركيز/وفرة المتفاعلات) ودور الوسيط (Catalyseur)
+              العامل الثالث : تركيب المزيج الابتدائي وعوامل أخرى
             </div>
             <div className="text-[11px] text-[#6B6B6B]">
-              تأثير نسبة جزيئات المتفاعلات على تواتر التصادمات الفعالة وتوجيه نواتج التفاعل
+              تأثير وفرة المتفاعلات وعوامل الضغط والوسيط والضوء في سرعة وتوجيه التحوّل الكيميائي
             </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="bg-white rounded-[12px] p-4 border border-[#E2D9D0] space-y-2">
               <div className="text-xs font-bold text-[#0369A1]">
-                1. الاحتراق في الهواء العادي (21% O₂)
+                1. الاحتراق في الهواء (حوالي 20 % O₂ و 80 % غاز ثنائي الأزوت)
               </div>
               <div className="text-xs text-[#2B2B2B] leading-relaxed">
-                في الهواء، خُمس الجزيئات فقط هو ثنائي الأكسجين (<ChemicalFormula formula="O2" size="sm" />) والباقي أزوت غير متفاعل، لذلك تكون التصادمات الفعالة معتدلة والاحتراق أقل شدة.
+                في الهواء، خُمس الأفراد الكيميائية فقط هو ثنائي الأكسجين (<ChemicalFormula formula="O2" size="sm" />) والباقي غاز ثنائي الأزوت، لذلك تكون التصادمات معتدلة والاحتراق أقل سرعة.
               </div>
             </div>
 
@@ -2597,16 +2321,18 @@ export const Course01SchemaRenderer: React.FC<{ type: string }> = ({ type }) => 
                 2. الاحتراق في ثنائي الأكسجين النقي (100% O₂)
               </div>
               <div className="text-xs text-[#2B2B2B] leading-relaxed">
-                عند زيادة تركيز/وفرة <ChemicalFormula formula="O2" size="sm" /> في الحيز، تصبح التصادمات الفعالة غزيرة جدًا فيكون التوهج والاحتراق أسرع وأشد بكثير، كما توجه وفرة <ChemicalFormula formula="O2" size="sm" /> التفاعل نحو احتراق تام.
+                عند توفر <ChemicalFormula formula="O2" size="sm" /> النقي، يكون عدد أفراده أكبر بحوالي خمس مرات في وحدة الحجم، فتزداد التصادمات بين الأفراد الكيميائية ويشتعل الفحم بلهب أشد وسرعة أكبر، كما يوجه التحوّل نحو احتراق تام.
               </div>
             </div>
 
             <div className="bg-[#F0FDFA] rounded-[12px] p-4 border border-[#99F6E4] space-y-2">
               <div className="text-xs font-bold text-[#0F766E]">
-                3. الوسيط / المحفز (Le catalyseur)
+                3. عوامل أخرى (الضغط، الوسيط، الضوء)
               </div>
-              <div className="text-xs text-[#2B2B2B] leading-relaxed">
-                مادة تُسرّع التفاعل الكيميائي (أو توجهه) دون أن تُستهلك في النهاية ودون أن تظهر في معادلة التفاعل (مثل الصودا في التحليل الكهربائي للماء والإنزيمات الحيوية).
+              <div className="text-xs text-[#2B2B2B] leading-relaxed space-y-1">
+                <div>• <strong>الضغط :</strong> زيادة الضغط تُنقص المسافة بين الأفراد الكيميائية فتزداد التصادمات.</div>
+                <div>• <strong>الوسيط :</strong> نوع كيميائي يساعد على حدوث التحوّل الكيميائي دون أن يظهر في النواتج (مثل إضافة الصود في التحليل الكهربائي للماء).</div>
+                <div>• <strong>الضوء :</strong> تحتاج بعض التحوّلات إلى الضوء لحدوثها أو تسريعها، مثل التركيب الضوئي عند النباتات.</div>
               </div>
             </div>
           </div>
@@ -2618,20 +2344,20 @@ export const Course01SchemaRenderer: React.FC<{ type: string }> = ({ type }) => 
         <div className="p-4 sm:p-6 bg-[#FAF7F4] rounded-[12px] border-2 border-[#0F766E] space-y-4">
           <div className="text-center space-y-1">
             <div className="text-sm sm:text-base font-bold text-[#0F766E]">
-              المخطط النهائي الشامل للدرس 06 : العوامل المؤثرة في التفاعل الكيميائي
+              المخطط النهائي الشامل للدرس 06 : العوامل المؤثرة في التحوّل الكيميائي
             </div>
             <div className="text-xs text-[#6B6B6B]" dir="ltr">
-              Schéma-bilan unique · Les facteurs influençant une réaction chimique
+              Schéma-bilan unique · Les facteurs influençant une transformation chimique
             </div>
           </div>
 
           <div className="max-w-xl mx-auto flex flex-col items-center space-y-2">
             <div className="w-full py-2.5 px-4 rounded-[10px] bg-white border-2 border-[#1D4ED8] text-center">
               <div className="text-xs sm:text-sm font-bold text-[#1D4ED8]">
-                العوامل المؤثرة في سرعة وتوجيه التفاعل الكيميائي
+                العوامل المؤثرة في سرعة وتوجيه التحوّل الكيميائي
               </div>
-              <div className="text-[11px] text-[#4A4A4A]">
-                1. درجة الحرارة (Température) · 2. سطح التلامس (Surface de contact) · 3. تركيب المزيج الابتدائي والوسيط
+              <div className="text-[11px] text-[#4A4A4A] mt-0.5">
+                1. درجة الحرارة · 2. سطح التلامس · 3. تركيب المزيج الابتدائي · عوامل أخرى (الضغط، الوسيط، الضوء)
               </div>
             </div>
 
@@ -2640,18 +2366,18 @@ export const Course01SchemaRenderer: React.FC<{ type: string }> = ({ type }) => 
             <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-2">
               <div className="py-2.5 px-3 rounded-[10px] bg-[#FFF7ED] border border-[#FDBA74] text-center">
                 <div className="text-xs font-bold text-[#C2410C]">
-                  رفع درجة الحرارة (Température ↑)
+                  رفع درجة الحرارة ↑
                 </div>
                 <div className="text-[11px] text-[#7C2D12] mt-0.5">
-                  يزيد سرعة وحركة الجسيمات (الاضطراب الحراري ↑)
+                  يزيد اضطراب حركة الأفراد الكيميائية ↑
                 </div>
               </div>
               <div className="py-2.5 px-3 rounded-[10px] bg-[#F0FDFA] border border-[#99F6E4] text-center">
                 <div className="text-xs font-bold text-[#0F766E]">
-                  زيادة سطح التلامس (مسحوق Poudre ↑)
+                  زيادة سطح التلامس (تجزئة المسحوق ↑)
                 </div>
                 <div className="text-[11px] text-[#115E59] mt-0.5">
-                  يزيد عدد الجسيمات المعرضة للتصادم المباشر ↑
+                  يزيد عدد الأفراد الكيميائية المعرضة للتصادم ↑
                 </div>
               </div>
             </div>
@@ -2660,10 +2386,10 @@ export const Course01SchemaRenderer: React.FC<{ type: string }> = ({ type }) => 
 
             <div className="w-full py-2.5 px-4 rounded-[10px] bg-[#FEF3C7] border border-[#F59E0B] text-center">
               <div className="text-xs sm:text-sm font-bold text-[#B45309]">
-                التفسير المجهري المشترك : ازدياد التصادمات الفعالة (Chocs efficaces ↑)
+                التفسير المجهري المشترك : ازدياد التصادمات بين الأفراد الكيميائية
               </div>
-              <div className="text-[11px] text-[#78350F]">
-                كلما زاد عدد التصادمات الفعالة بين الأفراد المتفاعلة في الثانية الواحدة، زادت سرعة التفاعل الكيميائي
+              <div className="text-[11px] text-[#78350F] mt-0.5">
+                تتصادم الأفراد الكيميائية للمتفاعلات فتتحطم إلى ذرات منفردة تتحد من جديد لتعطي أفرادًا جديدة
               </div>
             </div>
 
@@ -2671,10 +2397,10 @@ export const Course01SchemaRenderer: React.FC<{ type: string }> = ({ type }) => 
 
             <div className="w-full py-2.5 px-4 rounded-[10px] bg-[#0F766E] text-white text-center space-y-1">
               <div className="text-xs sm:text-sm font-bold">
-                القاعدة الذهبية للحفظ :
+                الفكرة الأساسية للحفظ :
               </div>
-              <div className="text-xs">
-                درجة الحرارة ↑ أو سطح التلامس ↑ أو تركيز المتفاعلات ↑ ⟵ التصادمات الفعالة ↑ ⟵ سرعة التفاعل الكيميائي ↑
+              <div className="text-xs leading-relaxed">
+                كل عامل يزيد عدد التصادمات بين الأفراد الكيميائية للمتفاعلات يزيد سرعة التحوّل، وتركيب المزيج الابتدائي يوجّه النواتج أيضًا.
               </div>
             </div>
           </div>

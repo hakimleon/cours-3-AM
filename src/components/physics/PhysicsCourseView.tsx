@@ -44,6 +44,7 @@ import {
   Sparkles,
   CheckCircle2,
   ChevronDown,
+  ChevronUp,
   ChevronLeft,
   Star,
   LayoutGrid,
@@ -152,25 +153,26 @@ export const PhysicsCourseView: React.FC<PhysicsCourseViewProps> = ({
     }
   }, [unlockedDiscoveryIds]);
 
-  // Accordéon « للتعمق » : replié sur le web, forcé ouvert pendant l'export PDF
-  const [tataamakAccordionOpen, setTataamakAccordionOpen] = useState<boolean>(false);
+  // Niveau « L'essentiel » vs bloc repliable « للتعمق » (Pour approfondir) — Gabarit générique
+  const [isDeepenExpanded, setIsDeepenExpanded] = useState<boolean>(!course.essential);
+
+  useEffect(() => {
+    setIsDeepenExpanded(!course.essential);
+  }, [course.id, course.essential]);
 
   useEffect(() => {
     const handlePreparePdf = () => {
       setActiveTab('all');
-      setTataamakAccordionOpen(true);
+      setIsDeepenExpanded(true);
     };
-    const handleDonePdf = () => setTataamakAccordionOpen(false);
     const handleBeforePrint = () => {
       setActiveTab('all');
-      setTataamakAccordionOpen(true);
+      setIsDeepenExpanded(true);
     };
     window.addEventListener('course-pdf-prepare', handlePreparePdf);
-    window.addEventListener('course-pdf-done', handleDonePdf);
     window.addEventListener('beforeprint', handleBeforePrint);
     return () => {
       window.removeEventListener('course-pdf-prepare', handlePreparePdf);
-      window.removeEventListener('course-pdf-done', handleDonePdf);
       window.removeEventListener('beforeprint', handleBeforePrint);
     };
   }, []);
@@ -204,8 +206,6 @@ export const PhysicsCourseView: React.FC<PhysicsCourseViewProps> = ({
     if (!unlockedDiscoveryIds.includes(course.id)) {
       setUnlockedDiscoveryIds((prev) => [...prev, course.id]);
     }
-    // Ouvre l'accordéon « للتعمق » pour révéler la suite du cours (section 2…)
-    setTataamakAccordionOpen(true);
     const secondSec = course.sections[1];
     if (secondSec) {
       setActiveSectionId(secondSec.id);
@@ -240,9 +240,10 @@ export const PhysicsCourseView: React.FC<PhysicsCourseViewProps> = ({
   const summarySecNum = course.sections.length + (hasExercisesSection ? 2 : 1);
 
   const handleJumpToSection = (secId: string) => {
-    // Toute navigation vers une section révèle l'accordéon « للتعمق »
-    setTataamakAccordionOpen(true);
     setActiveSectionId(secId);
+    if (course.essential && secId !== 'sec-pc-essential' && secId !== 'sec-pc-exercises') {
+      setIsDeepenExpanded(true);
+    }
     if (activeTab !== 'all') {
       setActiveTab('all');
       setTimeout(() => {
@@ -886,6 +887,7 @@ export const PhysicsCourseView: React.FC<PhysicsCourseViewProps> = ({
 
         {/* 2. MAIN COURSE CONTENT */}
         <main id="physics-course-main-content" className="flex-1 min-w-0 space-y-5">
+
           {/* A. BANDEAU DE REPÈRE VISUEL DU DOMAINE + EN-TÊTE DU COURS */}
           <section
             id="physics-course-header"
@@ -1049,7 +1051,12 @@ export const PhysicsCourseView: React.FC<PhysicsCourseViewProps> = ({
                       <button
                         key={id}
                         type="button"
-                        onClick={() => setActiveTab(id)}
+                        onClick={() => {
+                          setActiveTab(id);
+                          if (id !== 'all') {
+                            setIsDeepenExpanded(true);
+                          }
+                        }}
                         style={
                           isTabActive
                             ? { backgroundColor: theme.primaryHex, color: '#FFFFFF' }
@@ -1082,38 +1089,117 @@ export const PhysicsCourseView: React.FC<PhysicsCourseViewProps> = ({
           {/* C. EXERCICES CONTEXTUALISÉS & CORRIGÉS (VISIBLE PAR DÉFAUT SOUS L'ESSENTIEL, AVANT « للتعمق ») */}
           {course.essential && renderExercisesBlock()}
 
-          {/* ACCORDÉON « للتعمق » : replié sur le web, forcé ouvert pendant l'export PDF */}
-          <div id="tataamak-accordion" className="space-y-5">
+          {/* D. BOUTON ACCORDÉON « للتعمق » (REPLIÉ PAR DÉFAUT POUR TOUT COURS AVEC CHAMP ESSENTIAL) */}
+          {course.essential && (
             <button
               type="button"
-              onClick={() => setTataamakAccordionOpen(!tataamakAccordionOpen)}
-              aria-expanded={tataamakAccordionOpen}
-              className="w-full flex items-center justify-between gap-3 px-5 py-3.5 rounded-[16px] border-2 border-[#EAE2DA] bg-[#FAF7F4] hover:bg-[#F3ECE5] transition-colors cursor-pointer"
+              onClick={() => setIsDeepenExpanded(!isDeepenExpanded)}
+              style={{
+                borderColor: isDeepenExpanded ? theme.primaryHex : '#E2D9D0',
+              }}
+              className="w-full flex items-center justify-between p-4 sm:p-5 rounded-[18px] bg-[#FFFFFF] border-2 shadow-2xs transition-all text-right group cursor-pointer no-pdf"
+              dir="rtl"
             >
               <div className="flex items-center gap-3">
-                <span
-                  style={{ backgroundColor: theme.primaryHex }}
-                  className="w-8 h-8 rounded-[10px] text-white flex items-center justify-center shrink-0"
+                <div
+                  style={{
+                    backgroundColor: isDeepenExpanded ? theme.primaryHex : theme.softBgHex,
+                    color: isDeepenExpanded ? '#FFFFFF' : theme.primaryHex,
+                  }}
+                  className="w-10 h-10 rounded-[12px] flex items-center justify-center transition-colors"
                 >
-                  <BookOpen className="w-4.5 h-4.5" />
-                </span>
-                <div className="text-right">
-                  <div className="text-sm sm:text-base font-bold text-[#1A1A1A]">
-                    للتعمق — الدرس كاملاً من وضعية الانطلاق إلى الخلاصة
+                  <BookOpen className="w-5 h-5" />
+                </div>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <h3
+                      style={{ color: isDeepenExpanded ? theme.primaryHex : '#1A1A1A' }}
+                      className="text-base sm:text-lg font-bold transition-colors"
+                    >
+                      للتعمق
+                    </h3>
+                    <span className="text-[11px] font-mono text-[#6B6B6B]" dir="ltr">
+                      Pour approfondir
+                    </span>
                   </div>
-                  <div className="text-[11px] font-mono text-[#8C8C8C]" dir="ltr">
-                    Pour approfondir : situation de départ, sections, synthèse et vocabulaire
-                  </div>
+                  <p className="text-xs text-[#6B6B6B]">
+                    {isDeepenExpanded
+                      ? 'انقر لطي المحتوى المفصل'
+                      : 'انقر لعرض الشرح المفصل، وضعية الانطلاق، التجارب، والمعجم الكامل'}
+                  </p>
                 </div>
               </div>
-              <ChevronDown
-                style={{ color: theme.primaryHex }}
-                className={`w-5 h-5 transition-transform duration-200 ${tataamakAccordionOpen ? 'rotate-180' : ''}`}
-              />
-            </button>
 
-            {tataamakAccordionOpen && (
-              <>
+              <div className="flex items-center gap-2.5">
+                <span className="hidden sm:inline-block px-3 py-1 rounded-[8px] bg-[#FAF7F4] border border-[#E2D9D0] text-xs font-semibold text-[#4A4A4A]">
+                  {isDeepenExpanded ? 'معروض' : 'محتوى كامل'}
+                </span>
+                <div
+                  style={{
+                    backgroundColor: isDeepenExpanded ? theme.primaryHex : '#FAF7F4',
+                    color: isDeepenExpanded ? '#FFFFFF' : '#4A4A4A',
+                  }}
+                  className="w-8 h-8 rounded-full flex items-center justify-center transition-colors"
+                >
+                  {isDeepenExpanded ? (
+                    <ChevronUp className="w-5 h-5" />
+                  ) : (
+                    <ChevronDown className="w-5 h-5" />
+                  )}
+                </div>
+              </div>
+            </button>
+          )}
+
+          {/* E. CONTENU DÉTAILLÉ DU COURS (REPLIÉ PAR DÉFAUT POUR COURS AVEC ESSENTIAL, DIRECT POUR LES AUTRES) */}
+          <div className={`space-y-5 depth-accordion-content ${!course.essential || isDeepenExpanded ? "" : "hidden print:block pdf-export-mode:block"}`}>
+            {/* Titre visible « للتعمق » avant la situation de départ (ouvert dans le PDF et lors de l'impression) */}
+            {course.essential && (
+              <section
+                id="sec-pc-deepen-header"
+                style={{ borderColor: theme.primaryHex }}
+                className="section-lead-group rounded-[16px] p-4 sm:p-5 bg-[#FFFFFF] border-2 shadow-2xs flex items-center justify-between gap-3 text-right"
+                dir="rtl"
+              >
+                <div className="flex items-center gap-3">
+                  <div
+                    style={{
+                      backgroundColor: theme.primaryHex,
+                      color: '#FFFFFF',
+                    }}
+                    className="w-10 h-10 rounded-[12px] flex items-center justify-center shrink-0 shadow-xs"
+                  >
+                    <BookOpen className="w-5 h-5 text-white" strokeWidth={2.2} style={{ width: 20, height: 20 }} />
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <h2
+                        style={{ color: theme.primaryHex }}
+                        className="text-base sm:text-lg font-bold"
+                      >
+                        للتعمق
+                      </h2>
+                      <span className="text-xs font-mono text-[#6B6B6B]" dir="ltr">
+                        Pour approfondir · الشرح المفصل، التجارب والأنشطة
+                      </span>
+                    </div>
+                    <p className="text-xs text-[#6B6B6B]">
+                      الأنشطة الاستكشافية، الشرح المعمق، دراسة النماذج المجهرية، والخلاصة الشاملة
+                    </p>
+                  </div>
+                </div>
+                <span
+                  style={{
+                    backgroundColor: theme.softBgHex,
+                    color: theme.primaryHex,
+                    borderColor: theme.softBorderHex,
+                  }}
+                  className="hidden sm:inline-block px-3 py-1 rounded-[8px] border text-xs font-bold"
+                >
+                  المستوى المتقدم والمفصل
+                </span>
+              </section>
+            )}
               {/* Course Content or Ready Slot Architecture View */}
               {!hasContent ? (
             <section className="bg-[#FFFFFF] rounded-[18px] border border-[#EAE2DA] p-6 space-y-5">
@@ -1300,9 +1386,7 @@ export const PhysicsCourseView: React.FC<PhysicsCourseViewProps> = ({
               )}
             </>
           )}
-              </>
-            )}
-          </div>
+            </div>
 
           {/* 3. CONTINUITÉ PÉDAGOGIQUE (PRÉCÉDENT / SUIVANT AVEC REPÈRE DE DOMAINE) */}
           <section

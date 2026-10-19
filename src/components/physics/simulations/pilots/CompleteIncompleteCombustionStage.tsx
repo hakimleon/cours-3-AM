@@ -602,7 +602,7 @@ export const CompleteIncompleteCombustionStage: React.FC<
               fontWeight="bold"
               fill="#0F766E"
             >
-              اختبار ماء الجير (Eau de chaux)
+              اختبار رائق الكلس (Eau de chaux)
             </text>
 
             {/* Bécher d'eau de chaux qui se trouble avec CO₂ */}
@@ -650,8 +650,8 @@ export const CompleteIncompleteCombustionStage: React.FC<
               fill="#0F766E"
             >
               {metrics.limewaterTurbidityPercent > 15
-                ? 'ماء الجير تعكّر!'
-                : 'ماء الجير صافٍ'}
+                ? 'رائق الكلس تعكّر!'
+                : 'رائق الكلس صافٍ'}
             </text>
             <text x="592" y="214" textAnchor="middle" fontSize="9.5" fill="#475569">
               {metrics.limewaterTurbidityPercent > 15
@@ -997,7 +997,7 @@ export const CompleteIncompleteCombustionStage: React.FC<
                 {metrics.co2Produced.toFixed(1)} u
               </div>
               <div className="text-[10.5px] text-[#0F766E]">
-                يعكر ماء الجير ({metrics.limewaterTurbidityPercent}%)
+                يعكر رائق الكلس ({metrics.limewaterTurbidityPercent}%)
               </div>
             </div>
 
