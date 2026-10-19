@@ -1,0 +1,9 @@
+schema_version: 1
+module_path: pdf_artifacts_and_references
+title: PDF Export Reference Artifacts & Print-Style Diffs
+scope:
+    - pdf_ref/
+source_files: []
+depends_on: []
+related_to:
+    - path: pdf_tooling_scripts

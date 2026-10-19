@@ -1,0 +1,239 @@
+    -- 11  
+   :   :
+  .1
+:    
+.  · . ·
+.  · .   ·
+.  · .» « :       
+:       
+    
+      
+   
+1 
+.     
+>"  "=input type="text" placeholder<
+2 
+    
+>""=input type="text" placeholder<
+3 
+    
+>""=input type="text" placeholder<
+>summary/< >details< >summary<
+1
+
+.              .      >details/<
+
+    .2
+.         : 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+   
+
+.      :     
+
+     
+
+  .3
+.         
+  :
+:              
+.    
+
+:     
+
+2
+
+>" "=input type="text" placeholder<   ·
+  ·   ·   · >summary/< >details< >summary< .          
+>details/<
+  .4
+:                 
+.     
+ :
+.    .           
+.     
+  
+>"div style="display:flex;justify-content:center<
+:svg viewBox="0 0 1050 330" xmlns="http://www.w3.org/2000/svg" style="width< >"   "=height:auto;color:currentColor" role="img" aria-label;100%
+"defs< >marker id="energyArrow11" markerWidth="10" markerHeight="10" refX="8" refY="3< >orient="auto"< >path d="M0,0 L0,6 L8,3 Z" fill="currentColor"/< >/marker< >/defs
+"source --< >rect x="820" y="90" width="180" height="80" rx="14" fill="none" stroke="currentColor --!< >"stroke-width="2"/< >text x="910" y="125" text-anchor="middle" fill="currentColor" font-size="20 /<text< >text x="910" y="150" text-anchor="middle" fill="currentColor" font-size="15"<Source/<
+>text
+"motor --< >rect x="550" y="90" width="180" height="80" rx="14" fill="none" stroke="currentColor --!< -stroke-width="2"/< >text x="640" y="125" text-anchor="middle" fill="currentColor" font
+3
+
+-text< >text x="640" y="150" text-anchor="middle" fill="currentColor" font/<>"size="20 >size="15"<Moteur>/text
+"fan --< >rect x="280" y="90" width="180" height="80" rx="14" fill="none" stroke="currentColor --!< -stroke-width="2"/< >text x="370" y="125" text-anchor="middle" fill="currentColor" font
+-text< >text x="370" y="150" text-anchor="middle" fill="currentColor" font/<>"size="20 >size="15"<Ventilateur>/text
+"useful --< >rect x="40" y="90" width="170" height="80" rx="14" fill="none" stroke="currentColor --!< >"stroke-width="2"/< >text x="125" y="125" text-anchor="middle" fill="currentColor" font-size="19 /<text< >text x="125" y="150" text-anchor="middle" fill="currentColor" font-size="15"<Effet utile/<
+>text
+"RTL arrows --< >line x1="820" y1="130" x2="735" y2="130" stroke="currentColor" stroke-width="3 --!< "marker-end="url(#energyArrow11)"/< >text x="778" y="70" text-anchor="middle" fill="currentColor >text/< >"font-size="17
+-line x1="550" y1="130" x2="465" y2="130" stroke="currentColor" stroke-width="3" marker< -end="url(#energyArrow11)"/< >text x="508" y="70" text-anchor="middle" fill="currentColor" font
+>text/<  >"size="17
+-line x1="280" y1="130" x2="215" y2="130" stroke="currentColor" stroke-width="3" marker< -end="url(#energyArrow11)"/< >text x="248" y="70" text-anchor="middle" fill="currentColor" font
+>text/< >"size="17
+-dissipated branch --< >line x1="640" y1="170" x2="640" y2="250" stroke="currentColor" stroke --!< >/"width="3" stroke-dasharray="8 6
+>text/< >"text x="680" y="245" fill="currentColor" font-size="17<
+>svg/<
+>div/<
+
+      .5 
+
+ 
+
+ 
+
+        
+
+   :      
+
+   :     
+
+     
+
+   :
+
+4
+
+
+: :    >""=input type="text" placeholder< :    >""=input type="text" placeholder< >summary/< >details< >summary< .      :  · .     :  ·
+>details/<
+   .6
+:      
+  -- 1 
+    
+  -- 2 
+   
+   -- 3 
+     
+   -- 4 
+     
+   -- 5 
+     
+    -- 6 
+         
+5
+
+  --  .7
+.    
+
+>""=input type="text" placeholder<
+ 
+>""=input type="text" placeholder<
+ 
+>""=input type="text" placeholder<
+  
+>""=input type="text" placeholder< >summary/< >details< >summary<
+.  : · .  :  ·
+.  :  · .          ·
+>details/<
+  --  .8
+.       
+  
+  >""=input type="text" placeholder< >" "=input type="text" placeholder<
+>""=input type="text" placeholder<  
+>""=input type="text" placeholder< >""=input type="text" placeholder<
+6
+
+>summary/< >details< >summary< .          
+>details/<
+ 
+  >""=input type="text" placeholder< >" "=input type="text" placeholder< >summary/< >details< >summary< .            
+>details/<
+  .9
+1 
+».      « :
+.          
+2 
+».          « :
+.          
+3 
+».     « :
+.           
+7
+
+ .10
+  -- 1 
+: 
+   >""=input type="text" placeholder<  >""=input type="text" placeholder<  >""=input type="text" placeholder<  >""=input type="text" placeholder< 
+>summary/< >details< >summary< . : ·
+.  : · .  : ·
+.     : · >details/<
+  -- 2 
+:       ·  ·
+  ·   · >" "=input type="text" placeholder< >summary/< >details< >summary< .         
+>details/<
+  -- 3 
+.   :
+8
+
+   >""=input type="text" placeholder<
+ >" "=input type="text" placeholder< >summary/< >details< >summary< .         
+.         >details/<
+ -- 4 
+.         
+A 
+.  
+B 
+.  
+
+       .1 >""=input type="text" placeholder<
+        .1 >""=input type="text" placeholder<
+>summary/< >details< >summary< .          
+.         >details/<
+9
+
+  .11
+.      
+:   .  · .  · .    · .  ·
+
+    .1 >""=input type="text" placeholder<        .1 >""=input type="text" placeholder< .         .1 >""=input type="text" placeholder<
+.    .1 >""=input type="text" placeholder<
+.    .1 >""=input type="text" placeholder<
+.       .1 >""=input type="text" placeholder< >summary/< >details< >summary<
+. :   .1 .      .2 .       :  .  :  .3 .              :possible   .4 .            :  .5 .             .6
+>details/<
+10
+
+  .12
+:      
+ 
+:     .        
+ 
+:    
+:        
+.      
+
+ .13
+
+        
+             
+            
+                                            
+
+Français Objet technique Fonction principale Chaîne fonctionnelle Chaîne énergétique Source d'énergie Conversion d'énergie
+Énergie utile Énergie dissipée
+Moteur Générateur
+Dynamo
+
+                
+ 
+
+
+11
+
+

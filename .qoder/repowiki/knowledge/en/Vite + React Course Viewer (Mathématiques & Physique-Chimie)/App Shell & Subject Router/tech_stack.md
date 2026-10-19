@@ -1,0 +1,1 @@
+React 18 with `react-dom/client` `createRoot`, Tailwind CSS v4 (`@import "tailwindcss"`), KaTeX for math rendering, Lucide icons, and localStorage-backed persistence for physics course completion/favorites.

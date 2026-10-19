@@ -1,0 +1,1 @@
+No build or runtime — the diffs can be applied with `git apply pdf_ref/_d_blocks.diff` and `pdf_ref/_d_schemas.diff` to reproduce the referenced commit's changes on the corresponding component files.

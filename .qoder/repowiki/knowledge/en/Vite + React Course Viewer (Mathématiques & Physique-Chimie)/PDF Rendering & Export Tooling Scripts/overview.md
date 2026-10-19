@@ -1,0 +1,1 @@
+Standalone Node.js and Python utility scripts that drive Puppeteer/Chrome and PyMuPDF to render, inspect, analyze, and export PDF pages for the course viewer application.

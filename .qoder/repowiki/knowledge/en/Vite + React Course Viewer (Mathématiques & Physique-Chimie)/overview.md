@@ -1,0 +1,1 @@
+Root Vite+React app hosting two subject modules behind a shared shell, with Puppeteer/PyMuPDF tooling and reference artifacts for validating PDF export of course pages.

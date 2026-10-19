@@ -1,0 +1,1 @@
+Node.js ESM scripts using Puppeteer (headless `new` mode) against a locally running Vite dev server on port 4173; Python helpers using PyMuPDF (`fitz`).

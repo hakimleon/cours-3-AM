@@ -1,0 +1,13 @@
+schema_version: 1
+module_path: app_shell
+title: App Shell & Subject Router
+scope:
+    - src/App.tsx
+    - src/main.tsx
+    - src/index.css
+    - src/types.ts
+    - src/typesPhysicsChemistry.ts
+source_files: []
+depends_on: []
+related_to:
+    - path: pdf_tooling_scripts

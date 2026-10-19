@@ -1,0 +1,10 @@
+schema_version: 1
+module_path: pdf_tooling_scripts
+title: PDF Rendering & Export Tooling Scripts
+scope:
+    - scripts/
+source_files: []
+depends_on: []
+related_to:
+    - path: app_shell
+    - path: pdf_artifacts_and_references

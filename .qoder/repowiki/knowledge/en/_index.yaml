@@ -1,0 +1,85 @@
+# 知识卡导出索引文件
+schema_version: 1
+locale: en-US
+branch: main
+nodes_managed: true
+exported_at: "2026-10-10T10:35:37Z"
+modules:
+    "":
+        dir_name: Vite + React Course Viewer (Mathématiques & Physique-Chimie)
+        title: Vite + React Course Viewer (Mathématiques & Physique-Chimie)
+        scope:
+            - package.json
+            - vite.config.ts
+            - tsconfig.json
+            - .gitignore
+            - index.html
+            - metadata.json
+            - bun.lock
+            - pnpm-lock.yaml
+            - .env.example
+            - course11_text.txt
+            - course11_utf8.txt
+            - page_10.png
+            - page_11.png
+            - page_12.png
+            - page_13.png
+            - page_14.png
+            - page_15.png
+            - page_16.png
+            - page_17.png
+            - page_18.png
+            - page_19.png
+            - page_20.png
+            - page_21.png
+            - page_22.png
+            - page_23.png
+            - page_24.png
+            - page_25.png
+            - page_9.png
+            - toc_4.png
+            - toc_5.png
+            - toc_6.png
+            - toc_7.png
+        source_files: []
+        children:
+            - app_shell
+            - pdf_artifacts_and_references
+            - pdf_tooling_scripts
+        depends_on: []
+        related_to: []
+    app_shell:
+        dir_name: App Shell & Subject Router
+        title: App Shell & Subject Router
+        scope:
+            - src/App.tsx
+            - src/main.tsx
+            - src/index.css
+            - src/types.ts
+            - src/typesPhysicsChemistry.ts
+        source_files: []
+        children: []
+        depends_on: []
+        related_to:
+            - path: pdf_tooling_scripts
+    pdf_artifacts_and_references:
+        dir_name: PDF Export Reference Artifacts & Print-Style Diffs
+        title: PDF Export Reference Artifacts & Print-Style Diffs
+        scope:
+            - pdf_ref/
+        source_files: []
+        children: []
+        depends_on: []
+        related_to:
+            - path: pdf_tooling_scripts
+    pdf_tooling_scripts:
+        dir_name: PDF Rendering & Export Tooling Scripts
+        title: PDF Rendering & Export Tooling Scripts
+        scope:
+            - scripts/
+        source_files: []
+        children: []
+        depends_on: []
+        related_to:
+            - path: app_shell
+            - path: pdf_artifacts_and_references

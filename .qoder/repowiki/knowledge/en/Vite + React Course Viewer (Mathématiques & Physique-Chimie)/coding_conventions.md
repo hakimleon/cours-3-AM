@@ -1,0 +1,2 @@
+- Absolute imports use the `@/` alias resolved to the repository root, allowing cross-module references between app_shell, pdf_tooling_scripts, and pdf_artifacts_and_references without relative path chains.
+- Subject-specific content lives in its own child module under the root, exposing only typed contracts and a mountable component to the app_shell router.

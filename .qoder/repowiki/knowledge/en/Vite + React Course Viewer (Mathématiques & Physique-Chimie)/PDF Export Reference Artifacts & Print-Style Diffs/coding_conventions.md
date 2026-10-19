@@ -1,0 +1,2 @@
+- Diff artifacts are named with a leading underscore and a semantic suffix (`_d_blocks.diff`, `_d_schemas.diff`) so they sort before regular files and signal they are patch references rather than source.
+- Page screenshot crops follow a `crop-p<N>.png` naming scheme, with a trailing `b` suffix denoting alternate variants of the same page for comparison.

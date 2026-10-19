@@ -1,0 +1,6 @@
+This module is a static reference bundle with no executable code. It groups three artifact families under one directory:
+- `_d_blocks.diff` and `_d_schemas.diff`: raw `git diff` patches (commit a2f29d36) that refactor `src/components/physics/PhysicsChemistryBlocks.tsx` and `Course01Schemas.tsx` to make collapsible corrections and inline SVG legends render correctly during `beforeprint`/`afterprint` and PDF export.
+- `reference-cours-01-16p.pdf`: the canonical 16-page output used as the visual target.
+- `crop-p*.png`: per-page screenshots of selected pages (5, 6, 8, 11, 14, 15) plus alternate variants (`crop-p5b.png`, `crop-p14b.png`) for side-by-side comparison.
+- `reference-text.txt`: a plain-text index mapping each `===== PAGE N =====` header to its expected page number in the 16-page PDF, serving as an OCR/page-order sanity check.
+The dependency direction is one-way: these files are consumed by reviewers or automated checks against the actual React components; nothing in this folder imports from the app source tree.

@@ -1,0 +1,39 @@
+schema_version: 1
+module_path: ""
+title: Vite + React Course Viewer (Mathématiques & Physique-Chimie)
+scope:
+    - package.json
+    - vite.config.ts
+    - tsconfig.json
+    - .gitignore
+    - index.html
+    - metadata.json
+    - bun.lock
+    - pnpm-lock.yaml
+    - .env.example
+    - course11_text.txt
+    - course11_utf8.txt
+    - page_10.png
+    - page_11.png
+    - page_12.png
+    - page_13.png
+    - page_14.png
+    - page_15.png
+    - page_16.png
+    - page_17.png
+    - page_18.png
+    - page_19.png
+    - page_20.png
+    - page_21.png
+    - page_22.png
+    - page_23.png
+    - page_24.png
+    - page_25.png
+    - page_9.png
+    - toc_4.png
+    - toc_5.png
+    - toc_6.png
+    - toc_7.png
+source_files: []
+depends_on: []
+related_to: []

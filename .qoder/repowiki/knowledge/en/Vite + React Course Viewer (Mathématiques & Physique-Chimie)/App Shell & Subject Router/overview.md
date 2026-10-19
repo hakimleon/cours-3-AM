@@ -1,0 +1,1 @@
+Root React entry that mounts the app, switches between Mathématiques and Physique-Chimie 3AM modules, and declares their shared data contracts.

@@ -1,0 +1,5 @@
+- Subject-specific state is split into separate state pairs (e.g. `selectedCourseId`/`activeSectionId` for math vs. `selectedPhysicsCourseId`/`physicsViewMode` for physics) rather than a single polymorphic object, keeping the two curricula independently mutable.
+- Persistent user state (completed courses, favorites) is initialized lazily in `useState` with a try/catch around `JSON.parse(localStorage.getItem(...))` returning an empty fallback on parse errors.
+- Cross-cutting concerns (image lightbox, concept reminder modal) are exposed as React Context providers wrapped around the entire App tree instead of being passed as props.
+- PDF export handlers follow a uniform pattern: guard on `isExportingPdf`, set a localized Arabic status string, await the export helper with a step callback, then clear the status after a fixed delay in `finally`.
+- Type definitions use discriminated unions (`kind: 'paragraph'|'bullets'|...|'simulation'`) to model heterogeneous content blocks, with each variant carrying its own typed payload.

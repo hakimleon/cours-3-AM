@@ -1,0 +1,1 @@
+Git unified-diff format for the `.diff` artifacts; PNG raster snapshots for page crops; a standalone PDF (16 pages, Physique-Chimie 3AM Cours 01).

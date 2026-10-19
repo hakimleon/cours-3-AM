@@ -1,0 +1,1 @@
+Scripts assume a pre-built dev server is already listening at `http://localhost:4173/` and a local Chromium install at `C:/Program Files/Google Chrome/Application/chrome.exe`; run with `node scripts/<script>.mjs` or `python scripts/<script>.py` from the repository root.

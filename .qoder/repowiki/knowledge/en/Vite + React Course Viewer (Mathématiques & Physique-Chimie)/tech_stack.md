@@ -1,0 +1,1 @@
+React 19 + TypeScript + Vite 8 + Tailwind CSS v4; PDF generation via jspdf in the app and Puppeteer/PyMuPDF in the tooling scripts; KaTeX for math rendering; lucide-react icons; motion animations.

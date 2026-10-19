@@ -1,0 +1,3 @@
+- Puppeteer scripts launch a headless browser with `--no-sandbox --disable-setuid-sandbox` and an explicit Windows Chrome `executablePath` rather than relying on auto-discovery.
+- PDF rendering via Puppeteer targets the native Chrome viewer by navigating `file://...#page=N&zoom=100` and waiting a fixed delay before screenshotting.
+- PyMuPDF scripts accept all parameters through `sys.argv` and print usage hints as inline comments describing the expected command-line signature.

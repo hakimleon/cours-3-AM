@@ -1,0 +1,1 @@
+Standard Vite scripts: `pnpm dev` starts the dev server on port 3000 (host 0.0.0.0), `pnpm build` produces the static bundle, `pnpm preview` serves it locally, `pnpm lint` runs `tsc --noEmit`, and `pnpm clean` removes `dist` and `server.js`. HMR/file watching can be toggled via the `DISABLE_HMR` environment variable.

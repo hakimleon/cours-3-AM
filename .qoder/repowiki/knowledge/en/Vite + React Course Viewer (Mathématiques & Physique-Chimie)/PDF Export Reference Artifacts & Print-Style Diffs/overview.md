@@ -1,0 +1,1 @@
+Reference assets for the Physics-Chemistry course PDF export: a sample 16-page PDF, page-screenshot crops, a page-number index, and two git diffs documenting print/PDF layout fixes.
