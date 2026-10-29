@@ -87,12 +87,12 @@ export const SvtCourseEssentialBlock: React.FC<SvtCourseEssentialBlockProps> = (
             style={{ backgroundColor: primaryColor }}
             className="w-7 h-7 rounded-[8px] text-white font-bold text-xs flex items-center justify-center shrink-0"
           >
-            3
+            1
           </span>
           <div>
             <div className="flex items-center gap-2">
               <h2 className="text-base sm:text-lg font-bold text-[#4A4A4A] leading-tight">
-                {titleAr}
+                1. {titleAr}
               </h2>
               <span
                 style={{

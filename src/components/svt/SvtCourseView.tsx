@@ -72,20 +72,9 @@ export const SvtCourseView: React.FC<SvtCourseViewProps> = ({
   onCloseMobileSidebar,
 }) => {
   const [activeTab, setActiveTab] = useState<'all' | 'lesson' | 'activities' | 'exercises'>('all');
-  // Split sections according to the imperative pedagogical template:
-  // 1. Situation de départ (discoveryActivity)
-  // 2. Observation et exploitation des documents (observationSection)
-  // 3. Bloc « أحتفظ بالأهم » (essential)
-  // 4. Exercices visibles (applications)
-  // 5. Accordéon « للتعمق » (deepenSections + flowchart + synthesis + vocab + teacherNotes)
-  const observationSection =
-    course.sections.find(
-      (sec) => sec.id === 'sec-svt-01-docs' || sec.titleArabic.includes('ملاحظة الوثائق')
-    ) || (course.sections.length > 0 && course.sections[0].shortLabel?.includes('ملاحظة') ? course.sections[0] : null);
-
-  const deepenSections = observationSection
-    ? course.sections.filter((s) => s.id !== observationSection.id)
-    : course.sections;
+  // Strict Level-1 Structure (1 أحتفظ بالأهم، 2 تمارين تطبيقية، 3 للتعمق)
+  // All sections inside للتعمق are numbered with Arabic letters (أ، ب، ج، د، هـ، و، ز)
+  const deepenSections = course.sections;
 
   const [activeSectionId, setActiveSectionId] = useState<string>('sec-svt-discovery');
   // Accordion « للتعمق » is collapsed by default on the web, and always open in PDF export
@@ -317,7 +306,7 @@ export const SvtCourseView: React.FC<SvtCourseViewProps> = ({
                 فهرس أقسام الدرس :
               </div>
 
-              {/* 1. وضعية الانطلاق والتساؤل العلمي */}
+              {/* وضعية الانطلاق والتساؤل العلمي */}
               {course.discoveryActivity && (
                 <button
                   type="button"
@@ -328,28 +317,12 @@ export const SvtCourseView: React.FC<SvtCourseViewProps> = ({
                       : 'hover:bg-[#FAF7F4] text-[#4A4A4A]'
                   }`}
                 >
-                  <span className="truncate">1. وضعية الانطلاق والتساؤل</span>
-                  <span className="text-[10px] opacity-70">1</span>
+                  <span className="truncate">وضعية الانطلاق والتساؤل</span>
+                  <span className="text-[10px] opacity-70">★</span>
                 </button>
               )}
 
-              {/* 2. ملاحظة الوثائق واستغلالها */}
-              {observationSection && (
-                <button
-                  type="button"
-                  onClick={() => scrollToSection(observationSection.id)}
-                  className={`w-full text-right px-2.5 py-1.5 rounded-[8px] text-xs font-bold flex items-center justify-between transition-colors cursor-pointer ${
-                    activeSectionId === observationSection.id
-                      ? 'bg-amber-100/70 text-[#B45309]'
-                      : 'hover:bg-[#FAF7F4] text-[#4A4A4A]'
-                  }`}
-                >
-                  <span className="truncate">2. ملاحظة واستغلال الوثائق</span>
-                  <span className="text-[10px] opacity-70">2</span>
-                </button>
-              )}
-
-              {/* 3. أحتفظ بالأهم */}
+              {/* 1. أحتفظ بالأهم */}
               {course.essential && (
                 <button
                   type="button"
@@ -362,13 +335,13 @@ export const SvtCourseView: React.FC<SvtCourseViewProps> = ({
                 >
                   <span className="flex items-center gap-1 truncate text-[#B45309]">
                     <Sparkles className="w-3 h-3" />
-                    <span>3. أحتفظ بالأهم (L'essentiel)</span>
+                    <span>1. أحتفظ بالأهم (L'essentiel)</span>
                   </span>
-                  <span className="text-[10px] opacity-70">★</span>
+                  <span className="text-[10px] font-bold">1</span>
                 </button>
               )}
 
-              {/* 4. تمارين تطبيقية والـ BEM */}
+              {/* 2. تمارين تطبيقية */}
               {course.applications && course.applications.length > 0 && (
                 <button
                   type="button"
@@ -379,27 +352,31 @@ export const SvtCourseView: React.FC<SvtCourseViewProps> = ({
                       : 'hover:bg-[#FAF7F4] text-[#4A4A4A]'
                   }`}
                 >
-                  <span className="truncate">4. التمارين والتحضير للـ BEM</span>
-                  <span className="text-[10px] opacity-70">4</span>
+                  <span className="truncate">2. تمارين تطبيقية والـ BEM</span>
+                  <span className="text-[10px] font-bold">2</span>
                 </button>
               )}
 
-              {/* 5. للتعمق في المفاهيم والمخططات */}
+              {/* 3. للتعمق في المفاهيم والمخططات */}
               <button
                 type="button"
                 onClick={() => scrollToSection('sec-svt-deepen-accordion')}
                 className={`w-full text-right px-2.5 py-1.5 rounded-[8px] text-xs font-bold flex items-center justify-between transition-colors cursor-pointer ${
                   activeSectionId === 'sec-svt-deepen-accordion' ||
-                  deepenSections.some((s) => s.id === activeSectionId)
+                  deepenSections.some((s) => s.id === activeSectionId) ||
+                  activeSectionId === 'sec-svt-synthesis-vocab' ||
+                  activeSectionId === 'sec-svt-flowchart' ||
+                  activeSectionId === 'sec-svt-synthesis' ||
+                  activeSectionId === 'sec-svt-vocab'
                     ? 'bg-amber-100/70 text-[#B45309]'
                     : 'hover:bg-[#FAF7F4] text-[#4A4A4A]'
                 }`}
               >
                 <span className="flex items-center gap-1 truncate">
                   <BookOpen className="w-3 h-3 text-[#B45309]" />
-                  <span>5. للتعمق (المفاهيم والمخططات)</span>
+                  <span>3. للتعمق (المفاهيم والمخططات)</span>
                 </span>
-                <span className="text-[10px] opacity-70">5</span>
+                <span className="text-[10px] font-bold">3</span>
               </button>
 
               {/* Sous-sections de l'accordéon si déplié */}
@@ -419,28 +396,22 @@ export const SvtCourseView: React.FC<SvtCourseViewProps> = ({
                       <span className="truncate">{sec.shortLabel || sec.titleArabic}</span>
                     </button>
                   ))}
+                  <button
+                    type="button"
+                    onClick={() => scrollToSection('sec-svt-synthesis-vocab')}
+                    className={`w-full text-right px-2 py-1 rounded-[6px] text-[11px] font-semibold flex items-center justify-between transition-colors cursor-pointer ${
+                      activeSectionId === 'sec-svt-synthesis-vocab' ||
+                      activeSectionId === 'sec-svt-flowchart' ||
+                      activeSectionId === 'sec-svt-synthesis' ||
+                      activeSectionId === 'sec-svt-vocab'
+                        ? 'bg-amber-50 text-[#B45309] font-bold'
+                        : 'hover:bg-[#FAF7F4] text-[#6B6B6B]'
+                    }`}
+                  >
+                    <span className="truncate">الحصيلة الشاملة والمعجم</span>
+                  </button>
                 </div>
               )}
-
-              {/* 6. الحصيلة الشاملة ومعجم المصطلحات */}
-              <button
-                type="button"
-                onClick={() => scrollToSection('sec-svt-synthesis-vocab')}
-                className={`w-full text-right px-2.5 py-1.5 rounded-[8px] text-xs font-bold flex items-center justify-between transition-colors cursor-pointer ${
-                  activeSectionId === 'sec-svt-synthesis-vocab' ||
-                  activeSectionId === 'sec-svt-flowchart' ||
-                  activeSectionId === 'sec-svt-synthesis' ||
-                  activeSectionId === 'sec-svt-vocab'
-                    ? 'bg-amber-100/70 text-[#B45309]'
-                    : 'hover:bg-[#FAF7F4] text-[#4A4A4A]'
-                }`}
-              >
-                <span className="flex items-center gap-1 truncate">
-                  <CheckCircle2 className="w-3 h-3 text-[#15803D]" />
-                  <span>6. الحصيلة الشاملة والمعجم</span>
-                </span>
-                <span className="text-[10px] opacity-70">6</span>
-              </button>
             </div>
           </div>
 
@@ -570,25 +541,27 @@ export const SvtCourseView: React.FC<SvtCourseViewProps> = ({
 
             {/* Pedagogical Objectives */}
             {course.objectifs && course.objectifs.length > 0 && (
-              <div className="p-4 rounded-[12px] bg-[#FAF7F4] border border-[#E5DDD5] space-y-2">
+              <div id="svt-objectives-box" className="p-4 rounded-[12px] bg-[#FAF7F4] border border-[#E5DDD5] space-y-2">
                 <div
                   style={{ color: theme.primaryHex }}
                   className="text-xs font-bold flex items-center gap-1.5"
                 >
                   <ListChecks className="w-4 h-4" />
-                  <span>الأهداف التعليمية التعلمية لهذا الدرس :</span>
+                  <span>الأهداف التعلمية</span>
                 </div>
-                <ul className="space-y-1.5 pr-5 list-disc text-xs sm:text-sm text-[#4A4A4A] leading-relaxed">
+                <ol className="space-y-1.5 pr-6 list-decimal text-xs sm:text-sm text-[#4A4A4A] leading-relaxed">
                   {course.objectifs.map((obj, idx) => (
-                    <li key={idx}>{obj}</li>
+                    <li key={idx} className="pr-1">
+                      {obj}
+                    </li>
                   ))}
-                </ul>
+                </ol>
               </div>
             )}
           </div>
 
           {/* ========================================================================= */}
-          {/* ÉTAPE 1 : وضعية الانطلاق والتساؤل العلمي (Situation de départ & questions) */}
+          {/* وضعية الانطلاق والتساؤل العلمي (Situation de départ & questions)             */}
           {/* ========================================================================= */}
           {course.discoveryActivity && (
             <div id="sec-svt-discovery" className="scroll-mt-24">
@@ -597,45 +570,7 @@ export const SvtCourseView: React.FC<SvtCourseViewProps> = ({
           )}
 
           {/* ========================================================================= */}
-          {/* ÉTAPE 2 : ملاحظة واستغلال الوثائق (Observation et exploitation des docs)   */}
-          {/* ========================================================================= */}
-          {observationSection && (
-            <section
-              id={observationSection.id}
-              className="bg-white rounded-[18px] border border-[#E5DDD5] p-5 sm:p-6 shadow-2xs scroll-mt-24 space-y-4"
-            >
-              <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#EAE2DA] pb-3">
-                <div className="flex items-center gap-2.5">
-                  <span
-                    style={{ backgroundColor: theme.primaryHex }}
-                    className="w-7 h-7 rounded-[8px] text-white font-bold text-xs flex items-center justify-center shrink-0"
-                  >
-                    2
-                  </span>
-                  <h2 className="text-base sm:text-lg font-bold text-[#4A4A4A]">
-                    {observationSection.titleArabic}
-                  </h2>
-                </div>
-
-                {observationSection.titleFrench && (
-                  <span
-                    dir="ltr"
-                    style={{ color: theme.primaryHex }}
-                    className="text-xs font-mono font-semibold"
-                  >
-                    {observationSection.titleFrench}
-                  </span>
-                )}
-              </div>
-
-              <div className="space-y-4">
-                {observationSection.blocks.map((block, idx) => renderContentBlock(block, idx))}
-              </div>
-            </section>
-          )}
-
-          {/* ========================================================================= */}
-          {/* ÉTAPE 3 : Bloc « أحتفظ بالأهم » (L'essentiel)                             */}
+          {/* 1. Bloc « أحتفظ بالأهم » (L'essentiel)                                    */}
           {/* ========================================================================= */}
           {course.essential && (
             <div id="sec-svt-essential" className="scroll-mt-24">
@@ -647,15 +582,20 @@ export const SvtCourseView: React.FC<SvtCourseViewProps> = ({
           )}
 
           {/* ========================================================================= */}
-          {/* ÉTAPE 4 : Exercices visibles directement (Application & BEM)              */}
+          {/* 2. تمارين تطبيقية والتحضير لشهادة التعليم المتوسط (BEM)                   */}
           {/* ========================================================================= */}
           {course.applications && course.applications.length > 0 && (
             <div id="sec-svt-exercises" className="scroll-mt-24 space-y-4">
               <div className="bg-white rounded-[16px] border border-[#E5DDD5] p-4 sm:p-5 flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <Sparkles className="w-4 h-4 text-[#B45309]" />
+                  <span
+                    style={{ backgroundColor: theme.primaryHex }}
+                    className="w-7 h-7 rounded-[8px] text-white font-bold text-xs flex items-center justify-center shrink-0"
+                  >
+                    2
+                  </span>
                   <h3 className="text-base font-bold text-[#4A4A4A]">
-                    4. تمارين تطبيقية والتحضير لشهادة التعليم المتوسط (BEM)
+                    2. تمارين تطبيقية والتحضير لشهادة التعليم المتوسط (BEM)
                   </h3>
                 </div>
                 <span className="text-xs font-bold text-[#8C8C8C]">
@@ -670,19 +610,24 @@ export const SvtCourseView: React.FC<SvtCourseViewProps> = ({
           )}
 
           {/* ========================================================================= */}
-          {/* ÉTAPE 5 : Accordéon « للتعمق » (replié sur web, ouvert dans le PDF)        */}
+          {/* 3. للتعمق في المفاهيم والمخططات (أقسام مرقمة بأحرف أبجدية: أ، ب، ج...)     */}
           {/* ========================================================================= */}
           <div id="sec-svt-deepen-accordion" className="scroll-mt-24 space-y-4">
             <div className="bg-white p-4 sm:p-5 rounded-[16px] border border-[#E2D9D0] shadow-2xs flex flex-wrap items-center justify-between gap-3">
               <div className="space-y-1">
                 <div className="flex items-center gap-2">
-                  <BookOpen className="w-5 h-5" style={{ color: theme.primaryHex }} />
+                  <span
+                    style={{ backgroundColor: theme.primaryHex }}
+                    className="w-7 h-7 rounded-[8px] text-white font-bold text-xs flex items-center justify-center shrink-0"
+                  >
+                    3
+                  </span>
                   <h3 className="text-base sm:text-lg font-bold text-[#4A4A4A]">
-                    5. للتعمق واستيعاب المادة بالتفصيل
+                    3. للتعمق في المفاهيم والمخططات
                   </h3>
                 </div>
                 <p className="text-xs text-[#8C8C8C]">
-                  الشروحات النظرية الموسعة، المخطط الجيولوجي للبؤرة والمركز السطحي، السجل الزلزالي، مقارنة المقدار والشدة، منحنيات تساوي الشدة، الوقاية والحصيلة
+                  ملاحظة الوثائق، الشروحات النظرية، المخطط الجيولوجي للبؤرة والمركز السطحي، السجل الزلزالي، مقارنة المقدار والشدة، منحنيات تساوي الشدة، الوقاية والحصيلة
                 </p>
               </div>
 
@@ -746,7 +691,7 @@ export const SvtCourseView: React.FC<SvtCourseViewProps> = ({
           </div>
 
           {/* ========================================================================= */}
-          {/* ÉTAPE 6 : الحصيلة الشاملة ومعجم المصطلحات المعتمدة                         */}
+          {/* الحصيلة الشاملة ومعجم المصطلحات المعتمدة                                   */}
           {/* ========================================================================= */}
           <div id="sec-svt-synthesis-vocab" className="scroll-mt-24 space-y-5">
             <div className="bg-white rounded-[16px] border border-[#E5DDD5] p-4 sm:p-5 flex items-center justify-between">
@@ -755,10 +700,10 @@ export const SvtCourseView: React.FC<SvtCourseViewProps> = ({
                   style={{ backgroundColor: theme.primaryHex }}
                   className="w-7 h-7 rounded-[8px] text-white font-bold text-xs flex items-center justify-center shrink-0"
                 >
-                  6
+                  <CheckCircle2 className="w-4 h-4 text-white" />
                 </span>
                 <h3 className="text-base sm:text-lg font-bold text-[#4A4A4A]">
-                  6. الحصيلة الشاملة ومعجم المصطلحات العلمية المعتمدة
+                  الحصيلة الشاملة ومعجم المصطلحات العلمية المعتمدة
                 </h3>
               </div>
               <span className="text-xs font-bold text-[#8C8C8C]">
