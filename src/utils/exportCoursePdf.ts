@@ -233,6 +233,64 @@ function collectPhysicsPrintableBlocks(mainEl: HTMLElement): HTMLElement[] {
 }
 
 /**
+ * Collecte les blocs logiques de #svt-course-main-content (SVT 3AM).
+ * Chaque carte (en-tête, essentiel, exercice, section de l'accordéon) est
+ * poussée atomiquement : l'ordre du gabarit est conservé et le découpage de
+ * page ne peut pas séparer le contenu d'une carte.
+ */
+function collectSvtPrintableBlocks(mainEl: HTMLElement): HTMLElement[] {
+  const blocks: HTMLElement[] = [];
+
+  const isVisible = (el: Element | null): el is HTMLElement => {
+    if (!el || !(el instanceof HTMLElement)) return false;
+    if (el.classList.contains('no-pdf')) return false;
+    const style = window.getComputedStyle(el);
+    return style.display !== 'none' && el.offsetHeight > 0;
+  };
+
+  const push = (el: Element | null) => {
+    if (isVisible(el)) blocks.push(el);
+  };
+
+  // 1. En-tête (titre, numéro, domaine, objectifs)
+  push(mainEl.querySelector('#svt-course-header'));
+
+  // 2. أحتفظ بالأهم (9 puces + schéma-bilan + questions flash)
+  push(mainEl.querySelector('#sec-svt-essential'));
+
+  // 3. Exercices visibles : en-tête puis chaque exercice séparément
+  const exercises = mainEl.querySelector('#sec-svt-exercises');
+  if (exercises) {
+    push(exercises.querySelector(':scope > div'));
+    const cards = Array.from(
+      exercises.querySelectorAll<HTMLElement>('.application-enonce-group'),
+    );
+    if (cards.length > 0) {
+      cards.forEach((card) => push(card));
+    } else {
+      push(exercises);
+    }
+  }
+
+  // 4. Accordéon « للتعمق » : bandeau puis contenu dans l'ordre imposé
+  push(mainEl.querySelector('#sec-svt-deepen-accordion > div'));
+
+  const deepenBody = mainEl.querySelector('[data-svt-deepen-body="true"]');
+  if (deepenBody) {
+    for (const child of Array.from(deepenBody.children)) {
+      push(child);
+    }
+  } else {
+    const sections = Array.from(
+      mainEl.querySelectorAll<HTMLElement>('section[id^="sec-svt-"]'),
+    );
+    sections.forEach((section) => push(section));
+  }
+
+  return blocks.length > 0 ? blocks : [mainEl];
+}
+
+/**
  * Détecte si un bloc contient un <table> avec un <thead> : l'en-tête sera
  * répété quand le tableau passe sur une nouvelle page.
  */
@@ -1199,7 +1257,12 @@ export async function exportSvtCourseToPdf(
     }
     await new Promise((resolve) => setTimeout(resolve, 450));
 
-    const blocks = collectPhysicsPrintableBlocks(mainEl);
+    // Second signal après stabilisation du DOM : ouvre l'accordéon monté par
+    // React avant la collecte des blocs (même logique que l'export Physique).
+    window.dispatchEvent(new CustomEvent('course-pdf-prepare'));
+    await new Promise((resolve) => setTimeout(resolve, 200));
+
+    const blocks = collectSvtPrintableBlocks(mainEl);
     const cleanTitre = (course.titreFrancais || course.titreArabe)
       .replace(/[\\/:*?"<>|،]/g, '')
       .trim()

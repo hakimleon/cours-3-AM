@@ -122,7 +122,7 @@ const COURSE_01_SVT: SvtCourse = {
   // 1. وضعية الانطلاق والتساؤل العلمي (ص 9 من الكتاب المدرسي)
   discoveryActivity: {
     id: 'disc-svt-01',
-    titleArabic: 'وضعية الانطلاق والتساؤل العلمي',
+    titleArabic: 'وضعية الانطلاق',
     titleFrench: 'Situation de départ et questionnement scientifique',
     situationConcrete:
       'تتعرض الجزائر سنويا للعديد من الهزات الأرضية، معظم هذه الهزات لا يشعر بها السكان لضعف شدتها. إلا أن بعضها ذات شدات قوية تسبب تشوهات على مستوى سطح الأرض وخسائر مادية وبشرية متفاوتة.',
@@ -130,7 +130,7 @@ const COURSE_01_SVT: SvtCourse = {
       'فيم تتمثل مظاهر الزلزال على سطح الأرض؟',
       'ما أهم خصائص الزلزال؟',
     ],
-    hint: 'الإشكالية: فيم تتمثل مظاهر الزلزال على سطح الأرض؟ وما أهم خصائص الزلزال؟',
+    hint: 'فيم تتمثل مظاهر الزلزال على سطح الأرض؟ وما أهم خصائص الزلزال؟',
     conclusion:
       'الزلزال ظاهرة طبيعية باطنية تتجلى على السطح في شكل اهتزازات أرضية متفاوتة الشدة وتسجل بأجهزة خاصة.',
   },
@@ -167,8 +167,8 @@ const COURSE_01_SVT: SvtCourse = {
     },
     {
       id: 'sec-svt-01-def',
-      number: 'أ',
-      titleArabic: 'أ. تعريف الزلزال وخصائصه',
+      number: '1',
+      titleArabic: 'تعريف الزلزال وخصائصه',
       titleFrench: 'Définition du séisme et caractéristiques',
       shortLabel: 'تعريف الزلزال وخصائصه',
       blocks: [
@@ -213,8 +213,8 @@ const COURSE_01_SVT: SvtCourse = {
     },
     {
       id: 'sec-svt-01-propagation',
-      number: 'ب',
-      titleArabic: 'ب. كيف تنتشر الاهتزازات الزلزالية؟',
+      number: '2',
+      titleArabic: 'كيف تنتشر الاهتزازات الزلزالية؟',
       titleFrench: 'Propagation des vibrations sismiques',
       shortLabel: 'انتشار الاهتزازات',
       blocks: [
@@ -259,8 +259,8 @@ const COURSE_01_SVT: SvtCourse = {
     },
     {
       id: 'sec-svt-01-recording',
-      number: 'ج',
-      titleArabic: 'ج. كيف يسجل العلماء الزلازل؟',
+      number: '3',
+      titleArabic: 'كيف يسجل العلماء الزلازل؟',
       titleFrench: 'Enregistrement des séismes par les scientifiques',
       shortLabel: 'تسجيل الزلازل',
       blocks: [
@@ -307,8 +307,8 @@ const COURSE_01_SVT: SvtCourse = {
     },
     {
       id: 'sec-svt-01-magnitude-intensity',
-      number: 'د',
-      titleArabic: 'د. كيف نقدر مقدار الزلزال وشدته؟',
+      number: '4',
+      titleArabic: 'كيف نقدر مقدار الزلزال وشدته؟',
       titleFrench: 'Estimation de la magnitude et de l’intensité',
       shortLabel: 'المقدار والشدة',
       blocks: [
@@ -322,7 +322,7 @@ const COURSE_01_SVT: SvtCourse = {
             titleArabic: 'مقدار الزلزال — Magnitude',
             titleFrench: 'La Magnitude',
             contentArabic:
-              'يعبر عن الطاقة المحررة في البؤرة، ويُقدَّر انطلاقاً من تسجيلات أجهزة قياس الزلازل بسلم ريشتر (مثل: زلزال زموري، 2003، المقدار 6.6). لكل زلزال مقدار محدد يعبر عن طاقته المحررة في المصدر.',
+              'يعبر عن الطاقة المحررة في البؤرة، ويُقدَّر انطلاقاً من تسجيلات أجهزة قياس الزلازل بسلم ريشتر. لكل زلزال مقدار محدد يعبر عن طاقته المحررة في المصدر.',
           },
         },
         {
@@ -360,8 +360,8 @@ const COURSE_01_SVT: SvtCourse = {
     },
     {
       id: 'sec-svt-01-isoseismal',
-      number: 'هـ',
-      titleArabic: 'هـ. ماذا نستنتج من منحنيات تساوي الشدة؟',
+      number: '5',
+      titleArabic: 'ماذا نستنتج من منحنيات تساوي الشدة؟',
       titleFrench: 'Courbes isoséistes et distribution géographique',
       shortLabel: 'منحنيات تساوي الشدة',
       blocks: [
@@ -380,15 +380,16 @@ const COURSE_01_SVT: SvtCourse = {
     },
     {
       id: 'sec-svt-01-safety',
-      number: 'و',
-      titleArabic: 'و. الزلازل والسلامة والوقاية',
+      number: '6',
+      titleArabic: 'الزلازل والسلامة والوقاية',
       titleFrench: 'Séismes et consignes de sécurité',
       shortLabel: 'الزلازل والسلامة',
       blocks: [
         {
-          kind: 'paragraph',
+          kind: 'callout',
+          variant: 'important',
           title: 'إرشادات الحماية المدنية (مكمل بيداغوجي)',
-          text: 'لا يمكن التنبؤ بموعد ومكان حدوث الزلزال بدقة مسبقة. لذلك ترتكز الوقاية في المنهاج على السلوكات الاستباقية للحد من الأضرار :',
+          content: 'لا يمكن التنبؤ بموعد ومكان حدوث الزلزال بدقة مسبقة. لذلك ترتكز الوقاية في المنهاج على السلوكات الاستباقية للحد من الأضرار.',
         },
         {
           kind: 'bullets',
@@ -399,11 +400,12 @@ const COURSE_01_SVT: SvtCourse = {
           ],
         },
         {
-          kind: 'callout',
-          variant: 'note',
-          title: 'مكمل بيداغوجي – الحماية المدنية (غير مدرجة في درس المنهاج 1)',
-          content:
-            'تعليمات وإرشادات السلامة (مكمل بيداغوجي – الحماية المدنية):\n• أثناء الهزة: الاحتماء فوراً تحت طاولة متينة، حماية الرأس باليدين، والابتعاد عن النوافذ والمباني المتصدعة، وعدم استعمال المصاعد الكهربائية.\n• بعد توقف الهزة: إخلاء المبنى بهدوء، قطع شبكات الغاز والكهرباء، واتباع توجيهات فرق الإنقاذ وتجنب العودة إلى البنايات المتضررة.',
+          kind: 'bullets',
+          title: 'سلوكات أثناء الهزة وبعدها',
+          items: [
+            'أثناء الهزة: الاحتماء فوراً تحت طاولة متينة، حماية الرأس باليدين، والابتعاد عن النوافذ والمباني المتصدعة، وعدم استعمال المصاعد الكهربائية.',
+            'بعد توقف الهزة: إخلاء المبنى بهدوء، قطع شبكات الغاز والكهرباء، واتباع توجيهات فرق الإنقاذ وتجنب العودة إلى البنايات المتضررة.',
+          ],
         },
       ],
     },
@@ -426,8 +428,6 @@ const COURSE_01_SVT: SvtCourse = {
     title: 'أحتفظ بالأهم',
     titleArabic: 'أحتفظ بالأهم',
     titleFrench: "L'essentiel du cours",
-    takeaway:
-      'الزلزال تحرر مفاجئ للطاقة في البؤرة ينتشر كأمواج نحو السطح، ويُسجَّل بجهاز مسجل الزلازل.',
     items: [
       {
         number: 1,

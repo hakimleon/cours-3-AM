@@ -1,0 +1,117 @@
+{
+  "pages": 13,
+  "failures": 0,
+  "orderOk": true,
+  "blocks": [
+    {
+      "label": "Essentiel",
+      "status": "OK (page 2)"
+    },
+    {
+      "label": "Exercice 1",
+      "status": "OK (page 3)"
+    },
+    {
+      "label": "Exercice 2",
+      "status": "OK (page 4)"
+    },
+    {
+      "label": "Exercice 3",
+      "status": "OK (page 5)"
+    },
+    {
+      "label": "Situation de départ",
+      "status": "OK (page 6)"
+    },
+    {
+      "label": "Observation des documents",
+      "status": "OK (page 6)"
+    },
+    {
+      "label": "Coupe géologique",
+      "status": "OK (page 8)"
+    },
+    {
+      "label": "Sismogramme",
+      "status": "OK (page 9)"
+    },
+    {
+      "label": "Magnitude / intensité",
+      "status": "OK (page 10)"
+    },
+    {
+      "label": "Schéma-bilan",
+      "status": "OK (page 2)"
+    },
+    {
+      "label": "Prévention",
+      "status": "OK (page 11)"
+    },
+    {
+      "label": "Schéma-synthèse",
+      "status": "OK (page 12)"
+    }
+  ],
+  "positions": [
+    {
+      "label": "en-tête",
+      "page": 1,
+      "index": 119
+    },
+    {
+      "label": "essentiel",
+      "page": 2,
+      "index": 1
+    },
+    {
+      "label": "exercices",
+      "page": 3,
+      "index": 2
+    },
+    {
+      "label": "situation",
+      "page": 6,
+      "index": 18
+    },
+    {
+      "label": "observation",
+      "page": 6,
+      "index": 411
+    },
+    {
+      "label": "définition",
+      "page": 7,
+      "index": 237
+    },
+    {
+      "label": "propagation",
+      "page": 8,
+      "index": 42
+    },
+    {
+      "label": "enregistrement",
+      "page": 9,
+      "index": 54
+    },
+    {
+      "label": "magnitude/intensité",
+      "page": 10,
+      "index": 50
+    },
+    {
+      "label": "isoséistes",
+      "page": 10,
+      "index": 840
+    },
+    {
+      "label": "prévention",
+      "page": 11,
+      "index": 592
+    },
+    {
+      "label": "synthèse+glossaire",
+      "page": 12,
+      "index": 30
+    }
+  ]
+}

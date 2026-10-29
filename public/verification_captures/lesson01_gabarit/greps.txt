@@ -1,0 +1,30 @@
+$ grep -rn "page à confirmer" src/
+(occurrences: 0)
+
+$ grep -rn "ص 50-52" src/
+(occurrences: 0)
+
+$ grep -rn "Schéma du foyer" src/
+(occurrences: 0)
+
+$ grep -rn "Seismic intensity" src/
+(occurrences: 0)
+
+$ grep -rn "Magnitude vs" src/
+(occurrences: 0)
+
+$ grep -rn "Formulation simplifiée" src/
+(occurrences: 0)
+
+$ grep -rn "Vérification externe" src/
+(occurrences: 0)
+
+$ grep -rn "مكمل بيداغوجي" src/
+src/data/svtCoursesData.ts:391:          title: 'إرشادات الحماية المدنية (مكمل بيداغوجي)',
+(occurrences: 1)
+
+$ grep -rn "مثل زلزال زموري 2003، مقداره 6.6 على سلم ريشتر" src/
+src/components/svt/SvtSchemas.tsx:432:            <li>يُعبَّر عنه بقيمة رقمية (مثل زلزال زموري 2003، مقداره 6.6 على سلم ريشتر).</li>
+src/data/svtCoursesData.ts:325:              'يعبر عن الطاقة المحررة في البؤرة، ويُقدَّر انطلاقاً من تسجيلات أجهزة قياس الزلازل بسلم ريشتر (مثل زلزال زموري 2003، مقداره 6.6 على سلم ريشتر). لكل زلزال مقدار محدد يعبر عن طاقته المحررة في المصدر.',
+(occurrences: 2)
+

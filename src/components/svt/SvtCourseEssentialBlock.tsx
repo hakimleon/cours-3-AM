@@ -67,7 +67,6 @@ export const SvtCourseEssentialBlock: React.FC<SvtCourseEssentialBlockProps> = (
   }, []);
 
   const titleAr = essential.titleArabic || 'أحتفظ بالأهم';
-  const titleFr = essential.titleFrench || "L'essentiel du cours";
   const badgeAr = essential.badgeArabic || 'المستوى الأساسي المباشر';
   const subtitleAr =
     essential.subtitleArabic || 'المفاهيم المحورية المستخلصة من أنشطة المنهاج الوزاري';
@@ -75,9 +74,9 @@ export const SvtCourseEssentialBlock: React.FC<SvtCourseEssentialBlockProps> = (
   return (
     <section
       id="sec-svt-essential"
-      aria-label="L'essentiel du cours SVT"
+      aria-label="أحتفظ بالأهم — المفاهيم المحورية للدرس"
       style={{ borderColor: primaryColor }}
-      className="bg-[#FFFFFF] rounded-[18px] border-2 p-4 sm:p-5 shadow-sm space-y-4 font-sans text-right scroll-mt-28"
+      className="bg-[#FFFFFF] rounded-[18px] border-2 p-4 sm:p-5 shadow-sm space-y-4 font-sans text-right scroll-mt-28 break-inside-avoid"
       dir="rtl"
     >
       {/* 1. Header */}
@@ -87,7 +86,7 @@ export const SvtCourseEssentialBlock: React.FC<SvtCourseEssentialBlockProps> = (
             style={{ backgroundColor: primaryColor }}
             className="w-7 h-7 rounded-[8px] text-white font-bold text-xs flex items-center justify-center shrink-0"
           >
-            3
+            1
           </span>
           <div>
             <div className="flex items-center gap-2">
@@ -109,17 +108,6 @@ export const SvtCourseEssentialBlock: React.FC<SvtCourseEssentialBlockProps> = (
           </div>
         </div>
       </div>
-
-      {/* 2. Key Takeaway or Insight Callout */}
-      {essential.takeaway && (
-        <div className="p-3.5 rounded-[12px] bg-amber-50/80 border border-amber-300 text-xs sm:text-sm font-bold text-amber-950 leading-relaxed flex items-start gap-2.5">
-          <span className="text-base shrink-0 select-none">📌</span>
-          <div>
-            <span className="text-amber-900 font-black ml-1">الخلاصة المركزة :</span>
-            {essential.takeaway}
-          </div>
-        </div>
-      )}
 
       {essential.keyInsight && (
         <div
