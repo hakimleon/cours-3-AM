@@ -392,50 +392,73 @@ export const SvtTableBlock: React.FC<{ data: SvtTableItem }> = ({ data }) => {
 };
 
 // ============================================================================
-// 6. ILLUSTRATION / SCHÉMA — légende unique en arabe, sans doublon
+// 6. SCIENTIFIC ILLUSTRATION BLOCK (Association d'illustrations ciblées)
 // ============================================================================
 export const SvtIllustrationBlock: React.FC<{
   illustration: SvtIllustrationItem;
 }> = ({ illustration }) => {
   const theme = useSvtDomainTheme();
 
-  if (illustration.schemaType) {
-    return (
-      <div className="break-inside-avoid">
+  return (
+    <div className="my-5 bg-white rounded-[16px] border border-[#E5DDD5] p-4 sm:p-5 space-y-3 shadow-2xs">
+      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#EAE2DA] pb-2.5">
+        <div className="flex items-center gap-2">
+          <div
+            style={{ backgroundColor: theme.primaryHex }}
+            className="w-7 h-7 rounded-[8px] text-white flex items-center justify-center shrink-0 shadow-2xs"
+          >
+            <Images className="w-3.5 h-3.5" />
+          </div>
+          <div>
+            <h4 className="text-sm sm:text-base font-bold text-[#4A4A4A]">
+              {illustration.titleArabic}
+            </h4>
+            <p className="text-[11px] text-[#8C8C8C] leading-none mt-0.5">
+              الدور البيداغوجي : {illustration.pedagogicalRole}
+            </p>
+          </div>
+        </div>
+
+        {illustration.titleFrench && (
+          <span
+            dir="ltr"
+            style={{ color: theme.primaryHex }}
+            className="text-xs font-mono font-semibold"
+          >
+            {illustration.titleFrench}
+          </span>
+        )}
+      </div>
+
+      {illustration.imageSrc ? (
+        <ZoomableCourseImage
+          src={illustration.imageSrc}
+          alt={illustration.alt}
+          captionArabic={illustration.captionArabic}
+          captionFrench={illustration.captionFrench}
+          courseBadge={illustration.courseBadge || 'علوم الطبيعة والحياة'}
+        />
+      ) : illustration.schemaType ? (
         <SvtSchemaRenderer
           schema={{
             id: illustration.id,
             titleArabic: illustration.titleArabic,
+            titleFrench: illustration.titleFrench,
             type: illustration.schemaType,
+            caption: illustration.captionArabic,
           }}
         />
+      ) : null}
+
+      <div className="p-2.5 rounded-[10px] bg-[#FAF7F4] border border-[#E2D9D0] text-xs text-[#4A4A4A] flex items-center justify-between gap-2">
+        <span className="font-semibold">{illustration.captionArabic}</span>
+        {illustration.captionFrench && (
+          <span dir="ltr" className="text-[11px] font-mono text-[#8C8C8C]">
+            {illustration.captionFrench}
+          </span>
+        )}
       </div>
-    );
-  }
-
-  if (!illustration.imageSrc) return null;
-
-  return (
-    <figure className="my-4 bg-white rounded-[16px] border border-[#E5DDD5] p-4 sm:p-5 space-y-3 shadow-2xs break-inside-avoid">
-      <figcaption className="flex items-center gap-2 border-b border-[#EAE2DA] pb-2">
-        <Images className="w-4 h-4 shrink-0" style={{ color: theme.primaryHex }} />
-        <h4 className="text-sm sm:text-base font-bold text-[#4A4A4A]">
-          {illustration.titleArabic}
-        </h4>
-      </figcaption>
-
-      <ZoomableCourseImage
-        src={illustration.imageSrc}
-        alt={illustration.alt}
-        captionArabic={illustration.captionArabic}
-        captionFrench={illustration.captionFrench}
-        courseBadge={illustration.courseBadge || 'علوم الطبيعة والحياة'}
-      />
-
-      <p className="p-2.5 rounded-[10px] bg-[#FAF7F4] border border-[#E2D9D0] text-xs text-[#4A4A4A]">
-        {illustration.captionArabic}
-      </p>
-    </figure>
+    </div>
   );
 };
 
@@ -457,21 +480,28 @@ export const SvtDiscoveryBlock: React.FC<{
           <span
             style={{ backgroundColor: theme.primaryHex }}
             className="w-7 h-7 rounded-[8px] text-white font-bold text-xs flex items-center justify-center shrink-0"
-            aria-label="وضعية الانطلاق"
           >
-            <Compass className="w-3.5 h-3.5" />
+            <Sparkles className="w-4 h-4 text-white" />
           </span>
           <h2 className="text-base sm:text-lg font-bold text-[#4A4A4A]">
             {data.titleArabic}
           </h2>
         </div>
-
+        {data.titleFrench && (
+          <span
+            dir="ltr"
+            style={{ color: theme.primaryHex }}
+            className="text-xs font-mono font-semibold"
+          >
+            {data.titleFrench}
+          </span>
+        )}
       </div>
 
       {/* 1. Situation concrète */}
       <div className="space-y-2.5">
         <div className="text-xs font-bold" style={{ color: theme.primaryHex }}>
-          1. وضعية الانطلاق :
+          1. وضعية واقعية من المحيط الجيولوجي (Situation concrète) :
         </div>
         <p className="text-sm sm:text-[15px] text-[#4A4A4A] leading-[1.85] whitespace-pre-line">
           {data.situationConcrete}
@@ -500,7 +530,7 @@ export const SvtDiscoveryBlock: React.FC<{
             className="text-xs font-bold flex items-center gap-1.5"
           >
             <HelpCircle className="w-4 h-4" />
-            <span>2. التساؤلات :</span>
+            <span>2. التساؤلات والأسئلة الاستكشافية الموجهة (فكّر وفسّر) :</span>
           </div>
           <ol className="space-y-2 pr-5 list-decimal text-xs sm:text-sm text-[#4A4A4A] font-medium">
             {data.guidedQuestions.map((q, idx) => (
@@ -512,7 +542,7 @@ export const SvtDiscoveryBlock: React.FC<{
 
           {data.hint && (
             <div className="mt-2 p-2.5 rounded-[8px] bg-amber-50 border border-amber-200 text-xs text-amber-900 leading-relaxed">
-              <strong>الإشكالية : </strong> {data.hint}
+              💡 <strong>إضاءة مساعدة : </strong> {data.hint}
             </div>
           )}
         </div>
@@ -577,7 +607,7 @@ export const SvtApplicationCard: React.FC<{
   const theme = useSvtDomainTheme();
 
   return (
-    <div id={`exo-card-${question.number}`} className="application-enonce-group break-inside-avoid my-5 bg-white rounded-[16px] border border-[#E5DDD5] p-4 sm:p-5 space-y-3 shadow-2xs">
+    <div id={`exo-card-${question.number}`} className="application-enonce-group my-5 bg-white rounded-[16px] border border-[#E5DDD5] p-4 sm:p-5 space-y-3 shadow-2xs">
       <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#EAE2DA] pb-2.5">
         <div className="flex items-center gap-2">
           <span
@@ -659,7 +689,7 @@ export const SvtApplicationCard: React.FC<{
                   style={{ color: theme.primaryHex }}
                   className="text-xs font-bold flex items-center justify-between"
                 >
-                  <span>{st.title}</span>
+                  <span>{idx + 1}. {st.title}</span>
                   {st.points && (
                     <span className="text-[11px] font-mono text-[#8C8C8C]">({st.points})</span>
                   )}

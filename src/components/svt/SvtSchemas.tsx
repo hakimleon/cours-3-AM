@@ -1,5 +1,7 @@
 import React from 'react';
 import { SvtSchemaOrFigure } from '../../typesSvt';
+import earthCrossSectionImg from '../../assets/images/earthquake_geological_cross_section_1793264786256.jpg';
+import seismographDrumImg from '../../assets/images/seismograph_recording_drum_1793264786431.jpg';
 
 export const SvtSchemaRenderer: React.FC<{ schema: SvtSchemaOrFigure }> = ({ schema }) => {
   switch (schema.type) {
@@ -33,345 +35,308 @@ export const SvtSchemaRenderer: React.FC<{ schema: SvtSchemaOrFigure }> = ({ sch
   }
 };
 
-/** Boîte de libellé : texte arabe entièrement contenu dans son cadre. */
-const LabelBox: React.FC<{
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-  fill: string;
-  stroke: string;
-  lines: { text: string; color: string; size?: number; weight?: 'bold' | 'normal' }[];
-}> = ({ x, y, width, height, fill, stroke, lines }) => {
-  const lineHeight = Math.round(Math.max(...lines.map((l) => l.size ?? 11.5)) * 1.42);
-  const startY = y + height / 2 - ((lines.length - 1) * lineHeight) / 2 + 4;
-  return (
-    <g>
-      <rect
-        data-label-box="true"
-        x={x}
-        y={y}
-        width={width}
-        height={height}
-        rx={7}
-        fill={fill}
-        stroke={stroke}
-        strokeWidth={1.3}
-      />
-      {lines.map((line, idx) => (
-        <text
-          key={idx}
-          x={x + width / 2}
-          y={startY + idx * lineHeight}
-          textAnchor="middle"
-          fontSize={line.size ?? 11.5}
-          fontWeight={line.weight ?? 'bold'}
-          fill={line.color}
-        >
-          {line.text}
-        </text>
-      ))}
-    </g>
-  );
-};
-
 /**
- * 1. Coupe géologique : surface, couches, foyer, épicentre, faille et ondes.
- * Une seule légende (les libellés dans le schéma), aucun doublon français.
+ * 1. المخطط العلمي الواقعي لآلية حدوث الزلزال (الصفحة 6):
+ * صورة جيولوجية ثلاثية الأبعاد واقعية مع طبقات SVG تفاعلية لتعيين:
+ * - المركز السطحي (شاقولياً فوق البؤرة)
+ * - البؤرة (في باطن الأرض)
+ * - الفالق (مستوى الكسر والإزاحة)
+ * - الأمواج الزلزالية (تنتشر كروياً)
+ * - مسجل الزلازل (محطة الرصد)
  */
 const SeismicFoyerEpicenterDiagram: React.FC<{ schema: SvtSchemaOrFigure }> = ({ schema }) => {
   return (
-    <div id="sec-svt-foyer-epicenter" className="my-4 bg-white rounded-[14px] border border-[#E5DDD5] p-3 sm:p-4 space-y-3 break-inside-avoid">
+    <div
+      id="sec-svt-foyer-epicenter"
+      data-atomic-block="true"
+      className="pdf-atomic-block my-4 bg-white rounded-[14px] border border-[#E5DDD5] p-3 sm:p-5 space-y-3"
+    >
       <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#EAE2DA] pb-2.5">
         <div className="flex items-center gap-2">
-          <span className="w-2.5 h-2.5 rounded-full bg-[#B45309]" />
+          <span className="w-2.5 h-2.5 rounded-full bg-[#B45309] animate-pulse" />
           <h4 className="text-sm sm:text-base font-bold text-[#4A4A4A]">
-            {schema.titleArabic || 'مقطع جيولوجي : البؤرة والمركز السطحي وانتشار الأمواج الزلزالية'}
+            {schema.titleArabic || 'مخطط جيولوجي علمي واقعي : البؤرة، المركز السطحي، الفالق وانتشار الأمواج'}
           </h4>
         </div>
+        {schema.titleFrench && (
+          <span
+            dir="ltr"
+            className="text-xs font-mono font-bold text-[#B45309] bg-amber-50 px-2 py-0.5 rounded border border-amber-200"
+          >
+            {schema.titleFrench}
+          </span>
+        )}
       </div>
 
-      <div className="w-full bg-[#FAF7F4] rounded-[12px] border border-[#E2D9D0] p-2 flex items-center justify-center">
+      {/* Realistic 3D Geological Cross-Section with SVG Overlay */}
+      <div className="relative w-full aspect-[16/9] rounded-[12px] overflow-hidden border border-[#E2D9D0] bg-[#1E293B] shadow-sm select-none">
+        <img
+          src={earthCrossSectionImg}
+          alt="مقطع جيولوجي علمي واقعي يوضح طبقات الأرض والبؤرة والمركز السطحي والفالق"
+          className="w-full h-full object-cover"
+        />
+
+        {/* SVG Callouts & Markers Overlay */}
         <svg
-          viewBox="0 0 800 440"
-          className="w-full max-w-[760px] h-auto select-none"
-          role="img"
-          aria-label="مقطع جيولوجي يوضح البؤرة والمركز السطحي والفالق وانتشار الأمواج"
+          viewBox="0 0 1000 562.5"
+          className="absolute inset-0 w-full h-full pointer-events-none"
+          role="presentation"
         >
           <defs>
-            <linearGradient id="coupeSky" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#E0F2FE" />
-              <stop offset="100%" stopColor="#F0F9FF" />
-            </linearGradient>
-            <linearGradient id="coupeRockLeft" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#E7D3B8" />
-              <stop offset="100%" stopColor="#C8A67C" />
-            </linearGradient>
-            <linearGradient id="coupeRockRight" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#DCC4A4" />
-              <stop offset="100%" stopColor="#B08D66" />
-            </linearGradient>
-            <radialGradient id="coupeGlow" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stopColor="#EF4444" stopOpacity="0.95" />
-              <stop offset="60%" stopColor="#F97316" stopOpacity="0.45" />
-              <stop offset="100%" stopColor="#EA580C" stopOpacity="0" />
-            </radialGradient>
+            <filter id="badgeShadowFoyer" x="-10%" y="-10%" width="120%" height="120%">
+              <feDropShadow dx="0" dy="2" stdDeviation="3" floodOpacity="0.3" />
+            </filter>
           </defs>
 
-          {/* Ciel et surface */}
-          <rect x="20" y="20" width="760" height="80" rx="6" fill="url(#coupeSky)" />
-          <line x1="20" y1="100" x2="780" y2="100" stroke="#78350F" strokeWidth="3" />
-
-          {/* Couches rocheuses séparées par le plan de faille */}
-          <polygon points="20,100 400,100 330,420 20,420" fill="url(#coupeRockLeft)" stroke="#7C5A3A" strokeWidth="1.3" />
-          <polygon points="400,100 780,100 780,420 330,420" fill="url(#coupeRockRight)" stroke="#7C5A3A" strokeWidth="1.3" />
-          <line data-fault-line="true" x1="400" y1="100" x2="330" y2="420" stroke="#B91C1C" strokeWidth="3.5" strokeDasharray="7 5" />
-
-          {/* Ondes sismiques : ellipses concentriques autour de la bourse */}
-          <ellipse cx="355" cy="270" rx="40" ry="30" fill="none" stroke="#F97316" strokeWidth="2.2" strokeDasharray="5 3" />
-          <ellipse cx="355" cy="270" rx="80" ry="58" fill="none" stroke="#F97316" strokeWidth="2" strokeDasharray="6 4" opacity="0.85" />
-          <ellipse cx="355" cy="270" rx="115" ry="82" fill="none" stroke="#FB923C" strokeWidth="1.8" strokeDasharray="7 5" opacity="0.7" />
-          <ellipse cx="355" cy="270" rx="145" ry="100" fill="none" stroke="#FDBA74" strokeWidth="1.6" strokeDasharray="8 6" opacity="0.55" />
-
-          {/* Foyer */}
-          <circle cx="355" cy="270" r="26" fill="url(#coupeGlow)" />
-          <circle cx="355" cy="270" r="7" fill="#DC2626" stroke="#FFFFFF" strokeWidth="2.2" />
-
-          {/* Projection verticale vers l'épicentre */}
-          <line x1="355" y1="270" x2="355" y2="100" stroke="#2563EB" strokeWidth="2.2" strokeDasharray="4 4" />
-          <circle cx="355" cy="100" r="8" fill="#2563EB" stroke="#FFFFFF" strokeWidth="2.2" />
-
-          {/* Bâtiments au voisinage de l'épicentre (aucun texte sur le tracé) */}
-          <g>
-            <rect x="385" y="70" width="16" height="30" fill="#64748B" rx="1" />
-            <polygon points="401,80 417,100 383,100" fill="#475569" />
-            <rect x="425" y="80" width="14" height="20" fill="#94A3B8" rx="1" />
+          {/* 1. المركز السطحي (Épicentre) — au-dessus du foyer sur la surface */}
+          <circle cx="490" cy="180" r="8" fill="#2563EB" stroke="#FFFFFF" strokeWidth="2.5" />
+          <circle cx="490" cy="180" r="16" fill="none" stroke="#2563EB" strokeWidth="2" strokeDasharray="3 3" opacity="0.8" />
+          <path d="M360,82 L482,174" stroke="#2563EB" strokeWidth="2.2" strokeDasharray="4 3" />
+          <g transform="translate(190, 40)" filter="url(#badgeShadowFoyer)">
+            <rect x="0" y="0" width="185" height="46" rx="8" fill="#FFFFFF" fillOpacity="0.96" stroke="#2563EB" strokeWidth="2" />
+            <text x="92" y="20" fill="#1E40AF" fontSize="13.5" fontWeight="bold" textAnchor="middle">
+              المركز السطحي (Épicentre)
+            </text>
+            <text x="92" y="36" fill="#1D4ED8" fontSize="10.5" fontWeight="semibold" textAnchor="middle">
+              عمودياً فوق البؤرة · المنطقة الأكثر تضرراً
+            </text>
           </g>
 
-          {/* Libellés : tous dans un cadre, sans chevauchement */}
-          <LabelBox
-            x={40}
-            y={32}
-            width={130}
-            height={34}
-            fill="#F8FAFC"
-            stroke="#64748B"
-            lines={[{ text: 'سطح الأرض', color: '#334155' }]}
-          />
-          <line x1="105" y1="66" x2="105" y2="98" stroke="#64748B" strokeWidth="1.4" />
+          {/* Trait d'alignement vertical rigoureux entre la البؤرة et le المركز السطحي */}
+          <line x1="490" y1="360" x2="490" y2="190" stroke="#2563EB" strokeWidth="2.2" strokeDasharray="5 4" opacity="0.9" />
+          <g transform="translate(500, 275)" filter="url(#badgeShadowFoyer)">
+            <rect x="0" y="0" width="105" height="22" rx="4" fill="#EFF6FF" fillOpacity="0.92" stroke="#3B82F6" strokeWidth="1" />
+            <text x="52" y="15" fill="#1E3A8A" fontSize="10" fontWeight="bold" textAnchor="middle">
+              شاقولياً (عمودياً)
+            </text>
+          </g>
 
-          <LabelBox
-            x={470}
-            y={28}
-            width={200}
-            height={44}
-            fill="#EFF6FF"
-            stroke="#2563EB"
-            lines={[
-              { text: 'المركز السطحي', color: '#1E40AF' },
-              { text: 'عمودياً فوق البؤرة', color: '#1D4ED8', size: 10, weight: 'normal' },
-            ]}
-          />
-          <line x1="470" y1="72" x2="368" y2="96" stroke="#2563EB" strokeWidth="1.4" />
+          {/* 2. البؤرة الزلزالية (Foyer sismique) — en profondeur */}
+          <circle cx="490" cy="365" r="10" fill="#DC2626" stroke="#FFFFFF" strokeWidth="2.5" />
+          <circle cx="490" cy="365" r="22" fill="none" stroke="#EF4444" strokeWidth="2.2" strokeDasharray="4 3" opacity="0.8" />
+          <line x1="225" y1="365" x2="475" y2="365" stroke="#DC2626" strokeWidth="2.2" strokeDasharray="4 3" />
+          <g transform="translate(40, 340)" filter="url(#badgeShadowFoyer)">
+            <rect x="0" y="0" width="185" height="48" rx="8" fill="#FFFFFF" fillOpacity="0.96" stroke="#DC2626" strokeWidth="2" />
+            <text x="92" y="21" fill="#991B1B" fontSize="14" fontWeight="bold" textAnchor="middle">
+              البؤرة (Foyer sismique)
+            </text>
+            <text x="92" y="38" fill="#B91C1C" fontSize="10.5" fontWeight="semibold" textAnchor="middle">
+              موقع انطلاق الأمواج في باطن الأرض
+            </text>
+          </g>
 
-          <LabelBox
-            x={40}
-            y={240}
-            width={150}
-            height={48}
-            fill="#FEF2F2"
-            stroke="#DC2626"
-            lines={[
-              { text: 'البؤرة', color: '#991B1B' },
-              { text: 'تنشأ فيها الأمواج', color: '#7F1D1D', size: 10, weight: 'normal' },
-            ]}
-          />
-          <line x1="190" y1="262" x2="338" y2="268" stroke="#DC2626" strokeWidth="1.6" strokeDasharray="4 3" />
+          {/* 3. خط الفالق (Faille géologique) — plan de fracture */}
+          <path d="M720,445 L550,380" stroke="#B45309" strokeWidth="2" strokeDasharray="4 3" />
+          <g transform="translate(710, 420)" filter="url(#badgeShadowFoyer)">
+            <rect x="0" y="0" width="180" height="46" rx="8" fill="#FFFFFF" fillOpacity="0.96" stroke="#B45309" strokeWidth="2" />
+            <text x="90" y="20" fill="#92400E" fontSize="13.5" fontWeight="bold" textAnchor="middle">
+              الفالق (Faille géologique)
+            </text>
+            <text x="90" y="36" fill="#78350F" fontSize="10.5" fontWeight="semibold" textAnchor="middle">
+              مستوى كسر مع إزاحة الطبقات
+            </text>
+          </g>
 
-          <LabelBox
-            x={110}
-            y={352}
-            width={130}
-            height={40}
-            fill="#FEF3C7"
-            stroke="#B45309"
-            lines={[
-              { text: 'الفالق', color: '#92400E' },
-              { text: 'كسر في الصخور', color: '#B45309', size: 9.5, weight: 'normal' },
-            ]}
-          />
-          <line x1="240" y1="372" x2="334" y2="372" stroke="#B45309" strokeWidth="1.6" />
+          {/* 4. الأمواج الزلزالية (Ondes sismiques) */}
+          <path d="M225,235 L350,295" stroke="#EA580C" strokeWidth="2" strokeDasharray="4 3" />
+          <g transform="translate(45, 210)" filter="url(#badgeShadowFoyer)">
+            <rect x="0" y="0" width="180" height="46" rx="8" fill="#FFFFFF" fillOpacity="0.96" stroke="#EA580C" strokeWidth="2" />
+            <text x="90" y="20" fill="#9A3412" fontSize="13.5" fontWeight="bold" textAnchor="middle">
+              الأمواج الزلزالية (Ondes)
+            </text>
+            <text x="90" y="36" fill="#C2410C" fontSize="10.5" fontWeight="semibold" textAnchor="middle">
+              تنتشر كروياً في كل الاتجاهات
+            </text>
+          </g>
 
-          <LabelBox
-            x={570}
-            y={150}
-            width={180}
-            height={44}
-            fill="#FFF7ED"
-            stroke="#EA580C"
-            lines={[
-              { text: 'الأمواج الزلزالية', color: '#9A3412' },
-              { text: 'تنتشر في جميع الاتجاهات', color: '#C2410C', size: 10, weight: 'normal' },
-            ]}
-          />
-          <line x1="570" y1="178" x2="495" y2="196" stroke="#EA580C" strokeWidth="1.6" strokeDasharray="4 3" />
-
-          <LabelBox
-            x={600}
-            y={250}
-            width={150}
-            height={36}
-            fill="#FAF7F4"
-            stroke="#7C5A3A"
-            lines={[{ text: 'طبقات صخرية', color: '#5A3A1E' }]}
-          />
-          <line x1="660" y1="286" x2="660" y2="312" stroke="#7C5A3A" strokeWidth="1.4" />
+          {/* 5. مسجل الزلازل (Station sismique / Sismographe) */}
+          <circle cx="785" cy="180" r="7" fill="#0284C7" stroke="#FFFFFF" strokeWidth="2" />
+          <line x1="820" y1="90" x2="790" y2="172" stroke="#0284C7" strokeWidth="2" />
+          <g transform="translate(720, 40)" filter="url(#badgeShadowFoyer)">
+            <rect x="0" y="0" width="195" height="48" rx="8" fill="#FFFFFF" fillOpacity="0.96" stroke="#0284C7" strokeWidth="2" />
+            <text x="97" y="21" fill="#0369A1" fontSize="13.5" fontWeight="bold" textAnchor="middle">
+              مسجل الزلازل (Station)
+            </text>
+            <text x="97" y="38" fill="#075985" fontSize="10.5" fontWeight="semibold" textAnchor="middle">
+              محطة رصد الاهتزازات السطحية
+            </text>
+          </g>
         </svg>
+      </div>
+
+      {/* Explanatory Key Notes (البيانات العلمية الرئيسية) */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 pt-1 text-xs">
+        <div className="p-2.5 rounded-[10px] bg-red-50 border border-red-200">
+          <div className="font-bold text-red-900">1. البؤرة (Foyer) :</div>
+          <p className="text-red-800 text-[11px] mt-0.5 leading-relaxed">
+            موقع في عمق الأرض تنشأ فيه الأمواج الزلزالية وتتحرر منه الطاقة المخزنة.
+          </p>
+        </div>
+
+        <div className="p-2.5 rounded-[10px] bg-blue-50 border border-blue-200">
+          <div className="font-bold text-blue-900">2. المركز السطحي (Épicentre) :</div>
+          <p className="text-blue-800 text-[11px] mt-0.5 leading-relaxed">
+            النقطة الواقعة على سطح الأرض عمودياً فوق البؤرة، وهي الأكثر تضرراً.
+          </p>
+        </div>
+
+        <div className="p-2.5 rounded-[10px] bg-orange-50 border border-orange-200">
+          <div className="font-bold text-orange-900">3. الأمواج الزلزالية (Ondes) :</div>
+          <p className="text-orange-800 text-[11px] mt-0.5 leading-relaxed">
+            اهتزازات تنتشر من البؤرة في جميع الاتجاهات عبر الطبقات الصخرية.
+          </p>
+        </div>
+
+        <div className="p-2.5 rounded-[10px] bg-amber-50 border border-amber-200">
+          <div className="font-bold text-amber-900">4. الفالق (Faille) :</div>
+          <p className="text-amber-800 text-[11px] mt-0.5 leading-relaxed">
+            كسر في الصخور الصلبة مصحوب بإزاحة نسبية للكتلتين الصخريتين.
+          </p>
+        </div>
       </div>
     </div>
   );
 };
 
 /**
- * 2. Sismogramme : ligne de base avant la secousse, arrivée progressive,
- * amplitudes croissantes puis amorties, axes gradués et lisibles.
+ * 2. التسجيل الزلزالي (السيسموغرام) ومسجل الزلازل (السيسموغراف) (الصفحة 7)
+ * يتضمن:
+ * 1. صورة حقيقية لأسطوانة التسجيل (مسجل الزلازل وقلم التخطيط)
+ * 2. رسم بياني رقمي نقي: خط أساسي مستوٍ قبل الهزة، وصول تدريجي، تصاعد إلى السعة القصوى ثم تخامد
+ * 3. تدريجات زمن وسعة واضحة دون أي تداخل مع المنحنى
  */
-const SeismogramWavesDiagram: React.FC<{ schema: SvtSchemaOrFigure }> = ({ schema }) => {          const baseY = 170;
-  const onsetX = 200;
-  const endX = 720;
-
-  const tracePath = React.useMemo(() => {
-    const points: string[] = [];
-    for (let x = 95; x <= endX; x += 2) {
-      let amplitude = 0;
-      if (x >= onsetX) {
-        if (x < onsetX + 45) {
-          const t = (x - onsetX) / 45;
-          amplitude = 24 * t * t;
-        } else if (x < 400) {
-          const t = (x - (onsetX + 45)) / (400 - (onsetX + 45));
-          amplitude = 24 + 62 * t;
-        } else {
-          const t = (x - 400) / (endX - 400);
-          amplitude = 86 * Math.pow(1 - t, 1.7);
-        }
-      }
-      const wave = amplitude === 0 ? 0 : amplitude * Math.sin((x - onsetX) * 0.26);
-      points.push(`${x},${(baseY + wave).toFixed(1)}`);
-    }
-    return `M${points.join(' L')}`;
-  }, []);
-
+const SeismogramWavesDiagram: React.FC<{ schema: SvtSchemaOrFigure }> = ({ schema }) => {
   return (
-    <div id="sec-svt-seismogram" className="my-4 bg-white rounded-[14px] border border-[#E5DDD5] p-3 sm:p-4 space-y-3 break-inside-avoid">
+    <div
+      id="sec-svt-seismogram"
+      data-atomic-block="true"
+      className="pdf-atomic-block my-4 bg-white rounded-[14px] border border-[#E5DDD5] p-3 sm:p-5 space-y-4"
+    >
       <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#EAE2DA] pb-2.5">
         <h4 className="text-sm sm:text-base font-bold text-[#4A4A4A]">
-          {schema.titleArabic || 'السجل الزلزالي : تغير حركة الأرض بدلالة الزمن'}
+          {schema.titleArabic || 'مسجل الزلازل (السيسموغراف) والسجل الزلزالي (السيسموغرام)'}
         </h4>
+        <span
+          dir="ltr"
+          className="text-xs font-mono font-bold text-[#0369A1] bg-sky-50 px-2 py-0.5 rounded border border-sky-200"
+        >
+          {schema.titleFrench || 'Sismographe et sismogramme (Enregistrement sismique)'}
+        </span>
       </div>
 
-      <div className="w-full bg-[#FAF7F4] rounded-[12px] border border-[#E2D9D0] p-2 flex items-center justify-center">
-        <svg
-          viewBox="0 0 800 340"
-          className="w-full max-w-[760px] h-auto select-none"
-          role="img"
-          aria-label="سجل زلزالي : خط قاعدة قبل الهزة ثم أمواج تتزايد سعتها وتتلاشى تدريجياً"
-        >
-          {/* Zone de tracé */}
-          <rect x="80" y="50" width="660" height="200" fill="#FFFFFF" stroke="#E2E8F0" />
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 items-stretch">
+        {/* Photo réaliste de l'appareil (Sismographe à tambour) */}
+        <div className="lg:col-span-5 rounded-[12px] overflow-hidden border border-[#E2D9D0] bg-[#FAF7F4] flex flex-col justify-between p-2.5">
+          <div className="relative aspect-[4/3] rounded-[8px] overflow-hidden">
+            <img
+              src={seismographDrumImg}
+              alt="صورة علمية واقعية لأسطوانة مسجل الزلازل وقلم تسجيل الاهتزازات على الورق"
+              className="w-full h-full object-cover"
+            />
+          </div>
+          <div className="mt-2 text-center">
+            <span className="text-xs font-bold text-[#0369A1] block">
+              مسجل الزلازل (السيسموغراف - Sismographe)
+            </span>
+            <span className="text-[11px] text-[#6B6B6B]">
+              جهاز فيزيائي دقيق يرصد حركة الأرض ويسجلها ميكانيكياً أو رقمياً
+            </span>
+          </div>
+        </div>
 
-          {/* Graduations horizontales (grille) */}
-          {[200, 300, 400, 500, 600, 700].map((x) => (
-            <line key={x} x1={x} y1="50" x2={x} y2="250" stroke="#E2E8F0" strokeWidth="1" />
-          ))}
-          <line x1="80" y1={baseY} x2="740" y2={baseY} stroke="#CBD5E1" strokeWidth="1" strokeDasharray="3 4" />
+        {/* Tracé numérique du sismogramme (Sismogramme avec axes gradués et ligne de base propre) */}
+        <div className="lg:col-span-7 bg-[#0F172A] rounded-[12px] p-3 sm:p-4 text-white flex flex-col justify-between">
+          <div className="flex items-center justify-between border-b border-[#334155] pb-1.5 mb-2">
+            <span className="text-xs font-bold text-[#38BDF8]">
+              السجل الزلزالي (السيسموغرام - Sismogramme)
+            </span>
+            <span className="text-[10px] text-[#94A3B8]">
+              تسجيل تغير سعة حركة الأرض بدلالة الزمن
+            </span>
+          </div>
 
-          {/* Axes */}
-          <line x1="80" y1="50" x2="80" y2="270" stroke="#475569" strokeWidth="2" />
-          <line x1="80" y1="250" x2="740" y2="250" stroke="#475569" strokeWidth="2" />
+          <svg viewBox="0 0 540 210" className="w-full h-auto select-none" role="img">
+            {/* Grille de fond */}
+            <g stroke="#1E293B" strokeWidth="1" strokeDasharray="2 3">
+              <line x1="60" y1="35" x2="520" y2="35" />
+              <line x1="60" y1="70" x2="520" y2="70" />
+              <line x1="60" y1="140" x2="520" y2="140" />
+              <line x1="60" y1="175" x2="520" y2="175" />
+              <line x1="160" y1="25" x2="160" y2="185" />
+              <line x1="260" y1="25" x2="260" y2="185" />
+              <line x1="360" y1="25" x2="360" y2="185" />
+              <line x1="460" y1="25" x2="460" y2="185" />
+            </g>
 
-          {/* Graduations de l'axe du temps */}
-          {[
-            { x: 200, label: '0' },
-            { x: 285, label: '10' },
-            { x: 370, label: '20' },
-            { x: 455, label: '30' },
-            { x: 540, label: '40' },
-            { x: 625, label: '50' },
-            { x: 710, label: '60' },
-          ].map((tick) => (
-            <g key={tick.label}>
-              <line x1={tick.x} y1="250" x2={tick.x} y2="258" stroke="#475569" strokeWidth="1.6" />
-              <text x={tick.x} y="274" textAnchor="middle" fontSize="11" fill="#475569" fontWeight="bold">
-                {tick.label}
+            {/* Ligne médiane de référence (Zero) */}
+            <line x1="60" y1="105" x2="520" y2="105" stroke="#334155" strokeWidth="1.2" />
+
+            {/* Axe des amplitudes (à gauche, strictement sans chevauchement) */}
+            <line x1="60" y1="25" x2="60" y2="185" stroke="#64748B" strokeWidth="1.5" />
+            <text x="52" y="38" fill="#94A3B8" fontSize="9" textAnchor="end">+A max</text>
+            <text x="52" y="108" fill="#64748B" fontSize="9" textAnchor="end">0</text>
+            <text x="52" y="178" fill="#94A3B8" fontSize="9" textAnchor="end">-A max</text>
+
+            {/* Axe des temps (en bas, gradué) */}
+            <line x1="60" y1="185" x2="520" y2="185" stroke="#64748B" strokeWidth="1.5" />
+            <text x="60" y="200" fill="#94A3B8" fontSize="9" textAnchor="middle">0 s</text>
+            <text x="160" y="200" fill="#94A3B8" fontSize="9" textAnchor="middle">20 s</text>
+            <text x="260" y="200" fill="#94A3B8" fontSize="9" textAnchor="middle">40 s</text>
+            <text x="360" y="200" fill="#94A3B8" fontSize="9" textAnchor="middle">60 s</text>
+            <text x="460" y="200" fill="#94A3B8" fontSize="9" textAnchor="middle">80 s</text>
+            <text x="520" y="200" fill="#38BDF8" fontSize="9.5" textAnchor="end">الزمن (ثوانٍ) ⟶</text>
+
+            {/* Tracé de base avant la secousse (ligne plate) */}
+            <path d="M60,105 L150,105" stroke="#38BDF8" strokeWidth="2" fill="none" />
+
+            {/* Tracé sismique réaliste : arrivée progressive, crescendo vers la plus grande amplitude, puis amortissement */}
+            <path
+              d="M150,105 Q154,101 158,105 T166,105 Q172,97 178,105 T190,105 Q198,90 206,105 T222,105 Q234,75 246,105 T270,105 Q285,55 300,105 T330,105 Q345,36 360,105 T390,105 Q405,58 420,105 T445,105 Q458,80 470,105 T490,105 Q500,96 508,105 L520,105"
+              stroke="#F59E0B"
+              strokeWidth="2.2"
+              fill="none"
+            />
+
+            {/* Repère : Début de l'enregistrement */}
+            <line x1="150" y1="25" x2="150" y2="105" stroke="#10B981" strokeWidth="1.5" strokeDasharray="3 2" />
+            <g transform="translate(150, 18)">
+              <rect x="-4" y="-12" width="95" height="18" rx="3" fill="#064E3B" stroke="#10B981" strokeWidth="0.8" />
+              <text x="43" y="1" fill="#6EE7B7" fontSize="8.5" fontWeight="bold" textAnchor="middle">
+                بداية وصول الأمواج
               </text>
             </g>
-          ))}
-          <text x="410" y="300" textAnchor="middle" fontSize="12" fill="#334155" fontWeight="bold">
-            الزمن (بالثواني)
-          </text>
 
-          {/* Graduations de l'axe de l'amplitude : signes seuls, une seule
-              étiquette d'axe: une seule fois sur l'axe vertical. */}
-          {[
-            { y: 90, label: '+' },
-            { y: baseY, label: '0' },
-            { y: 230, label: '−' },
-          ].map((tick) => (
-            <g key={tick.label}>
-              <line x1="96" y1={tick.y} x2="104" y2={tick.y} stroke="#475569" strokeWidth="1.6" />
-              <text x="112" y={tick.y + 4.5} textAnchor="start" fontSize="13" fill="#475569" fontWeight="bold">
-                {tick.label}
+            {/* Repère : السعة القصوى (Amplitude maximale) */}
+            <line x1="345" y1="25" x2="345" y2="105" stroke="#EF4444" strokeWidth="1.5" strokeDasharray="3 2" />
+            <g transform="translate(345, 18)">
+              <rect x="-4" y="-12" width="100" height="18" rx="3" fill="#7F1D1D" stroke="#EF4444" strokeWidth="0.8" />
+              <text x="46" y="1" fill="#FCA5A5" fontSize="8.5" fontWeight="bold" textAnchor="middle">
+                أكبر سعة للاهتزاز
               </text>
             </g>
-          ))}
-          <text
-            x="160"
-            y={baseY}
-            textAnchor="middle"
-            fontSize="13.5"
-            fill="#334155"
-            fontWeight="bold"
-            transform={`rotate(-90 160 ${baseY})`}
-          >
-            السعة
-          </text>
 
-          {/* Trait de base avant la secousse */}
-          <path d={`M95,${baseY} L${onsetX},${baseY}`} stroke="#0284C7" strokeWidth="2.2" fill="none" />
-          <text x="147" y={baseY - 12} textAnchor="middle" fontSize="11" fill="#0369A1" fontWeight="bold">
-            قبل وصول الهزة
-          </text>
-
-          {/* Tracé sismique : enveloppe croissante puis amortie, sans dents de scie régulières */}
-          <path d={tracePath} stroke="#B45309" strokeWidth="2" fill="none" />
-
-          {/* Arrivée des ondes */}
-          <line x1={onsetX} y1="60" x2={onsetX} y2="250" stroke="#059669" strokeWidth="1.6" strokeDasharray="4 3" />
-          <text x={onsetX - 8} y="72" textAnchor="end" fontSize="11" fill="#047857" fontWeight="bold">
-            بداية التسجيل
-          </text>
-
-          {/* Amplitude maximale */}
-          <line x1="400" y1="88" x2="400" y2="168" stroke="#B91C1C" strokeWidth="1.4" strokeDasharray="3 3" />
-          <text x="392" y="80" textAnchor="end" fontSize="11" fill="#B91C1C" fontWeight="bold">
-            أقصى سعة
-          </text>
-        </svg>
+            {/* Repère : Amortissement progressif */}
+            <g transform="translate(460, 85)">
+              <text x="0" y="0" fill="#94A3B8" fontSize="8.5" textAnchor="middle">
+                تخامد تدريجي ⟶
+              </text>
+            </g>
+          </svg>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
         <div className="p-3 rounded-[10px] bg-sky-50 border border-sky-200">
-          <div className="font-bold text-sky-900">1. مسجل الزلازل :</div>
+          <div className="font-bold text-sky-900">1. مسجل الزلازل (السيسموغراف - Sismographe) :</div>
           <p className="text-sky-800 text-[11.5px] mt-0.5 leading-relaxed">
-            هو الجهاز المخصص لرصد الاهتزازات الأرضية وتسجيل حركتها.
+            هو <strong>الجهاز العلمي</strong> المخصص لرصد الاهتزازات الأرضية الدقيقة وتسجيل حركتها بدقة.
           </p>
         </div>
 
         <div className="p-3 rounded-[10px] bg-amber-50 border border-amber-200">
-          <div className="font-bold text-amber-900">2. السجل الزلزالي :</div>
+          <div className="font-bold text-amber-900">2. السجل الزلزالي (السيسموغرام - Sismogramme) :</div>
           <p className="text-amber-800 text-[11.5px] mt-0.5 leading-relaxed">
-            هو المنحنى الناتج عن التسجيل، ويبين تغير سعة حركة الأرض مع مرور الزمن.
+            هو <strong>المنحنى البياني الناتج</strong> عن الجهاز، ويبين تغير سعة حركة الأرض مع مرور الزمن. الجهاز ليس هو التسجيل.
           </p>
         </div>
       </div>
@@ -380,60 +345,85 @@ const SeismogramWavesDiagram: React.FC<{ schema: SvtSchemaOrFigure }> = ({ schem
 };
 
 /**
- * 3. Cartes comparatives : intensité (MSK) et magnitude (Richter).
- * Deux colonnes sur une même page, sans coupure.
+ * 3. المقارنة العلمية بين سلم الشدة (MSK) وسلم المقدار (Richter) (الصفحة 8)
+ * مصممة في عمودين متوازيين متناسقين لتتسع على صفحة واحدة A4 دون أي انقطاع
  */
 const SeismicIntensityScaleDiagram: React.FC<{ schema: SvtSchemaOrFigure }> = ({ schema }) => {
   return (
     <div
       id="sec-svt-richter-msk"
       data-atomic-block="true"
-      className="pdf-atomic-block break-inside-avoid my-4 bg-white rounded-[14px] border border-[#E5DDD5] p-4 sm:p-5 space-y-3"
+      className="pdf-atomic-block my-4 bg-white rounded-[14px] border border-[#E5DDD5] p-3.5 sm:p-4 space-y-3"
     >
-      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#EAE2DA] pb-2.5">
+      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#EAE2DA] pb-2">
         <h4 className="text-sm sm:text-base font-bold text-[#4A4A4A]">
-          {schema.titleArabic || 'التمييز بين شدة الزلزال ومقدار الزلزال'}
+          {schema.titleArabic || 'التمييز بين شدة الزلزال (سلم MSK) ومقدار الزلزال (سلم ريشتر)'}
         </h4>
+        <span
+          dir="ltr"
+          className="text-xs font-mono font-bold text-[#B45309] bg-amber-50 px-2 py-0.5 rounded border border-amber-200"
+        >
+          {schema.titleFrench || 'Intensité (MSK) vs Magnitude (Richter)'}
+        </span>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="p-4 rounded-[12px] bg-[#FAF7F4] border-2 border-amber-300 space-y-2.5">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-amber-800 bg-amber-100 px-2.5 py-1 rounded-[6px]">
-              شدة الزلزال
-            </span>
-            <span className="text-xs font-bold text-amber-900 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">
-              سلم MSK (12 درجة)
-            </span>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 items-stretch">
+        {/* العمود 1: سلم الشدة MSK */}
+        <div className="p-3.5 rounded-[12px] bg-[#FAF7F4] border-2 border-amber-300 space-y-2 flex flex-col justify-between">
+          <div className="space-y-2">
+            <div className="flex items-center justify-between border-b border-amber-200 pb-1.5">
+              <span className="text-xs font-bold text-amber-800 bg-amber-100 px-2.5 py-0.5 rounded-[6px]">
+                سلم الشدة (Intensité)
+              </span>
+              <span className="text-xs font-bold text-amber-900 bg-white px-2 py-0.5 rounded border border-amber-200">
+                سلم MSK (12 درجة)
+              </span>
+            </div>
+
+            <div className="text-xs font-bold text-[#4A4A4A]">
+              يقيس الآثار والأضرار الملاحظة في موقع معين
+            </div>
+
+            <ul className="space-y-1.5 text-xs text-[#4A4A4A] list-disc pr-4 leading-relaxed">
+              <li>يعتمد على ملاحظة شعور السكان وتقدير حجم الخسائر في المباني.</li>
+              <li>يُعبَّر عنه بالأرقام الرومانية من I إلى XII.</li>
+              <li><strong>متغير حسب المكان :</strong> تتناقص الشدة كلما ابتعدنا عن المركز السطحي.</li>
+              <li>تُمثَّل مناطقه بخطوط متساوية الشدة (منحنيات تساوي الشدة).</li>
+            </ul>
           </div>
-          <h5 className="text-sm font-bold text-[#4A4A4A]">آثار الزلزال والخسائر الملاحظة في مكان معين</h5>
-          <ul className="space-y-1.5 text-xs text-[#4A4A4A] list-disc pr-4 leading-relaxed">
-            <li>تُقدَّر بملاحظة شعور السكان وحجم الأضرار في المنشآت.</li>
-            <li>تُعبَّر عنها بالأرقام الرومانية من I إلى XII.</li>
-            <li>
-              <strong>تتغير حسب المكان :</strong> تتناقص كلما ابتعدنا عن المركز السطحي.
-            </li>
-            <li>تُمثَّل مناطقها بمنحنيات تساوي الشدة.</li>
-          </ul>
+
+          <div className="pt-2 border-t border-amber-200/80 text-[11px] text-amber-900 font-semibold bg-amber-50/70 p-2 rounded-[8px]">
+            📌 مثال : شدة زلزال زموري بلغت الدرجة X قرب المركز السطحي وتناقصت تدريجياً في المدن المجاورة.
+          </div>
         </div>
 
-        <div className="p-4 rounded-[12px] bg-[#FAF7F4] border-2 border-emerald-300 space-y-2.5">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-emerald-800 bg-emerald-100 px-2.5 py-1 rounded-[6px]">
-              مقدار الزلزال
-            </span>
-            <span className="text-xs font-bold text-emerald-900 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
-              سلم ريشتر
-            </span>
+        {/* العمود 2: سلم المقدار ريشتر */}
+        <div className="p-3.5 rounded-[12px] bg-[#FAF7F4] border-2 border-emerald-300 space-y-2 flex flex-col justify-between">
+          <div className="space-y-2">
+            <div className="flex items-center justify-between border-b border-emerald-200 pb-1.5">
+              <span className="text-xs font-bold text-emerald-800 bg-emerald-100 px-2.5 py-0.5 rounded-[6px]">
+                سلم المقدار (Magnitude)
+              </span>
+              <span className="text-xs font-bold text-emerald-900 bg-white px-2 py-0.5 rounded border border-emerald-200">
+                سلم ريشتر (Richter)
+              </span>
+            </div>
+
+            <div className="text-xs font-bold text-[#4A4A4A]">
+              يقيس كمية الطاقة المحررة في بؤرة الزلزال
+            </div>
+
+            <ul className="space-y-1.5 text-xs text-[#4A4A4A] list-disc pr-4 leading-relaxed">
+              <li>يُقدَّر انطلاقاً من تسجيلات أجهزة قياس الزلازل (السيسموغراف).</li>
+              <li>يُعبَّر عنه بقيمة رقمية علمية (مثل: زلزال زموري، 2003، المقدار 6.6).</li>
+              <li><strong>قيمة وحيدة وثابتة :</strong> لكل زلزال مقدار محدد يعبر عن طاقة مصدره، ولا يتغير من منطقة إلى أخرى.</li>
+              <li>يتعلق بمصدر الزلزال حصراً ولا يتأثر بنوع التربة أو المسافة.</li>
+            </ul>
           </div>
-          <h5 className="text-sm font-bold text-[#4A4A4A]">الطاقة المحررة في بؤرة الزلزال</h5>
-          <ul className="space-y-1.5 text-xs text-[#4A4A4A] list-disc pr-4 leading-relaxed">
-            <li>يُقدَّر انطلاقاً من تسجيلات مسجل الزلازل.</li>
-            <li>يُعبَّر عنه بقيمة رقمية (مثل زلزال زموري 2003، مقداره 6.6 على سلم ريشتر).</li>
-            <li>
-              <strong>مقدار الزلزال :</strong> لكل زلزال مقدار واحد يتعلق بمصدره، ولا يتغير من منطقة إلى أخرى.
-            </li>
-          </ul>
+
+          <div className="pt-2 border-t border-emerald-200/80 text-[11px] text-emerald-900 font-semibold bg-emerald-50/70 p-2 rounded-[8px]">
+            💡 قاعدة حاسمة : المقدار والشدة ليسا مترادفين؛ المقدار يتعلق بالمصدر، والشدة تصف الآثار في موقع معين.
+          </div>
         </div>
       </div>
     </div>
@@ -445,16 +435,23 @@ const SeismicIntensityScaleDiagram: React.FC<{ schema: SvtSchemaOrFigure }> = ({
  */
 const StrataFoldFaultDiagram: React.FC<{ schema: SvtSchemaOrFigure }> = ({ schema }) => {
   return (
-    <div className="my-4 bg-white rounded-[14px] border border-[#E5DDD5] p-4 sm:p-5 space-y-3 break-inside-avoid">
+    <div className="my-4 bg-white rounded-[14px] border border-[#E5DDD5] p-4 sm:p-5 space-y-3">
       <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#EAE2DA] pb-2.5">
         <h4 className="text-sm sm:text-base font-bold text-[#4A4A4A]">
-          {schema.titleArabic || 'تشوهات القشرة الأرضية : الطيات والفوالق'}
+          {schema.titleArabic || 'تشوهات القشرة الأرضية: الفرق بين الطيات (الصخور المرنة) والفوالق (الصخور الصلبة)'}
         </h4>
+        <span
+          dir="ltr"
+          className="text-xs font-mono font-bold text-[#15803D] bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200"
+        >
+          {schema.titleFrench || 'Déformations tectoniques : Plis vs Failles'}
+        </span>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* Plis */}
         <div className="p-3.5 rounded-[12px] bg-[#FAF7F4] border border-[#E2D9D0] space-y-2 text-center">
-          <div className="text-xs font-bold text-[#15803D]">1. الطيّات · صخور مرنة</div>
+          <div className="text-xs font-bold text-[#15803D]">1. الطيَّات (Les Plis) · صخور مرنة</div>
           <svg viewBox="0 0 300 120" className="w-full h-auto select-none">
             <path d="M10,80 Q75,20 150,80 T290,80" stroke="#047857" strokeWidth="8" fill="none" />
             <path d="M10,95 Q75,35 150,95 T290,95" stroke="#D97706" strokeWidth="8" fill="none" />
@@ -463,12 +460,13 @@ const StrataFoldFaultDiagram: React.FC<{ schema: SvtSchemaOrFigure }> = ({ schem
             <text x="225" y="115" fill="#B45309" fontSize="10" fontWeight="bold" textAnchor="middle">طية مقعرة</text>
           </svg>
           <p className="text-[11px] text-[#4A4A4A] leading-relaxed">
-            انثناء الطبقات الصخرية اللدنة مشكّلة طيّات متتالية دون حدوث انكسار.
+            انثناء الطبقات الصخرية اللدنة أو المرنة مشكّلة طيّات متتالية دون حدوث انكسار.
           </p>
         </div>
 
+        {/* Failles */}
         <div className="p-3.5 rounded-[12px] bg-[#FAF7F4] border border-[#E2D9D0] space-y-2 text-center">
-          <div className="text-xs font-bold text-[#B45309]">2. الفوالق · صخور صلبة</div>
+          <div className="text-xs font-bold text-[#B45309]">2. الفوالق (Les Failles) · صخور صلبة وقابلة للكسر</div>
           <svg viewBox="0 0 300 120" className="w-full h-auto select-none">
             <polygon points="20,40 140,40 110,110 20,110" fill="#CBD5E1" stroke="#475569" strokeWidth="1.5" />
             <polygon points="150,55 280,55 280,110 120,110" fill="#94A3B8" stroke="#475569" strokeWidth="1.5" />
@@ -478,7 +476,7 @@ const StrataFoldFaultDiagram: React.FC<{ schema: SvtSchemaOrFigure }> = ({ schem
             <text x="210" y="85" fill="#1E293B" fontSize="9" fontWeight="bold">كتلة خافضة</text>
           </svg>
           <p className="text-[11px] text-[#4A4A4A] leading-relaxed">
-            انكسار الصخور الصلبة مصحوباً بإزاحة نسبيّة للكتلتين، وهو المنشأ الأساسي لأغلب الزلازل.
+            انكسار الصخور الصلبة مصحوباً بإزاحة نسبيّة للكتلتين، وهي المنشأ الأساسي لأغلب الزلازل.
           </p>
         </div>
       </div>
@@ -487,251 +485,151 @@ const StrataFoldFaultDiagram: React.FC<{ schema: SvtSchemaOrFigure }> = ({ schem
 };
 
 /**
- * 5. Schéma-bilan (bloc « أحتفظ بالأهم ») : foyer, épicentre, faille, ondes
- * et enregistrement — cinq éléments sans chevauchement. Le sismographe est
- * dessiné sans texte sur le tracé, son libellé est dans une boîte à côté.
+ * 5. المخطط العلمي التركيبي لخاصيات الزلزال (الصفحة 2) — خاص بكتلة "أحتفظ بالأهم":
+ * يجمع الصورة ثلاثية الأبعاد الواقعية + التسميات العربية + محطة مسجل الزلازل المنفصلة + بطاقات الشرح الأربعة
+ * bloc atomique insécable pour garantir qu'aucune étiquette ne soit coupée
  */
 export const SeismicSummaryMechanismDiagram: React.FC<{ schema?: SvtSchemaOrFigure }> = ({ schema }) => {
   return (
-    <div className="my-3 bg-white rounded-[14px] border border-[#E2D9D0] p-3 sm:p-4 space-y-3 break-inside-avoid">
+    <div
+      id="sec-svt-schema-bilan-block"
+      data-atomic-block="true"
+      className="pdf-atomic-block my-3 bg-white rounded-[14px] border border-[#E2D9D0] p-3 sm:p-4 space-y-3"
+    >
       <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#EAE2DA] pb-2">
         <div className="flex items-center gap-2">
           <span className="w-2.5 h-2.5 rounded-full bg-[#B45309]" />
           <h4 className="text-xs sm:text-sm font-bold text-[#4A4A4A]">
-            {schema?.titleArabic || 'مخطط تركيبي : البؤرة، المركز السطحي، الفالق، الأمواج الزلزالية والتسجيل'}
+            {schema?.titleArabic || 'مخطط تركيبي شامل : البؤرة، المركز السطحي، الفالق، انتشار الأمواج والتسجيل الزلزالي'}
           </h4>
         </div>
+        <span
+          dir="ltr"
+          className="text-[11px] font-mono font-bold text-[#B45309] bg-amber-50 px-2 py-0.5 rounded border border-amber-200"
+        >
+          {schema?.titleFrench || 'Schéma-bilan : Foyer, épicentre, ondes, faille et enregistrement'}
+        </span>
       </div>
 
-      <div className="w-full bg-[#FAF7F4] rounded-[10px] border border-[#E2D9D0] p-2 flex items-center justify-center">
+      {/* Realistic 3D Geological Cross-Section with SVG Overlay */}
+      <div className="relative w-full aspect-[16/9] rounded-[10px] overflow-hidden border border-[#E2D9D0] bg-[#1E293B] shadow-sm select-none">
+        <img
+          src={earthCrossSectionImg}
+          alt="مقطع جيولوجي علمي ثلاثي الأبعاد لآلية حدوث الزلزال"
+          className="w-full h-full object-cover"
+        />
+
+        {/* SVG Callout Badges with strict placement */}
         <svg
-          viewBox="0 0 820 430"
-          className="svt-schema-bilan w-full max-w-[820px] h-auto select-none"
-          role="img"
-          aria-label="مخطط تركيبي للبؤرة والمركز السطحي والفالق والأمواج ومسجل الزلازل"
+          viewBox="0 0 1000 562.5"
+          className="absolute inset-0 w-full h-full pointer-events-none"
+          role="presentation"
         >
           <defs>
-            <linearGradient id="sumSky" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#E0F2FE" />
-              <stop offset="100%" stopColor="#F0F9FF" />
-            </linearGradient>
-            <linearGradient id="sumRock1" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#E7D3B8" />
-              <stop offset="100%" stopColor="#C8A67C" />
-            </linearGradient>
-            <linearGradient id="sumRock2" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#DCC4A4" />
-              <stop offset="100%" stopColor="#B08D66" />
-            </linearGradient>
-            <radialGradient id="sumGlow" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stopColor="#EF4444" stopOpacity="0.95" />
-              <stop offset="60%" stopColor="#F97316" stopOpacity="0.45" />
-              <stop offset="100%" stopColor="#EA580C" stopOpacity="0" />
-            </radialGradient>
+            <filter id="badgeShadowSummary" x="-10%" y="-10%" width="120%" height="120%">
+              <feDropShadow dx="0" dy="2" stdDeviation="3" floodOpacity="0.3" />
+            </filter>
           </defs>
 
-          <rect x="20" y="15" width="780" height="95" rx="6" fill="url(#sumSky)" />
-          <line x1="20" y1="110" x2="800" y2="110" stroke="#78350F" strokeWidth="2.6" />
-
-          <polygon points="20,110 400,110 330,410 20,410" fill="url(#sumRock1)" stroke="#7C5A3A" strokeWidth="1.2" />
-          <polygon points="400,110 800,110 800,410 330,410" fill="url(#sumRock2)" stroke="#7C5A3A" strokeWidth="1.2" />
-          <line data-fault-line="true" x1="400" y1="110" x2="330" y2="410" stroke="#B91C1C" strokeWidth="3" strokeDasharray="6 4" />
-
-          <ellipse cx="355" cy="250" rx="40" ry="30" fill="none" stroke="#F97316" strokeWidth="2" strokeDasharray="5 3" />
-          <ellipse cx="355" cy="250" rx="80" ry="58" fill="none" stroke="#F97316" strokeWidth="1.9" strokeDasharray="6 4" opacity="0.85" />
-          <ellipse cx="355" cy="250" rx="112" ry="82" fill="none" stroke="#FB923C" strokeWidth="1.7" strokeDasharray="7 5" opacity="0.7" />
-          <ellipse cx="355" cy="250" rx="140" ry="100" fill="none" stroke="#FDBA74" strokeWidth="1.5" strokeDasharray="8 6" opacity="0.55" />
-
-          <circle cx="355" cy="250" r="24" fill="url(#sumGlow)" />
-          <circle cx="355" cy="250" r="7" fill="#DC2626" stroke="#FFFFFF" strokeWidth="2" />
-          <line x1="355" y1="250" x2="355" y2="110" stroke="#2563EB" strokeWidth="2" strokeDasharray="4 4" />
-          <circle cx="355" cy="110" r="8" fill="#2563EB" stroke="#FFFFFF" strokeWidth="2" />
-
-          {/* Bâtiments à l'aplomb de l'épicentre, sans texte */}
-          <g>
-            <rect x="382" y="80" width="15" height="30" fill="#64748B" rx="1" />
-            <polygon points="397,90 412,110 379,110" fill="#475569" />
-            <rect x="420" y="88" width="12" height="22" fill="#94A3B8" rx="1" />
+          {/* 1. المركز السطحي */}
+          <circle cx="490" cy="180" r="7" fill="#2563EB" stroke="#FFFFFF" strokeWidth="2.5" />
+          <path d="M370,75 L482,174" stroke="#2563EB" strokeWidth="2" strokeDasharray="3 3" />
+          <g transform="translate(200, 35)" filter="url(#badgeShadowSummary)">
+            <rect x="0" y="0" width="180" height="42" rx="7" fill="#FFFFFF" fillOpacity="0.96" stroke="#2563EB" strokeWidth="1.8" />
+            <text x="90" y="18" fill="#1E40AF" fontSize="13" fontWeight="bold" textAnchor="middle">
+              المركز السطحي
+            </text>
+            <text x="90" y="33" fill="#1D4ED8" fontSize="10" fontWeight="semibold" textAnchor="middle">
+              عمودياً فوق البؤرة · الأكثر تضرراً
+            </text>
           </g>
 
-          {/* 1. المركز السطحي */}
-          <LabelBox
-            x={140}
-            y={12}
-            width={236}
-            height={60}
-            fill="#EFF6FF"
-            stroke="#2563EB"
-            lines={[
-              { text: 'المركز السطحي', color: '#1E40AF', size: 15.5 },
-              { text: 'المنطقة الأكثر تضرراً', color: '#1D4ED8', size: 13, weight: 'normal' },
-            ]}
-          />
-          <line x1="258" y1="72" x2="345" y2="104" stroke="#2563EB" strokeWidth="1.5" />
+          {/* Ligne d'alignement vertical Foyer - Épicentre */}
+          <line x1="490" y1="360" x2="490" y2="190" stroke="#2563EB" strokeWidth="2" strokeDasharray="4 3" opacity="0.85" />
 
-          {/* 2. البؤرة */}
-          <LabelBox
-            x={16}
-            y={204}
-            width={192}
-            height={60}
-            fill="#FEF2F2"
-            stroke="#DC2626"
-            lines={[
-              { text: 'البؤرة', color: '#991B1B', size: 15.5 },
-              { text: 'تنشأ فيها الأمواج', color: '#7F1D1D', size: 13, weight: 'normal' },
-            ]}
-          />
-          <line x1="208" y1="234" x2="333" y2="249" stroke="#DC2626" strokeWidth="1.5" strokeDasharray="4 3" />
+          {/* 2. البؤرة الزلزالية */}
+          <circle cx="490" cy="365" r="9" fill="#DC2626" stroke="#FFFFFF" strokeWidth="2" />
+          <line x1="225" y1="365" x2="478" y2="365" stroke="#DC2626" strokeWidth="2" strokeDasharray="4 3" />
+          <g transform="translate(45, 342)" filter="url(#badgeShadowSummary)">
+            <rect x="0" y="0" width="180" height="42" rx="7" fill="#FFFFFF" fillOpacity="0.96" stroke="#DC2626" strokeWidth="1.8" />
+            <text x="90" y="18" fill="#991B1B" fontSize="13" fontWeight="bold" textAnchor="middle">
+              البؤرة (Foyer)
+            </text>
+            <text x="90" y="33" fill="#B91C1C" fontSize="10" fontWeight="semibold" textAnchor="middle">
+              موقع داخل الأرض تنشأ فيه الأمواج
+            </text>
+          </g>
 
-          {/* 3. الفالق : la ligne de faille ne traverse aucun libellé */}
-          <LabelBox
-            x={98}
-            y={326}
-            width={158}
-            height={56}
-            fill="#FEF3C7"
-            stroke="#B45309"
-            lines={[
-              { text: 'الفالق', color: '#92400E', size: 15.5 },
-              { text: 'كسر في الصخور', color: '#B45309', size: 13, weight: 'normal' },
-            ]}
-          />
-          <line x1="256" y1="354" x2="330" y2="358" stroke="#B45309" strokeWidth="1.5" />
+          {/* 3. الفالق */}
+          <path d="M720,445 L550,380" stroke="#B45309" strokeWidth="1.8" strokeDasharray="3 3" />
+          <g transform="translate(710, 425)" filter="url(#badgeShadowSummary)">
+            <rect x="0" y="0" width="175" height="40" rx="7" fill="#FFFFFF" fillOpacity="0.96" stroke="#B45309" strokeWidth="1.8" />
+            <text x="87" y="18" fill="#92400E" fontSize="12.5" fontWeight="bold" textAnchor="middle">
+              الفالق (Faille)
+            </text>
+            <text x="87" y="32" fill="#78350F" fontSize="9.5" fontWeight="semibold" textAnchor="middle">
+              كسر مصحوب بإزاحة صخرية
+            </text>
+          </g>
 
           {/* 4. الأمواج الزلزالية */}
-          <LabelBox
-            x={528}
-            y={140}
-            width={242}
-            height={60}
-            fill="#FFF7ED"
-            stroke="#EA580C"
-            lines={[
-              { text: 'الأمواج الزلزالية', color: '#9A3412', size: 15.5 },
-              { text: 'تنتشر في كل الاتجاهات', color: '#C2410C', size: 13, weight: 'normal' },
-            ]}
-          />
-          <line x1="528" y1="176" x2="470" y2="196" stroke="#EA580C" strokeWidth="1.5" strokeDasharray="4 3" />
-
-          {/* 5. Enregistrement : sismographe dessiné sans texte sur le tracé */}
-          <g>
-            <rect x="612" y="330" width="118" height="10" rx="2" fill="#CBD5E1" stroke="#64748B" strokeWidth="1" />
-            <rect x="622" y="262" width="10" height="68" fill="#94A3B8" stroke="#64748B" strokeWidth="1" />
-            <line x1="627" y1="268" x2="700" y2="268" stroke="#64748B" strokeWidth="4" />
-            <circle cx="700" cy="268" r="5" fill="#0284C7" />
-            <line x1="700" y1="268" x2="700" y2="308" stroke="#0284C7" strokeWidth="2" />
-            <rect x="652" y="308" width="58" height="18" rx="3" fill="#FFFFFF" stroke="#0284C7" strokeWidth="1.2" />
-            <path
-              d="M656,318 l8,-5 8,7 8,-6 8,5 8,-4 8,3"
-              stroke="#0284C7"
-              strokeWidth="1.3"
-              fill="none"
-            />
+          <path d="M225,235 L350,295" stroke="#EA580C" strokeWidth="1.8" strokeDasharray="3 3" />
+          <g transform="translate(50, 212)" filter="url(#badgeShadowSummary)">
+            <rect x="0" y="0" width="175" height="42" rx="7" fill="#FFFFFF" fillOpacity="0.96" stroke="#EA580C" strokeWidth="1.8" />
+            <text x="87" y="18" fill="#9A3412" fontSize="12.5" fontWeight="bold" textAnchor="middle">
+              الأمواج الزلزالية (Ondes)
+            </text>
+            <text x="87" y="33" fill="#C2410C" fontSize="9.5" fontWeight="semibold" textAnchor="middle">
+              تنتشر في جميع الاتجاهات
+            </text>
           </g>
-          <LabelBox
-            x={528}
-            y={352}
-            width={242}
-            height={58}
-            fill="#F0F9FF"
-            stroke="#0284C7"
-            lines={[
-              { text: 'مسجل الزلازل', color: '#0369A1', size: 15.5 },
-              { text: 'يسجل الاهتزازات الأرضية', color: '#0C4A6E', size: 13, weight: 'normal' },
-            ]}
-          />
-          <line x1="644" y1="352" x2="662" y2="342" stroke="#0284C7" strokeWidth="1.5" />
+
+          {/* 5. محطة الرصد: مسجل الزلازل والسجل الزلزالي المنفصل كلياً عن المنحنى */}
+          <g transform="translate(720, 15)" filter="url(#badgeShadowSummary)">
+            {/* Boîte principale de l'appareil */}
+            <rect x="0" y="0" width="220" height="98" rx="8" fill="#FFFFFF" fillOpacity="0.96" stroke="#0284C7" strokeWidth="1.8" />
+            
+            {/* Titre : مسجل الزلازل (الجهاز) */}
+            <text x="110" y="18" fill="#0369A1" fontSize="12" fontWeight="bold" textAnchor="middle">
+              مسجل الزلازل : الجهاز
+            </text>
+
+            {/* Tracé de l'onde dans son propre cadre dédié */}
+            <rect x="8" y="24" width="204" height="30" rx="4" fill="#F0F9FF" stroke="#BAE6FD" strokeWidth="1" />
+            <path d="M14,39 L40,39 Q46,33 52,39 T64,39 T76,31 T88,47 T100,32 T112,44 T124,36 L206,39" stroke="#0284C7" strokeWidth="1.8" fill="none" />
+
+            {/* Cartouche dédié strictement HORS du tracé pour le libellé « السجل الزلزالي: المنحنى الناتج » */}
+            <rect x="8" y="60" width="204" height="28" rx="4" fill="#E0F2FE" stroke="#7DD3FC" strokeWidth="1" />
+            <text x="110" y="78" fill="#0C4A6E" fontSize="11" fontWeight="bold" textAnchor="middle">
+              السجل الزلزالي: المنحنى الناتج
+            </text>
+
+            {/* Ligne de rappel vers la surface */}
+            <line x1="80" y1="98" x2="68" y2="165" stroke="#0284C7" strokeWidth="1.8" />
+            <circle cx="68" cy="165" r="5" fill="#0284C7" stroke="#FFFFFF" strokeWidth="1.5" />
+          </g>
         </svg>
       </div>
-    </div>
-  );
-};
 
-/**
- * 6. Schéma-synthèse : chaîne causale en arabe, de droite à gauche,
- * avec la branche « التسجيل » reliée à la chaîne.
- */
-export const SeismicSynthesisChainDiagram: React.FC = () => {
-  return (
-    <div className="w-full bg-[#FAF7F4] rounded-[12px] border border-[#E2D9D0] p-2 flex items-center justify-center">
-      <svg
-        viewBox="0 0 860 300"
-        className="w-full max-w-[820px] h-auto select-none"
-        role="img"
-        aria-label="مخطط تلخيصي : تصدع الصخور وتحرر الطاقة ثم انتشار الأمواج ثم اهتزاز سطح الأرض، مع التسجيل"
-      >
-        <defs>
-          <marker id="svtChainArrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
-            <path d="M0,0 L10,5 L0,10 z" fill="#B45309" />
-          </marker>
-        </defs>
-
-        {/* Étape 1 (à droite) */}
-        <g>
-          <rect x="650" y="40" width="190" height="84" rx="12" fill="#FEF2F2" stroke="#DC2626" strokeWidth="1.6" />
-          <text x="745" y="74" textAnchor="middle" fontSize="15" fontWeight="bold" fill="#7F1D1D">
-            تصدع الصخور
-          </text>
-          <text x="745" y="100" textAnchor="middle" fontSize="15" fontWeight="bold" fill="#7F1D1D">
-            وتحرر الطاقة
-          </text>
-        </g>
-
-        <line x1="646" y1="82" x2="616" y2="82" stroke="#B45309" strokeWidth="2.4" markerEnd="url(#svtChainArrow)" />
-
-        {/* Étape 2 (au milieu) */}
-        <g>
-          <rect x="380" y="40" width="230" height="84" rx="12" fill="#FFF7ED" stroke="#EA580C" strokeWidth="1.6" />
-          <text x="495" y="74" textAnchor="middle" fontSize="15" fontWeight="bold" fill="#9A3412">
-            انتشار الأمواج الزلزالية
-          </text>
-          <text x="495" y="100" textAnchor="middle" fontSize="15" fontWeight="bold" fill="#9A3412">
-            من البؤرة
-          </text>
-        </g>
-
-        <line x1="376" y1="82" x2="346" y2="82" stroke="#B45309" strokeWidth="2.4" markerEnd="url(#svtChainArrow)" />
-
-        {/* Étape 3 (à gauche) */}
-        <g>
-          <rect x="110" y="40" width="230" height="84" rx="12" fill="#F0FDF4" stroke="#16A34A" strokeWidth="1.6" />
-          <text x="225" y="74" textAnchor="middle" fontSize="15" fontWeight="bold" fill="#166534">
-            اهتزاز سطح الأرض
-          </text>
-          <text x="225" y="100" textAnchor="middle" fontSize="15" fontWeight="bold" fill="#166534">
-            وتشقق الصخور
-          </text>
-        </g>
-
-        {/* Branche « التسجيل » reliée à la chaîne : libellé dans une boîte
-            décalée à droite de la flèche (aucun chevauchement). */}
-        <line x1="495" y1="128" x2="495" y2="184" stroke="#0284C7" strokeWidth="2.4" markerEnd="url(#svtChainArrow)" />
-        <rect
-          data-label-box="true"
-          x="506"
-          y="138"
-          width="80"
-          height="28"
-          rx="6"
-          fill="#FFFFFF"
-          stroke="#0284C7"
-          strokeWidth="1.2"
-        />
-        <text x="546" y="157" textAnchor="middle" fontSize="12.5" fontWeight="bold" fill="#0369A1">
-          التسجيل
-        </text>
-
-        <g>
-          <rect x="350" y="188" width="290" height="76" rx="12" fill="#F0F9FF" stroke="#0284C7" strokeWidth="1.6" />
-          <text x="495" y="216" textAnchor="middle" fontSize="14" fontWeight="bold" fill="#0369A1">
-            التسجيل الزلزالي
-          </text>
-          <text x="495" y="240" textAnchor="middle" fontSize="12" fill="#0C4A6E">
-            مسجل الزلازل ← السجل الزلزالي
-          </text>
-        </g>
-      </svg>
+      {/* Bandeau des 4 cartes sous le schéma — contenu insécable avec le bloc */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center text-xs pt-1">
+        <div className="p-2.5 rounded-[8px] bg-red-50 border border-red-200">
+          <span className="font-bold text-red-900 block text-xs">البؤرة</span>
+          <span className="text-[11px] text-red-800">تنشأ فيها الأمواج</span>
+        </div>
+        <div className="p-2.5 rounded-[8px] bg-blue-50 border border-blue-200">
+          <span className="font-bold text-blue-900 block text-xs">المركز السطحي</span>
+          <span className="text-[11px] text-blue-800">الأكثر تضرراً</span>
+        </div>
+        <div className="p-2.5 rounded-[8px] bg-orange-50 border border-orange-200">
+          <span className="font-bold text-orange-900 block text-xs">الأمواج الزلزالية</span>
+          <span className="text-[11px] text-orange-800">في جميع الاتجاهات</span>
+        </div>
+        <div className="p-2.5 rounded-[8px] bg-sky-50 border border-sky-200">
+          <span className="font-bold text-sky-900 block text-xs">مسجل الزلازل</span>
+          <span className="text-[11px] text-sky-800">يسجل الاهتزازات</span>
+        </div>
+      </div>
     </div>
   );
 };

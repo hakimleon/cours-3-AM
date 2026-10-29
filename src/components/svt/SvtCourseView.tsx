@@ -16,7 +16,7 @@ import {
   SvtIllustrationBlock,
   SvtEmbeddedQuestionBlock,
 } from './SvtBlocks';
-import { SvtSchemaRenderer, SeismicSynthesisChainDiagram } from './SvtSchemas';
+import { SvtSchemaRenderer } from './SvtSchemas';
 import { SvtCourseEssentialBlock } from './SvtCourseEssentialBlock';
 import {
   getSvtDomainTheme,
@@ -72,20 +72,9 @@ export const SvtCourseView: React.FC<SvtCourseViewProps> = ({
   onCloseMobileSidebar,
 }) => {
   const [activeTab, setActiveTab] = useState<'all' | 'lesson' | 'activities' | 'exercises'>('all');
-  // Split sections according to the imperative pedagogical template:
-  // 1. Situation de départ (discoveryActivity)
-  // 2. Observation et exploitation des documents (observationSection)
-  // 3. Bloc « أحتفظ بالأهم » (essential)
-  // 4. Exercices visibles (applications)
-  // 5. Accordéon « للتعمق » (deepenSections + flowchart + synthesis + vocab + teacherNotes)
-  const observationSection =
-    course.sections.find(
-      (sec) => sec.id === 'sec-svt-01-docs' || sec.titleArabic.includes('ملاحظة الوثائق')
-    ) || (course.sections.length > 0 && course.sections[0].shortLabel?.includes('ملاحظة') ? course.sections[0] : null);
-
-  const deepenSections = observationSection
-    ? course.sections.filter((s) => s.id !== observationSection.id)
-    : course.sections;
+  // Strict Level-1 Structure (1 أحتفظ بالأهم، 2 تمارين تطبيقية، 3 للتعمق)
+  // All sections inside للتعمق are numbered with Arabic letters (أ، ب، ج، د، هـ، و، ز)
+  const deepenSections = course.sections;
 
   const [activeSectionId, setActiveSectionId] = useState<string>('sec-svt-discovery');
   // Accordion « للتعمق » is collapsed by default on the web, and always open in PDF export
@@ -126,13 +115,7 @@ export const SvtCourseView: React.FC<SvtCourseViewProps> = ({
 
     const isDeepenTarget =
       deepenSections.some((s) => s.id === id) ||
-      id === 'sec-svt-deepen-accordion' ||
-      id === 'sec-svt-discovery' ||
-      id === 'sec-svt-synthesis-vocab' ||
-      id === 'sec-svt-flowchart' ||
-      id === 'sec-svt-synthesis' ||
-      id === 'sec-svt-vocab' ||
-      (observationSection ? id === observationSection.id : false);
+      id === 'sec-svt-deepen-accordion';
 
     if (isDeepenTarget) {
       setIsDeepenExpanded(true);
@@ -323,6 +306,22 @@ export const SvtCourseView: React.FC<SvtCourseViewProps> = ({
                 فهرس أقسام الدرس :
               </div>
 
+              {/* وضعية الانطلاق والتساؤل العلمي */}
+              {course.discoveryActivity && (
+                <button
+                  type="button"
+                  onClick={() => scrollToSection('sec-svt-discovery')}
+                  className={`w-full text-right px-2.5 py-1.5 rounded-[8px] text-xs font-bold flex items-center justify-between transition-colors cursor-pointer ${
+                    activeSectionId === 'sec-svt-discovery'
+                      ? 'bg-amber-100/70 text-[#B45309]'
+                      : 'hover:bg-[#FAF7F4] text-[#4A4A4A]'
+                  }`}
+                >
+                  <span className="truncate">وضعية الانطلاق والتساؤل</span>
+                  <span className="text-[10px] opacity-70">★</span>
+                </button>
+              )}
+
               {/* 1. أحتفظ بالأهم */}
               {course.essential && (
                 <button
@@ -336,13 +335,13 @@ export const SvtCourseView: React.FC<SvtCourseViewProps> = ({
                 >
                   <span className="flex items-center gap-1 truncate text-[#B45309]">
                     <Sparkles className="w-3 h-3" />
-                    <span>1. أحتفظ بالأهم</span>
+                    <span>1. أحتفظ بالأهم (L'essentiel)</span>
                   </span>
-                  <span className="text-[10px] opacity-70">★</span>
+                  <span className="text-[10px] font-bold">1</span>
                 </button>
               )}
 
-              {/* 2. التمارين */}
+              {/* 2. تمارين تطبيقية */}
               {course.applications && course.applications.length > 0 && (
                 <button
                   type="button"
@@ -353,62 +352,36 @@ export const SvtCourseView: React.FC<SvtCourseViewProps> = ({
                       : 'hover:bg-[#FAF7F4] text-[#4A4A4A]'
                   }`}
                 >
-                  <span className="truncate">2. التمارين والتحضير للـ BEM</span>
-                  <span className="text-[10px] opacity-70">2</span>
+                  <span className="truncate">2. تمارين تطبيقية والـ BEM</span>
+                  <span className="text-[10px] font-bold">2</span>
                 </button>
               )}
 
-              {/* 3. للتعمق */}
+              {/* 3. للتعمق في المفاهيم والمخططات */}
               <button
                 type="button"
                 onClick={() => scrollToSection('sec-svt-deepen-accordion')}
                 className={`w-full text-right px-2.5 py-1.5 rounded-[8px] text-xs font-bold flex items-center justify-between transition-colors cursor-pointer ${
                   activeSectionId === 'sec-svt-deepen-accordion' ||
-                  activeSectionId === 'sec-svt-discovery' ||
+                  deepenSections.some((s) => s.id === activeSectionId) ||
                   activeSectionId === 'sec-svt-synthesis-vocab' ||
-                  deepenSections.some((s) => s.id === activeSectionId)
+                  activeSectionId === 'sec-svt-flowchart' ||
+                  activeSectionId === 'sec-svt-synthesis' ||
+                  activeSectionId === 'sec-svt-vocab'
                     ? 'bg-amber-100/70 text-[#B45309]'
                     : 'hover:bg-[#FAF7F4] text-[#4A4A4A]'
                 }`}
               >
                 <span className="flex items-center gap-1 truncate">
                   <BookOpen className="w-3 h-3 text-[#B45309]" />
-                  <span>3. للتعمق</span>
+                  <span>3. للتعمق (المفاهيم والمخططات)</span>
                 </span>
-                <span className="text-[10px] opacity-70">3</span>
+                <span className="text-[10px] font-bold">3</span>
               </button>
 
               {/* Sous-sections de l'accordéon si déplié */}
               {isDeepenExpanded && (
                 <div className="mr-3 pr-2 border-r-2 border-amber-200 space-y-1">
-                  {course.discoveryActivity && (
-                    <button
-                      type="button"
-                      onClick={() => scrollToSection('sec-svt-discovery')}
-                      className={`w-full text-right px-2 py-1 rounded-[6px] text-[11px] font-semibold flex items-center justify-between transition-colors cursor-pointer ${
-                        activeSectionId === 'sec-svt-discovery'
-                          ? 'bg-amber-50 text-[#B45309] font-bold'
-                          : 'hover:bg-[#FAF7F4] text-[#6B6B6B]'
-                      }`}
-                    >
-                      <span className="truncate">وضعية الانطلاق</span>
-                    </button>
-                  )}
-
-                  {observationSection && (
-                    <button
-                      type="button"
-                      onClick={() => scrollToSection(observationSection.id)}
-                      className={`w-full text-right px-2 py-1 rounded-[6px] text-[11px] font-semibold flex items-center justify-between transition-colors cursor-pointer ${
-                        activeSectionId === observationSection.id
-                          ? 'bg-amber-50 text-[#B45309] font-bold'
-                          : 'hover:bg-[#FAF7F4] text-[#6B6B6B]'
-                      }`}
-                    >
-                      <span className="truncate">ملاحظة واستغلال الوثائق</span>
-                    </button>
-                  )}
-
                   {deepenSections.map((sec) => (
                     <button
                       key={sec.id}
@@ -423,21 +396,22 @@ export const SvtCourseView: React.FC<SvtCourseViewProps> = ({
                       <span className="truncate">{sec.shortLabel || sec.titleArabic}</span>
                     </button>
                   ))}
-
                   <button
                     type="button"
                     onClick={() => scrollToSection('sec-svt-synthesis-vocab')}
                     className={`w-full text-right px-2 py-1 rounded-[6px] text-[11px] font-semibold flex items-center justify-between transition-colors cursor-pointer ${
-                      activeSectionId === 'sec-svt-synthesis-vocab'
+                      activeSectionId === 'sec-svt-synthesis-vocab' ||
+                      activeSectionId === 'sec-svt-flowchart' ||
+                      activeSectionId === 'sec-svt-synthesis' ||
+                      activeSectionId === 'sec-svt-vocab'
                         ? 'bg-amber-50 text-[#B45309] font-bold'
                         : 'hover:bg-[#FAF7F4] text-[#6B6B6B]'
                     }`}
                   >
-                    <span className="truncate">الحصيلة والمعجم</span>
+                    <span className="truncate">الحصيلة الشاملة والمعجم</span>
                   </button>
                 </div>
               )}
-
             </div>
           </div>
 
@@ -567,28 +541,39 @@ export const SvtCourseView: React.FC<SvtCourseViewProps> = ({
 
             {/* Pedagogical Objectives */}
             {course.objectifs && course.objectifs.length > 0 && (
-              <div className="p-4 rounded-[12px] bg-[#FAF7F4] border border-[#E5DDD5] space-y-2">
+              <div id="svt-objectives-box" className="p-4 rounded-[12px] bg-[#FAF7F4] border border-[#E5DDD5] space-y-2">
                 <div
                   style={{ color: theme.primaryHex }}
                   className="text-xs font-bold flex items-center gap-1.5"
                 >
                   <ListChecks className="w-4 h-4" />
-                  <span>الأهداف التعليمية التعلمية لهذا الدرس :</span>
+                  <span>الأهداف التعلمية</span>
                 </div>
-                <ul className="space-y-1.5 pr-5 list-disc text-xs sm:text-sm text-[#4A4A4A] leading-relaxed">
+                <ol className="space-y-1.5 pr-6 list-decimal text-xs sm:text-sm text-[#4A4A4A] leading-relaxed">
                   {course.objectifs.map((obj, idx) => (
-                    <li key={idx}>{obj}</li>
+                    <li key={idx} className="pr-1">
+                      {obj}
+                    </li>
                   ))}
-                </ul>
+                </ol>
               </div>
             )}
           </div>
 
           {/* ========================================================================= */}
-          {/* A. « أحتفظ بالأهم » : les 9 puces exactes, le schéma-bilan, les questions flash */}
+          {/* وضعية الانطلاق والتساؤل العلمي (Situation de départ & questions)             */}
+          {/* ========================================================================= */}
+          {course.discoveryActivity && (
+            <div id="sec-svt-discovery" className="scroll-mt-24">
+              <SvtDiscoveryBlock data={course.discoveryActivity} />
+            </div>
+          )}
+
+          {/* ========================================================================= */}
+          {/* 1. Bloc « أحتفظ بالأهم » (L'essentiel)                                    */}
           {/* ========================================================================= */}
           {course.essential && (
-            <div id="sec-svt-essential" data-atomic-block="true" className="scroll-mt-24 break-inside-avoid">
+            <div id="sec-svt-essential" className="scroll-mt-24">
               <SvtCourseEssentialBlock
                 essential={course.essential}
                 primaryColor={theme.primaryHex}
@@ -597,13 +582,18 @@ export const SvtCourseView: React.FC<SvtCourseViewProps> = ({
           )}
 
           {/* ========================================================================= */}
-          {/* B. Exercices visibles (BEM) : barèmes, corrections et erreurs fréquentes        */}
+          {/* 2. تمارين تطبيقية والتحضير لشهادة التعليم المتوسط (BEM)                   */}
           {/* ========================================================================= */}
           {course.applications && course.applications.length > 0 && (
             <div id="sec-svt-exercises" className="scroll-mt-24 space-y-4">
-              <div className="bg-white rounded-[16px] border border-[#E5DDD5] p-4 sm:p-5 flex flex-wrap items-center justify-between gap-2 break-inside-avoid">
+              <div className="bg-white rounded-[16px] border border-[#E5DDD5] p-4 sm:p-5 flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <Sparkles className="w-4 h-4 text-[#B45309]" />
+                  <span
+                    style={{ backgroundColor: theme.primaryHex }}
+                    className="w-7 h-7 rounded-[8px] text-white font-bold text-xs flex items-center justify-center shrink-0"
+                  >
+                    2
+                  </span>
                   <h3 className="text-base font-bold text-[#4A4A4A]">
                     2. تمارين تطبيقية والتحضير لشهادة التعليم المتوسط (BEM)
                   </h3>
@@ -620,19 +610,24 @@ export const SvtCourseView: React.FC<SvtCourseViewProps> = ({
           )}
 
           {/* ========================================================================= */}
-          {/* C. Accordéon « للتعمق » : replié sur le web, ouvert à l'impression et au PDF   */}
+          {/* 3. للتعمق في المفاهيم والمخططات (أقسام مرقمة بأحرف أبجدية: أ، ب، ج...)     */}
           {/* ========================================================================= */}
           <div id="sec-svt-deepen-accordion" className="scroll-mt-24 space-y-4">
-            <div className="bg-white p-4 sm:p-5 rounded-[16px] border border-[#E2D9D0] shadow-2xs flex flex-wrap items-center justify-between gap-3 break-inside-avoid">
+            <div className="bg-white p-4 sm:p-5 rounded-[16px] border border-[#E2D9D0] shadow-2xs flex flex-wrap items-center justify-between gap-3">
               <div className="space-y-1">
                 <div className="flex items-center gap-2">
-                  <BookOpen className="w-5 h-5" style={{ color: theme.primaryHex }} />
+                  <span
+                    style={{ backgroundColor: theme.primaryHex }}
+                    className="w-7 h-7 rounded-[8px] text-white font-bold text-xs flex items-center justify-center shrink-0"
+                  >
+                    3
+                  </span>
                   <h3 className="text-base sm:text-lg font-bold text-[#4A4A4A]">
-                    3. للتعمق
+                    3. للتعمق في المفاهيم والمخططات
                   </h3>
                 </div>
                 <p className="text-xs text-[#8C8C8C]">
-                  وضعية الانطلاق ← ملاحظة الوثائق ← التطورات المفاهيمية ← الحصيلة والمعجم
+                  ملاحظة الوثائق، الشروحات النظرية، المخطط الجيولوجي للبؤرة والمركز السطحي، السجل الزلزالي، مقارنة المقدار والشدة، منحنيات تساوي الشدة، الوقاية والحصيلة
                 </p>
               </div>
 
@@ -649,77 +644,19 @@ export const SvtCourseView: React.FC<SvtCourseViewProps> = ({
                 ) : (
                   <>
                     <ChevronDown className="w-4 h-4" />
-                    <span>فتح التفاصيل</span>
+                    <span>فتح التفاصيل والمفاهيم المعمقة</span>
                   </>
                 )}
               </button>
             </div>
 
-            {/* Contenu repliable : ordre imposé du gabarit */}
-            <div
-              data-svt-deepen-body="true"
-              className={
-                isDeepenExpanded
-                  ? 'space-y-6'
-                  : 'hidden print:block pdf-export-mode:block space-y-6'
-              }
-            >
-              {/* a. Situation de départ et problématique */}
-              {course.discoveryActivity && (
-                <div
-                  id="sec-svt-discovery"
-                  data-atomic-block="true"
-                  className="scroll-mt-24 break-inside-avoid"
-                >
-                  <SvtDiscoveryBlock data={course.discoveryActivity} />
-                </div>
-              )}
-
-              {/* b. Observation et exploitation des documents */}
-              {observationSection && (
-                <section
-                  id={observationSection.id}
-                  data-atomic-block="true"
-                  className="bg-white rounded-[18px] border border-[#E5DDD5] p-5 sm:p-6 shadow-2xs scroll-mt-24 space-y-4 break-inside-avoid"
-                >
-                  <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#EAE2DA] pb-3">
-                    <div className="flex items-center gap-2.5">
-                      <span
-                        style={{ backgroundColor: theme.primaryHex }}
-                        className="w-7 h-7 rounded-[8px] text-white font-bold text-xs flex items-center justify-center shrink-0"
-                        aria-label="ملاحظة الوثائق"
-                      >
-                        <BookOpen className="w-3.5 h-3.5" />
-                      </span>
-                      <h2 className="text-base sm:text-lg font-bold text-[#4A4A4A]">
-                        {observationSection.titleArabic}
-                      </h2>
-                    </div>
-
-                    {observationSection.titleFrench && (
-                      <span
-                        dir="ltr"
-                        style={{ color: theme.primaryHex }}
-                        className="text-xs font-mono font-semibold"
-                      >
-                        {observationSection.titleFrench}
-                      </span>
-                    )}
-                  </div>
-
-                  <div className="space-y-4">
-                    {observationSection.blocks.map((block, idx) => renderContentBlock(block, idx))}
-                  </div>
-                </section>
-              )}
-
-              {/* c. Développements : définition, propagation, enregistrement, magnitude/intensité, isoséistes, prévention */}
+            {/* Contenu dépliable : replié par défaut sur le web, toujours déplié à l'impression / PDF */}
+            <div className={isDeepenExpanded ? 'space-y-6' : 'hidden print:block pdf-export-mode:block'}>
               {deepenSections.map((section) => (
                 <section
                   key={section.id}
                   id={section.id}
-                  data-atomic-block="true"
-                  className="bg-white rounded-[18px] border border-[#E5DDD5] p-5 sm:p-6 shadow-2xs scroll-mt-24 space-y-4 break-inside-avoid"
+                  className="bg-white rounded-[18px] border border-[#E5DDD5] p-5 sm:p-6 shadow-2xs scroll-mt-24 space-y-4"
                 >
                   <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#EAE2DA] pb-3">
                     <div className="flex items-center gap-2.5">
@@ -750,56 +687,125 @@ export const SvtCourseView: React.FC<SvtCourseViewProps> = ({
                   </div>
                 </section>
               ))}
-
-              {/* d. Schéma-synthèse puis glossaire */}
-              <div
-                id="sec-svt-synthesis-vocab"
-                data-atomic-block="true"
-                className="scroll-mt-24 space-y-5 break-inside-avoid"
-              >
-                {course.summaryFlowchart && course.summaryFlowchart.length > 0 && (
-                  <div
-                    id="sec-svt-flowchart"
-                    data-atomic-block="true"
-                    className="bg-white rounded-[18px] border border-[#E5DDD5] p-5 sm:p-6 shadow-2xs space-y-4 break-inside-avoid"
-                  >
-                    <div className="flex items-center gap-2 border-b border-[#EAE2DA] pb-2.5">
-                      <Sparkles className="w-4 h-4 text-[#B45309]" />
-                      <h3 className="text-base font-bold text-[#4A4A4A]">
-                        المخطط التلخيصي لمسار الظاهرة الزلزالية
-                      </h3>
-                    </div>
-                    <SeismicSynthesisChainDiagram />
-                  </div>
-                )}
-
-                {course.synthesisText && (
-                  <div
-                    id="sec-svt-synthesis"
-                    className="bg-white rounded-[18px] border-2 border-emerald-400 p-5 sm:p-6 shadow-2xs space-y-3 break-inside-avoid"
-                  >
-                    <div className="flex items-center gap-2 text-emerald-800 font-bold border-b border-emerald-100 pb-2">
-                      <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />
-                      <h3 className="text-base sm:text-lg font-bold text-[#4A4A4A]">
-                        الحصيلة النهائية — خلاصة الدرس
-                      </h3>
-                    </div>
-                    <p className="text-xs sm:text-sm text-[#4A4A4A] leading-[1.95] whitespace-pre-line bg-[#FAF7F4] p-4 rounded-[12px] border border-[#E5DDD5]">
-                      {course.synthesisText}
-                    </p>
-                  </div>
-                )}
-
-                {course.vocabulaire && course.vocabulaire.length > 0 && (
-                  <div id="sec-svt-vocab" data-atomic-block="true" className="scroll-mt-24 break-inside-avoid">
-                    <SvtTrilingualTermBox
-                      terms={course.vocabulaire}
-                      title="المصطلحات العلمية المعتمدة (عربي · Français · تعريف مبسط)"
-                    />
-                  </div>
-                )}
-              </div>
             </div>
+          </div>
+
+          {/* ========================================================================= */}
+          {/* الحصيلة الشاملة ومعجم المصطلحات المعتمدة                                   */}
+          {/* ========================================================================= */}
+          <div id="sec-svt-synthesis-vocab" className="scroll-mt-24 space-y-5">
+            <div className="bg-white rounded-[16px] border border-[#E5DDD5] p-4 sm:p-5 flex items-center justify-between">
+              <div className="flex items-center gap-2.5">
+                <span
+                  style={{ backgroundColor: theme.primaryHex }}
+                  className="w-7 h-7 rounded-[8px] text-white font-bold text-xs flex items-center justify-center shrink-0"
+                >
+                  <CheckCircle2 className="w-4 h-4 text-white" />
+                </span>
+                <h3 className="text-base sm:text-lg font-bold text-[#4A4A4A]">
+                  الحصيلة الشاملة ومعجم المصطلحات العلمية المعتمدة
+                </h3>
+              </div>
+              <span className="text-xs font-bold text-[#8C8C8C]">
+                خلاصة المنهاج الوزاري الرسمي
+              </span>
+            </div>
+
+            {/* Summary Flowchart */}
+            {course.summaryFlowchart && course.summaryFlowchart.length > 0 && (
+              <div
+                id="sec-svt-flowchart"
+                data-atomic-block="true"
+                className="pdf-atomic-block scroll-mt-24 bg-white rounded-[18px] border border-[#E5DDD5] p-5 sm:p-6 shadow-2xs space-y-4"
+              >
+                <div className="flex items-center gap-2 border-b border-[#EAE2DA] pb-2.5">
+                  <Sparkles className="w-4 h-4 text-[#B45309]" />
+                  <h3 className="text-base font-bold text-[#4A4A4A]">
+                    المخطط التلخيصي لمسار الظاهرة الزلزالية
+                  </h3>
+                </div>
+
+                {/* 1. Chaîne causale principale : de droite à gauche en arabe (RTL) */}
+                <div className="space-y-3">
+                  <div className="text-xs font-bold text-[#8C8C8C]">
+                    مسار الظاهرة من المصدر الباطني إلى السطح (قراءة من اليمين إلى اليسار) :
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-5 items-center gap-2 text-center">
+                    {/* Étape 1 : à droite */}
+                    <div className="p-3.5 rounded-[12px] bg-red-50/90 border border-red-300 text-xs sm:text-sm font-bold text-red-950 shadow-2xs leading-relaxed">
+                      <span className="block text-[10px] text-red-700 font-semibold mb-0.5">1. البؤرة في العمق</span>
+                      {course.summaryFlowchart[0]}
+                    </div>
+
+                    {/* Flèche droite -> gauche */}
+                    <div className="text-red-500 font-black text-2xl select-none flex items-center justify-center">
+                      <span className="hidden md:inline">←</span>
+                      <span className="md:hidden">↓</span>
+                    </div>
+
+                    {/* Étape 2 : au milieu */}
+                    <div className="p-3.5 rounded-[12px] bg-orange-50/90 border border-orange-300 text-xs sm:text-sm font-bold text-orange-950 shadow-2xs leading-relaxed">
+                      <span className="block text-[10px] text-orange-700 font-semibold mb-0.5">2. في باطن الأرض</span>
+                      {course.summaryFlowchart[1]}
+                    </div>
+
+                    {/* Flèche droite -> gauche */}
+                    <div className="text-orange-500 font-black text-2xl select-none flex items-center justify-center">
+                      <span className="hidden md:inline">←</span>
+                      <span className="md:hidden">↓</span>
+                    </div>
+
+                    {/* Étape 3 : à gauche */}
+                    <div className="p-3.5 rounded-[12px] bg-amber-50/90 border border-amber-300 text-xs sm:text-sm font-bold text-amber-950 shadow-2xs leading-relaxed">
+                      <span className="block text-[10px] text-amber-700 font-semibold mb-0.5">3. على السطح والمركز السطحي</span>
+                      {course.summaryFlowchart[2]}
+                    </div>
+                  </div>
+                </div>
+
+                {/* 2. Connecteur vers le bloc « التسجيل » relié à la chaîne */}
+                <div className="pt-2 border-t border-dashed border-[#EAE2DA] space-y-2">
+                  <div className="flex items-center justify-center gap-1.5 text-sky-700 text-xs font-bold">
+                    <span>↓</span>
+                    <span>الرصد والقياس العلمي المترتب على الظاهرة</span>
+                    <span>↓</span>
+                  </div>
+
+                  <div className="p-3.5 rounded-[12px] bg-sky-50/90 border border-sky-300 text-xs sm:text-sm font-bold text-sky-950 text-center shadow-2xs leading-relaxed max-w-[620px] mx-auto">
+                    <span className="block text-[11px] text-sky-800 font-bold mb-1">
+                      مسار التسجيل والتقييم (مسجل الزلازل ➔ السجل الزلزالي ➔ المقدار والشدة) :
+                    </span>
+                    {course.summaryFlowchart[3] || 'التسجيل العلمي (مسجل الزلازل والسجل الزلزالي) · تقدير المقدار ودراسة الشدة'}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Synthesis Text */}
+            {course.synthesisText && (
+              <div id="sec-svt-synthesis" className="scroll-mt-24 bg-white rounded-[18px] border-2 border-emerald-400 p-5 sm:p-6 shadow-2xs space-y-3">
+                <div className="flex items-center gap-2 text-emerald-800 font-bold border-b border-emerald-100 pb-2">
+                  <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />
+                  <h3 className="text-base sm:text-lg font-bold text-[#4A4A4A]">
+                    الحصيلة النهائية — خلاصة الدرس
+                  </h3>
+                </div>
+                <p className="text-xs sm:text-sm text-[#4A4A4A] leading-[1.95] whitespace-pre-line bg-[#FAF7F4] p-4 rounded-[12px] border border-[#E5DDD5]">
+                  {course.synthesisText}
+                </p>
+              </div>
+            )}
+
+            {/* Scientific Vocabulary Glossary */}
+            {course.vocabulaire && course.vocabulaire.length > 0 && (
+              <div id="sec-svt-vocab" className="scroll-mt-24">
+                <SvtTrilingualTermBox
+                  terms={course.vocabulaire}
+                  title="المصطلحات العلمية المعتمدة (عربي · Français · تعريف مبسط)"
+                />
+              </div>
+            )}
           </div>
 
           {/* G. Bottom Next/Previous Course Navigator */}
