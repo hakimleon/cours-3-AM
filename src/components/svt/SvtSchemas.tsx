@@ -81,7 +81,7 @@ const LabelBox: React.FC<{
  */
 const SeismicFoyerEpicenterDiagram: React.FC<{ schema: SvtSchemaOrFigure }> = ({ schema }) => {
   return (
-    <div className="my-4 bg-white rounded-[14px] border border-[#E5DDD5] p-3 sm:p-4 space-y-3 break-inside-avoid">
+    <div id="sec-svt-foyer-epicenter" className="my-4 bg-white rounded-[14px] border border-[#E5DDD5] p-3 sm:p-4 space-y-3 break-inside-avoid">
       <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#EAE2DA] pb-2.5">
         <div className="flex items-center gap-2">
           <span className="w-2.5 h-2.5 rounded-full bg-[#B45309]" />
@@ -263,7 +263,7 @@ const SeismogramWavesDiagram: React.FC<{ schema: SvtSchemaOrFigure }> = ({ schem
   }, []);
 
   return (
-    <div className="my-4 bg-white rounded-[14px] border border-[#E5DDD5] p-3 sm:p-4 space-y-3 break-inside-avoid">
+    <div id="sec-svt-seismogram" className="my-4 bg-white rounded-[14px] border border-[#E5DDD5] p-3 sm:p-4 space-y-3 break-inside-avoid">
       <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#EAE2DA] pb-2.5">
         <h4 className="text-sm sm:text-base font-bold text-[#4A4A4A]">
           {schema.titleArabic || 'السجل الزلزالي : تغير حركة الأرض بدلالة الزمن'}

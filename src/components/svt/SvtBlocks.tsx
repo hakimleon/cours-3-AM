@@ -577,7 +577,7 @@ export const SvtApplicationCard: React.FC<{
   const theme = useSvtDomainTheme();
 
   return (
-    <div className="application-enonce-group break-inside-avoid my-5 bg-white rounded-[16px] border border-[#E5DDD5] p-4 sm:p-5 space-y-3 shadow-2xs">
+    <div id={`exo-card-${question.number}`} className="application-enonce-group break-inside-avoid my-5 bg-white rounded-[16px] border border-[#E5DDD5] p-4 sm:p-5 space-y-3 shadow-2xs">
       <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#EAE2DA] pb-2.5">
         <div className="flex items-center gap-2">
           <span

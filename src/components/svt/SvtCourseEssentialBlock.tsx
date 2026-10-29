@@ -91,7 +91,7 @@ export const SvtCourseEssentialBlock: React.FC<SvtCourseEssentialBlockProps> = (
           <div>
             <div className="flex items-center gap-2">
               <h2 className="text-base sm:text-lg font-bold text-[#4A4A4A] leading-tight">
-                {titleAr}
+                1. {titleAr}
               </h2>
               <span
                 style={{
